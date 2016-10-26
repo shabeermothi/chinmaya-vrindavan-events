@@ -126,4 +126,4 @@ jspm_packages
 *.iml
 
 # Bower Components
-./public/bower_components/
+./public/components/
