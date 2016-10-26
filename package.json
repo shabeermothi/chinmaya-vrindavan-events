@@ -1,0 +1,31 @@
+{
+  "name": "chinmaya-vrindavan-events",
+  "version": "1.0.0",
+  "description": "An app to enable users to register and subscribe to events.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/chinmaya-vrindavan/events.git"
+  },
+  "keywords": [
+    "MEAN",
+    "Express",
+    "Angular"
+  ],
+  "author": "Shabeer Mothi",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "angular-uuid": "0.0.4",
+    "body-parser": "^1.13.3",
+    "bower": "^1.7.9",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^7.1.9",
+    "mongodb": "^2.0.43"
+  }
+}

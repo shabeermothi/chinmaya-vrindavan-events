@@ -1,0 +1,46 @@
+<div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Create new user</h2>
+    </div>
+</div>
+    <div class="row" ng-if="userCreated">
+        <h4>User Created Successfully</h4>
+    </div>
+<div class="container">
+    <div>
+        <p>
+            <label>First Name (required)</label>
+            <input id="name" class="form-control" type="text" ng-model="user.firstName" required>
+        </p>
+        <p>
+            <label>Last Name (required)</label>
+            <input id="name" class="form-control" type="text" ng-model="user.lastName" required>
+        </p>
+        <p>
+            <label>Email (required)</label>
+            <input id="name" class="form-control" type="text" ng-model="user.email" required>
+        </p>
+        <p>
+            <label>Phone (Mobile)</label>
+            <input id="name" class="form-control" type="text" ng-model="user.phone.mobile">
+        </p>
+        <p>
+            <label>Phone (Work)</label>
+            <input id="name" class="form-control" type="text" ng-model="user.phone.work">
+        </p>
+        <p>
+            <label>Address</label>
+            <input id="name" class="form-control" type="text" ng-model="user.address">
+        </p>
+        <p>
+            <label>Twitter</label>
+            <input id="name" class="form-control" type="text" ng-model="user.twitter">
+        </p>
+        <p>
+            <button style="margin-top:20px" class="btn btn-default" ng-click="saveUser(user)">Save</button>
+            <button style="margin-top:20px" class="btn btn-default" ui-sref="users">Back</button>
+        </p>
+    </div>
+</div>
+</div>

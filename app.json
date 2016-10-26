@@ -1,0 +1,8 @@
+{
+  "name": "Chinmaya Vrindavan Events",
+  "description": "An app to enable users to register and subscribe to events.",
+  "repository": "https://gitlab.com/chinmaya-vrindavan/events",
+  "logo": "https://mlab.com/company/brand/resources/mLab-logo-onlight.png",
+  "keywords": ["chinmaya vrindavan", "chinmaya vrindavan events"],
+  "addons": ["mongolab"]
+}

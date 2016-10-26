@@ -1,0 +1,114 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">My Profile</h1>
+                        <p>View and update your profile here..</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="view-user-profile">
+    <div class="container">
+        <form name="userProfileForm" novalidate>
+            <div class="row" ng-if="profileUpdated">
+                <div class="alert alert-success">
+                    Profile Updated Successfully
+                </div>
+            </div>
+            <div class="row">
+                <h4>Personal Details</h4><hr />
+                <div class="col-md-2 col-sm-12"></div>
+                <div class="contact-form">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required="required" placeholder="Name"
+                                   ng-model="userDetails.name">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" name="addressLine" placeholder="Address"
+                                      ng-model="userDetails.addressLine"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" name="city" class="form-control" placeholder="City"
+                                   ng-model="userDetails.addressCity">
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" name="state" class="form-control" placeholder="State"
+                                   ng-model="userDetails.addressState">
+                        </div>
+                        <div class="form-group">
+                            <label>Zip</label>
+                            <input type="number" name="zip" class="form-control" placeholder="Zip"
+                                   ng-model="userDetails.addressZip">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required="required"
+                                   placeholder="Email Id" ng-model="userDetails.email">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone (Home)</label>
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                   placeholder="111 111 1111" ng-model="userDetails.homePhone">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone (Mobile)</label>
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                   placeholder="111 111 1111" ng-model="userDetails.mobilePhone">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone (Work)</label>
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                   placeholder="111 111 1111" ng-model="userDetails.workPhone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="userDetails.familyDetails">
+                <h4>Family Details</h4><hr />
+                <div class="col-md-2 col-sm-12"></div>
+                <div class="col-md-4 col-sm-12" data-ng-repeat="family in userDetails.familyDetails">
+                        <div class="form-group">
+                            <label>Name <a ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                   placeholder="Name" ng-model="family.name">
+                            <label>Role</label>
+                            <select class="form-control" ng-model="family.role">
+                                <option>Adult</option>
+                                <option>Child</option>
+                            </select>
+                            <label>Grade</label>
+                            <input class="form-control" type="number" ng-model="family.grade" name="" placeholder="Enter Grade">
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-12"></div>
+                <div class="col-md-4 col-sm-12">
+                    <button class="form-control btn btn-default" ng-click="addNewChoice()">Add family member</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12"></div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <input ng-disabled="userProfileForm.$invalid" type="submit" name="submit" class="btn btn-submit"
+                               ng-click="updateProfile()" value="Update Profile">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

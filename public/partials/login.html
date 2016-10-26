@@ -1,0 +1,135 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12" ng-if="!register">
+                        <h1 class="title">Login</h1>
+                        <p>Login to subscribe to events</p>
+                    </div>
+                    <div class="col-sm-12" ng-if="register">
+                        <h1 class="title">Register</h1>
+                        <p>Get yourself registered to get started..</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="login" ng-if="!register">
+    <div class="row" ng-if="invalidUserLogin">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+            <span>Invalid email/password</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+            <div class="contact-form">
+                <form name="loginForm" novalidate>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" ng-required="true" ng-model="loginEmail"
+                               placeholder="Email Id"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="phone" id="password" ng-required="true" class="form-control"
+                               ng-model="loginPassword"
+                               placeholder="Password" ng-minlength="5"/>
+                    </div>
+                    <div class="form-group">
+                        <input ng-disabled="loginForm.$invalid" type="submit" name="submit" class="btn btn-submit"
+                               ng-click="loginUser(loginEmail, loginPassword)" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+            <a ng-click="toggleRegister()">Register?</a>
+        </div>
+    </div>
+</section>
+<section id="register" ng-if="register">
+    <div class="row" ng-if="invalidRegisterLogin">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+            <span>User with email already exists. <a ng-click="toggleRegister()">Login?</a></span>
+        </div>
+    </div>
+    <form name="registerForm" novalidate>
+        <div class="row">
+            <div class="col-md-2 col-sm-12"></div>
+                <div class="contact-form">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" class="form-control" required="required" placeholder="Name" ng-model="user.name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" name="addressLine" required="required" placeholder="Address" ng-model="user.addressLine"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="city" class="form-control" required="required" placeholder="City" ng-model="user.addressCity">
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="state" class="form-control" required="required" placeholder="State" ng-model="user.addressState">
+                            </div>
+                            <div class="form-group">
+                                <label>Zip</label>
+                                <input type="number" name="zip" class="form-control" required="required" placeholder="Zip" ng-model="user.addressZip">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required="required"
+                                       placeholder="Email Id" ng-model="user.email">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone (Home)</label>
+                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                       placeholder="111 111 1111" ng-model="user.homePhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone (Mobile)</label>
+                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                       placeholder="111 111 1111" ng-model="user.mobilePhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone (Work)</label>
+                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                       placeholder="111 111 1111" ng-model="user.workPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" id="password" required="required" class="form-control" ng-minlength="5" ng-model="user.password">
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12"></div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <input ng-disabled="registerForm.$invalid" type="submit" name="submit" class="btn btn-submit"
+                           ng-click="registerUser(user)" value="Register">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+            <a ng-click="toggleRegister()">Haven an id? Login</a>
+        </div>
+    </div>
+</section>
