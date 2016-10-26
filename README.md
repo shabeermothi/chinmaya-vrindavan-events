@@ -14,7 +14,12 @@ Users should be able to
 
 #### How to run the project in local
 
-The below instruction assumes you have MongoDB running in your local in port 27107
+The below instruction assumes you have MongoDB running in your local in port 27107.
+
+Before setting up the project you will need to have the below installed
+- Git
+- Node.js
+
 
 Run the below commands in command line to setup the project in your local machine.
 
