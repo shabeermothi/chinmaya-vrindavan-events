@@ -2,7 +2,7 @@ CHINMAYA VRINDAVAN EVENTS
 ==========================
 
 ```
-The module is under active development
+The module is under construction
 ```
 
 Users should be able to
