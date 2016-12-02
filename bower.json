@@ -25,12 +25,14 @@
     "tests"
   ],
   "dependencies": {
-    "angular-bootstrap": "^2.0.1",
+    "angular-bootstrap": "^2.3.0",
     "jquery": "^3.1.0",
     "bootstrap": "^3.3.7",
     "angular-ui-router": "^0.3.1",
     "ng-uuid": "^0.1.1",
     "angular-growl-v2": "^0.7.9",
-    "angular-growl-notifications": "^2.4.0"
+    "angular-growl-notifications": "^2.4.0",
+    "api-check": "^7.5.5",
+    "angular-formly": "^8.4.0"
   }
 }

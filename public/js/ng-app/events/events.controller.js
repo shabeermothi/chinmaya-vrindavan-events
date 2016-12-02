@@ -6,7 +6,7 @@
     eventsApp.controller('HomeController', ['$rootScope', '$scope', '$window', function ($rootScope, $scope, $window){
         if ($window.sessionStorage.token) {
             $scope.showLogin = true;
-            $scope.userDetails = {name: $window.sessionStorage.userDetails};
+            $scope.userDetails = {name: $window.sessionStorage.userDetails, isAdmin: $window.sessionStorage.isAdmin};
         }
 
         $rootScope.$on('home.login', function (event, args) {

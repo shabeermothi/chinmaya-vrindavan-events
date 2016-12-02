@@ -1,0 +1,13 @@
+<uib-tabset active="activeForm">
+    <uib-tab index="0" heading="Form Tab">
+        <formly-form model="vm.userEventDetails" fields="vm.eventDetails">
+            <button type="submit" class="btn btn-default" ng-click="vm.submit(vm.userEventDetails)">Submit</button>
+        </formly-form>
+    </uib-tab>
+    <uib-tab index="1" heading="Tab One">
+        Some Tab Content
+    </uib-tab>
+    <uib-tab index="2" heading="Tab Two">
+        More Tab Content
+    </uib-tab>
+</uib-tabset>

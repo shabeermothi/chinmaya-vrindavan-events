@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var eventsApp = angular.module("eventsApp", ['ui.router', 'uuid', 'growlNotifications']);
+    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home');
@@ -43,6 +43,7 @@
                                 $scope.invalidUserLogin = false;
                                 $window.sessionStorage.token = response.data.token;
                                 $window.sessionStorage.userDetails = response.data.data[0].name;
+                                $window.sessionStorage.isAdmin = response.data.data[0].isAdmin;
                                 $window.sessionStorage.userId = response.data.data[0]._id;
                                 $rootScope.$broadcast('home.login', response.data.data);
                                 $state.go('home');
@@ -57,6 +58,8 @@
                     };
 
                     $scope.registerUser = function (user) {
+                        user.isAdmin = false;
+
                         $http({
                             method: 'POST',
                             url: '/users',
@@ -109,6 +112,13 @@
                             });
                         };
                     });
+                }]
+            })
+            .state('events.subscription', {
+                url: '/:eventId',
+                templateUrl: 'partials/events/subscribe/home.html',
+                controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                    $scope.eventId = $stateParams.eventId;
                 }]
             })
             .state('userSubscriptions', {
@@ -246,6 +256,10 @@
                         });
                     }
                 }]
+            })
+            .state('admin', {
+                url: '/events/admin/login',
+                templateUrl: 'partials/admin/login.html'
             });
     });
 
