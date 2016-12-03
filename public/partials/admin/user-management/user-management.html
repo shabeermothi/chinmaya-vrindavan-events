@@ -1,0 +1,37 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Manage Users</h1>
+                        <p>Update user roles, delete and update user profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="create-new-event">
+    <div class="container" ui-view>
+        <h5>Click on an user to delete the user or update user profile</h5>
+        <br />
+        <input type="search" class="form-control" ng-model="searchUsers" placeholder="Search for user name or email to find users"/>
+        <table class="table table-hover">
+            <tbody>
+            <tr ng-repeat="user in vm.users | filter: searchUsers" style="cursor:pointer">
+                <td>
+                    <a ui-sref="manageUsers.editUser({userId: user._id})">{{ user.name }}</a>
+                </td>
+                <td>
+                    <a ui-sref="manageUsers.editUser({userId: user._id})"><i class="fa fa-user"></i> Manage User Profile</a>
+                </td>
+                <td>
+                    <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i> Delete User</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

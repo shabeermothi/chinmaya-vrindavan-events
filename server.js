@@ -277,3 +277,9 @@ app.delete("/user-events/:id/:userId/:token", function(req, res) {
     }
   });
 });
+
+app.get('/user-details/child-details/:userId', function (req, res) {
+  db.collection(USERS_COLLECTION).find({_id: new ObjectID(req.params.userId)}).toArray(function (err, doc) {
+      res.status(200).json(doc[0].familyDetails);
+  });
+});
