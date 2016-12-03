@@ -34,6 +34,12 @@
     "angular-growl-notifications": "^2.4.0",
     "api-check": "^7.5.5",
     "angular-formly": "^8.4.0",
-    "angular-formly-templates-bootstrap": "^6.3.2"
+    "angular-formly-templates-bootstrap": "^6.3.2",
+    "easy-form-generator": "^1.2.0"
+  },
+  "resolutions": {
+    "angular-bootstrap": "^2.3.0",
+    "angular": "^1.5.1",
+    "api-check": "~7.2.4"
   }
 }

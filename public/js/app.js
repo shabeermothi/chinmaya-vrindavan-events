@@ -1,9 +1,13 @@
 (function () {
     'use strict';
 
-    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap']);
+    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap', 'eda.easyformGen.stepway']);
 
-    eventsApp.config(function($stateProvider, $urlRouterProvider) {
+    eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
+        easyFormSteWayConfigProvider.showPreviewPanel(true);
+        //show/hide models in preview panel => default is true
+        easyFormSteWayConfigProvider.showPreviewModels(true);
+
         $urlRouterProvider.otherwise('/home');
 
         $stateProvider

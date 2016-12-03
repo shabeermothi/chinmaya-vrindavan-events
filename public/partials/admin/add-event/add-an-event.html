@@ -15,38 +15,9 @@
 
 <section id="create-new-event">
     <div class="container">
-        <h3>Form builder should be shown here</h3>
-        <p>
-            <label>Name (required)</label>
-            <input id="name" class="form-control" type="text" ng-model="event.name" required>
-        </p>
-        <p>
-            <label>Category (required)</label>
-            <input id="category" class="form-control" type="text" ng-model="event.category" required>
-        </p>
-        <p>
-            <label>Type (required)</label>
-            <input id="type" class="form-control" type="text" ng-model="event.type" required>
-        </p>
-        <p>
-            <label>Date (mm-dd-yyyy)</label>
-            <input id="date" class="form-control" type="text" ng-model="event.date">
-        </p>
-        <p>
-            <label>Price ($)</label>
-            <input id="price" class="form-control" type="text" ng-model="event.price">
-        </p>
-        <p>
-            <label>Location</label>
-            <input id="location" class="form-control" type="text" ng-model="event.location">
-        </p>
-        <p>
-            <label>Tag</label>
-            <input id="tag" class="form-control" type="text" ng-model="event.tag">
-        </p>
-        <p>
-            <button style="margin-top:20px" class="btn btn-default" ng-click="saveEvent(event)">Save</button>
-            <button style="margin-top:20px" class="btn btn-default" ui-sref="events">Back</button>
-        </p>
+        <eda-step-way-easy-form-gen
+                eda-easy-form-generator-model="demoCtrl.easyFormGeneratorModel"
+                eda-save-form-event="demoCtrl.saveForm(edaEasyFormGeneratorModel)">
+        </eda-step-way-easy-form-gen>
     </div>
 </section>
