@@ -33,13 +33,20 @@
                     vm.users = response;
                 });
             }
+            
+            vm.toggleAdmin = function (userId) {
+                ManageUserService.updateUserDetails(userId).then(function () {
+                    getUsers();
+                });
+            };
         }
     }
 
     function ManageUserService ($http, $log) {
         return {
             getUsers: getUsers,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            updateUserDetails: updateUserDetails
         };
         
         function getUsers () {
@@ -57,6 +64,24 @@
                 url: '/users/' + userId
             }).then(function (response) {
                 return response.data;
+            });
+        }
+        
+        function updateUserDetails (userId) {
+            return $http({
+                method: 'GET',
+                url: '/users'
+            }).then(function (response) {
+                var userDetails = response.data;
+                userDetails.isAdmin = !userDetails.isAdmin;
+
+                return $http({
+                    method: 'PUT',
+                    url: '/users/' + userId,
+                    data: userDetails
+                }).then(function (response) {
+                    return response.data;
+                });
             });
         }
     }

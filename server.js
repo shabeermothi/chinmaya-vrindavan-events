@@ -169,7 +169,7 @@ app.post("/events", function(req, res) {
   var newEvent = req.body;
   newEvent.createDate = new Date();
 
-  if (!(req.body.name || req.body.date)) {
+  if (!(req.body.eventName || req.body.eventDate)) {
     handleError(res, "Invalid user input", "Must provide a name and date.", 400);
   }
 

@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="action">
                     <div class="col-sm-12">
-                        <h1 class="title">Create New Event</h1>
-                        <p>Create a new event for users to subscribe</p>
+                        <h1 class="title">Define your event</h1>
+                        <p>Define the title, description and date of occurrence of your event</p>
                     </div>
                 </div>
             </div>
@@ -13,11 +13,17 @@
     </div>
 </section>
 
-<section id="create-new-event">
+<section id="define-new-event">
     <div class="container">
-        <eda-step-way-easy-form-gen
-                eda-easy-form-generator-model="demoCtrl.easyFormGeneratorModel"
-                eda-save-form-event="demoCtrl.saveForm(edaEasyFormGeneratorModel)">
-        </eda-step-way-easy-form-gen>
+        <eda-easy-form-viewer
+                eda-easy-form-viewer-data-model="event.dataModel"
+                eda-easy-form-viewer-easy-form-generator-fields-model="event.fieldsModel"
+
+                eda-easy-form-viewer-submit-button-text="{{event.submitButtonText}}"
+                eda-easy-form-viewer-cancel-button-text="{{event.cancelButtonText}}"
+
+                eda-easy-form-viewer-submit-form-event="event.createEvent(dataModelSubmitted)"
+                eda-easy-form-viewer-cancel-form-event="event.cancelEvent()">
+        </eda-easy-form-viewer>
     </div>
 </section>

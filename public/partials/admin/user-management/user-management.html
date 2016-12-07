@@ -30,6 +30,12 @@
                 <td>
                     <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i> Delete User</a>
                 </td>
+                <td ng-if="!user.isAdmin">
+                    <a ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i> Make an admin</a>
+                </td>
+                <td ng-if="user.isAdmin">
+                    <a ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user-circle-o"></i> Remove from Admin</a>
+                </td>
             </tr>
             </tbody>
         </table>

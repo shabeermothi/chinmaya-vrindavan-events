@@ -1,0 +1,41 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Active Events</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="active-events">
+    <div class="container" ui-view>
+        <input type="search" class="form-control" ng-model="searchActiveEvents" placeholder="Search for events with date or event name or description"/>
+        <br />
+        <div class="row">
+            <div class="[ col-xs-12 col-sm-9 col-md-9 ]">
+                <ul class="event-list">
+                    <li ng-repeat="event in events | orderBy:'date' | filter: searchActiveEvents">
+                        <time datetime="2014-07-20 0000">
+                            <span class="day">8</span>
+                            <span class="month">Jul</span>
+                            <span class="year">2014</span>
+                            <span class="time">12:00 AM</span>
+                        </time>
+                        <div class="info">
+                            <h2 class="title">{{event.eventName}}</h2>
+                            <p class="desc">{{event.eventDescription}}</p>
+                            <ul>
+                                <li style="width:100%;"><a ui-sref="addDetails({eventId: event._id})"><span class="fa fa-download"></span> Add Details</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

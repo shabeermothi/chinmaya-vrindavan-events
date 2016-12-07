@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap', 'eda.easyformGen.stepway']);
+    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap', 'eda.easyformGen.stepway', 'eda.easyFormViewer']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(true);
