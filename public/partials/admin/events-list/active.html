@@ -22,7 +22,6 @@
                     <li ng-repeat="event in events | orderBy:'date' | filter: searchActiveEvents">
                         <time datetime="{{event.eventDate}}">
                             <span class="day">{{event.eventDate | date}}</span>
-                            <span class="month">Jul</span>
                         </time>
                         <div class="info">
                             <h2 class="title">{{event.eventName}}</h2>
