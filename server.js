@@ -226,8 +226,6 @@ app.post("/user-events/:token", function(req, res) {
   var newEvent = req.body;
   newEvent.createDate = new Date();
 
-  jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {
-      if (response) {
         if (!(req.body.eventId)) {
           handleError(res, "Invalid user input", "Must provide a name and date.", 400);
         }
@@ -239,11 +237,7 @@ app.post("/user-events/:token", function(req, res) {
             res.status(201).json(doc.ops[0]);
           }
         });
-      } else {
-          res.sendStatus(403);
-      }
   });
-});
 
 app.get("/user-events/:id/:token", function(req, res) {
   jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {

@@ -70,7 +70,7 @@
         function updateUserDetails (userId) {
             return $http({
                 method: 'GET',
-                url: '/users'
+                url: '/users/' + userId
             }).then(function (response) {
                 var userDetails = response.data;
                 userDetails.isAdmin = !userDetails.isAdmin;

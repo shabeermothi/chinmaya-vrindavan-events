@@ -1,16 +1,11 @@
-<uib-tabset active="activeForm">
-    <uib-tab index="0" heading="Register for event">
-        <formly-form model="vm.userEventDetails" fields="vm.eventDetails">
-            <button type="submit" class="btn btn-default" ng-click="vm.submit(vm.userEventDetails)">Make Payment</button>
-        </formly-form>
-    </uib-tab>
-    <uib-tab index="1" heading="Add Lunch">
+<h1>Subscribe to {{vm.eventName}}</h1>
+<eda-easy-form-viewer
+        eda-easy-form-viewer-data-model="vm.eventDataModel"
+        eda-easy-form-viewer-easy-form-generator-fields-model="vm.eventDetails"
 
-    </uib-tab>
-    <uib-tab index="2" heading="Add After Care">
+        eda-easy-form-viewer-submit-button-text="{{vm.submitButtonText}}"
+        eda-easy-form-viewer-cancel-button-text="{{vm.cancelButtonText}}"
 
-    </uib-tab>
-    <uib-tab index="2" heading="Extend Morning">
-
-    </uib-tab>
-</uib-tabset>
+        eda-easy-form-viewer-submit-form-event="vm.subscribeToEvent(dataModelSubmitted)"
+        eda-easy-form-viewer-cancel-form-event="vm.cancelSubscription()">
+</eda-easy-form-viewer>

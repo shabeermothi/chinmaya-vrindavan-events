@@ -115,7 +115,36 @@
                             }
                         }
                     ]
-                }
+                }/*,
+                {
+                    "line": -1,
+                    "activeColumn": 1,
+                    "columns": [
+                        {
+                            "numColumn": 1,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventTag",
+                                "selectedControl": "TextInput",
+                                "subtype": "",
+                                "templateOptions": {
+                                    "label": "Event Tag(s)",
+                                    "required": true,
+                                    "description": "Tags/Categories for the event",
+                                    "placeholder": "",
+                                    "options": []
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": true
+                            }
+                        }
+                    ]
+                }*/
             ];
         }
     }

@@ -3,312 +3,65 @@
 
     angular.module('eventsApp')
         .directive('subscribeEvent', subscribeEventDirective)
+        .directive('userEventSubscription', userEventSubscriptionDirective)
         .factory('SubscribeEventService', SubscribeEventService);
 
-    SubscribeEventService.$inject = ['$http', '$log'];
+    SubscribeEventService.$inject = ['$http', '$log', '$window'];
 
     function subscribeEventDirective () {
-        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window'];
+        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state'];
 
         return {
             restrict: 'A',
             scope: {
-                eventId: '='
+                eventId: '=',
+                childId: '='
             },
             templateUrl: 'partials/events/subscribe/subscribe-to-an-event.html',
             controller: SubscribeEventDirectiveCtrl,
             controllerAs: 'vm'
         };
 
-        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window) {
+        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state) {
             var vm = this;
 
-            vm.userEventDetails = {};
-            vm.eventDetails = [
-                {
-                    key: 'child',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Child Name',
-                        placeholder: 'Child Name',
-                        options: []
-                    }
-                },
-                {
-                    key: 'week1',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 1: June 20 – June 24 : Theme: Inside Out – Being powerful comes from within'
-                    }
-                },
-                {
-                    key: 'week2',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 2: June 27 – July 1 : Theme: The Survivor Overcoming fears'
-                    }
-                },
-                {
-                    key: 'week3',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 3: July 5 – July 8 : Theme: Just do it'
-                    }
-                },
-                {
-                    key: 'week4',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 4: July 11 – July 15 : Theme: Less drama, more Dharma'
-                    }
-                },
-                {
-                    key: 'week5',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 5: July 18 – July 22 : Theme: Quantity vs. Quality'
-                    }
-                },
-                {
-                    key: 'week6',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 6: July 25 – July 29 : Theme: Divergent – Going against the tide'
-                    }
-                },
-                {
-                    key: 'week7',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 7: Aug 1 – Aug 5 : Theme: Catching Fire: Ignite Your Faith'
-                    }
-                },
-                {
-                    key: 'week8',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 8: Aug 8 – Aug 12 : Theme: Impossible is nothing'
-                    }
-                },
-                {
-                    key: 'week9',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 9: Aug 15 – Aug 19 : Theme: Challenge Everything'
-                    }
-                },
-                {
-                    key: 'week10',
-                    type: 'checkbox',
-                    templateOptions: {
-                        label: 'Week 10: Aug 22 – Aug 26 : Theme: Dude, Where is my Karma'
-                    }
-                },
-                {
-                    key: 'weektime1',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 1',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week1"
-                },
-                {
-                    key: 'weekaftercare1',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 1 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime1 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime2',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 2',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week2"
-                },
-                {
-                    key: 'weekaftercare2',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 2 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime2 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime3',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 3',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week3"
-                },
-                {
-                    key: 'weekaftercare3',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 3 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime3 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime4',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 4',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week4"
-                },
-                {
-                    key: 'weekaftercare4',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 4 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime4 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime5',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 5',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week5"
-                },
-                {
-                    key: 'weekaftercare5',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 5 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime5 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime6',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 6',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week6"
-                },
-                {
-                    key: 'weekaftercare6',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 6 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime6 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime7',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 7',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week7"
-                },
-                {
-                    key: 'weekaftercare7',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 7 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime7 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime8',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 8',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week8"
-                },
-                {
-                    key: 'weekaftercare8',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 8 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime8 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime9',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 9',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week9"
-                },
-                {
-                    key: 'weekaftercare9',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 9 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime9 != "9:00 - 4:30"'
-                },
-                {
-                    key: 'weektime10',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 10',
-                        options: [{"name": "9:00 - 12:00", "value": "9:00 - 12:00"}, {"name": "9:00 - 1:30", "value": "9:00 - 1:30"}, {"name": "9:00 - 4:30", "value": "9:00 - 4:30"}]
-                    },
-                    "hideExpression": "!model.week10"
-                },
-                {
-                    key: 'weekaftercare10',
-                    type: 'select',
-                    templateOptions: {
-                        label: 'Week 10 After Care',
-                        options: [{"name": "Yes", "value": "Yes"}, {"name": "No", "value": "No"}]
-                    },
-                    "hideExpression": 'model.weektime10 != "9:00 - 4:30"'
-                }
-            ];
+            vm.eventDataModel = {};
 
-            SubscribeEventService.getChildDetails($window.sessionStorage.userId).then(function (response) {
-                var childNames = [];
-                for (var i=0; i<response.length; i++) {
-                    childNames.push({
-                        name: response[i].name,
-                        value: response[i].id
-                    });
-                }
+            SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
+                vm.eventName = response.eventName;
+                vm.eventId = response._id;
+                vm.eventDetails = response.eventDetails.edaFieldsModel;
+                vm.submitButtonText = response.eventDetails.btnSubmitText;
+                vm.cancelButtonText = response.eventDetails.btnCancelText;
+            });
 
-                vm.eventDetails[0].templateOptions.options = childNames;
-             });
+            vm.subscribeToEvent = function (eventUserDataModel) {
+                console.log('Event Payment Requested ', eventUserDataModel);
 
-            /*SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
-                vm.eventDetails = response;
-            })*/
+                var userEventObj = {
+                    "eventId": $scope.eventId,
+                    "userId": $window.sessionStorage.userId,
+                    "childId": $scope.childId,
+                    "eventDetails": eventUserDataModel
+                };
+
+                SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
+                    $state.go('events.subscription.success', {'eventName': vm.eventName});
+                });
+            };
+
+            vm.cancelSubscription = function () {
+                console.log('Subscription cancellation requested!');
+            };
         }
     }
     
-    function SubscribeEventService ($http, $log) {
+    function SubscribeEventService ($http, $log, $window) {
         return {
             getEventDetails: getEventDetails,
             subscribeEvent: subscribeEvent,
-            getChildDetails: getChildDetails
+            getChildDetails: getChildDetails,
+            createUserEvent: createUserEvent
         };
 
         function getEventDetails (eventId) {
@@ -331,6 +84,103 @@
             }).then(function (response) {
                 return response.data;
             });
+        }
+
+        function createUserEvent (userEventDetails) {
+            return $http({
+                method: 'POST',
+                url: '/user-events/' + $window.sessionStorage.token,
+                data: userEventDetails
+            });
+        }
+    }
+    
+    function userEventSubscriptionDirective () {
+        UserEventSubscriptionDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state'];
+
+        return {
+            restrict: 'A',
+            scope: {
+                eventId: '='
+            },
+            templateUrl: 'partials/events/subscribe/subscribe-event-for.html',
+            controller: UserEventSubscriptionDirectiveCtrl,
+            controllerAs: 'userSubscription'
+        };
+        
+        function UserEventSubscriptionDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state) {
+            var userSubscription = this;
+
+            userSubscription.eventDataModel = {};
+
+            SubscribeEventService.getChildDetails($window.sessionStorage.userId).then(function (response) {
+                 var childNames = [];
+                 for (var i=0; i<response.length; i++) {
+                     childNames.push({
+                        name: response[i].name,
+                        value: response[i].id
+                     });
+                 }
+
+                userSubscription.childNameForm =  [
+                        {
+                            "line" : -1,
+                            "activeColumn" : 1,
+                            "columns" : [
+                                {
+                                    "numColumn" : 1,
+                                    "exist" : true,
+                                    "control" : {
+                                        "type" : "basicSelect",
+                                        "key" : "basicSelect-1481148532361",
+                                        "selectedControl" : "BasicSelect",
+                                        "subtype" : "",
+                                        "templateOptions" : {
+                                            "label" : "Choose Child",
+                                            "required" : false,
+                                            "description" : "",
+                                            "placeholder" : "",
+                                            "options" : childNames
+                                        },
+                                        "formlyExpressionProperties" : {},
+                                        "formlyValidators" : {},
+                                        "formlyValidation" : {
+                                            "messages" : {}
+                                        },
+                                        "edited" : true
+                                    }
+                                }
+                            ]
+                        }
+                    ];
+             });
+
+            SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
+                userSubscription.eventName = response.eventName;
+                userSubscription.eventId = response._id;
+                //userSubscription.eventDetails = response.eventDetails.edaFieldsModel;
+                userSubscription.submitButtonText = "Proceed to Event Details";
+                userSubscription.cancelButtonText = "Cancel";
+            });
+
+            userSubscription.subscribeEventForUser = function (eventUserDataModel) {
+                var userEventObj = {
+                    "eventId": $scope.eventId,
+                    "userId": $window.sessionStorage.userId,
+                    "childId": eventUserDataModel["basicSelect-1481148532361"].value,
+                    "eventUserDataModel": eventUserDataModel,
+                    "eventDetails": []
+                };
+
+                SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
+                    $state.go('events.details', {'eventId': $scope.eventId, 'childId': eventUserDataModel["basicSelect-1481148532361"].value});
+                });
+
+            };
+
+            userSubscription.cancelUserSubscription = function () {
+                console.log('Subscription cancellation requested!');
+            };
         }
     }
 })();

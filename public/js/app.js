@@ -125,6 +125,21 @@
                     $scope.eventId = $stateParams.eventId;
                 }]
             })
+            .state('events.details', {
+                url: '/details/:eventId/:childId',
+                templateUrl: 'partials/events/subscribe/event-details-home.html',
+                controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                    $scope.eventId = $stateParams.eventId;
+                    $scope.childId = $stateParams.childId;
+                }]
+            })
+            .state('events.subscription.success', {
+                url: '/details/:eventName',
+                templateUrl: 'partials/events/subscribe/success.html',
+                controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                    $scope.eventName = $stateParams.eventName;
+                }]
+            })
             .state('userSubscriptions', {
                 url: '/user-events',
                 templateUrl: 'partials/user-events-list.html',

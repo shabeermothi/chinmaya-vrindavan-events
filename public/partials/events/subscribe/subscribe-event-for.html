@@ -1,0 +1,15 @@
+<h1>Subscribe to {{userSubscription.eventName}} - Details</h1>
+<section id="subscribe-event-for">
+    <div class="container">
+        <eda-easy-form-viewer
+                eda-easy-form-viewer-data-model="userSubscription.eventDataModel"
+                eda-easy-form-viewer-easy-form-generator-fields-model="userSubscription.childNameForm"
+
+                eda-easy-form-viewer-submit-button-text="{{userSubscription.submitButtonText}}"
+                eda-easy-form-viewer-cancel-button-text="{{userSubscription.cancelButtonText}}"
+
+                eda-easy-form-viewer-submit-form-event="userSubscription.subscribeEventForUser(dataModelSubmitted)"
+                eda-easy-form-viewer-cancel-form-event="userSubscription.cancelUserSubscription()">
+        </eda-easy-form-viewer>
+    </div>
+</section>
