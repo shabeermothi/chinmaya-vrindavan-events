@@ -20,7 +20,7 @@
         <div class="row">
             <div class="[ col-xs-12 col-sm-12 col-md-12 ]">
                 <ul class="event-list">
-                    <li ng-repeat="event in events | orderBy:'date' | filter: searchEvents">
+                    <li ng-repeat="event in events | orderBy:'event.eventDate' | filter: searchEvents">
                         <time datetime="{{event.eventDate}}">
                             <span class="day">{{event.eventDate | date}}</span>
                         </time>

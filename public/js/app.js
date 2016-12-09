@@ -1,7 +1,16 @@
 (function () {
     'use strict';
 
-    var eventsApp = angular.module("eventsApp", ['ui.bootstrap', 'ui.router', 'uuid', 'growlNotifications', 'events.admin', 'formly', 'formlyBootstrap', 'eda.easyformGen.stepway', 'eda.easyFormViewer']);
+    var eventsApp = angular.module("eventsApp", ['ui.bootstrap',
+                                                'ui.router',
+                                                'uuid',
+                                                'growlNotifications',
+                                                'events.admin',
+                                                'formly',
+                                                'formlyBootstrap',
+                                                'eda.easyformGen.stepway',
+                                                'eda.easyFormViewer',
+                                                'events']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(true);
@@ -92,7 +101,7 @@
                 controller: ['$window', '$scope', '$http', '$state', function ($window, $scope, $http, $state) {
                     $http({
                         method: 'GET',
-                        url: '/events'
+                        url: '/active-events'
                     }).then(function (response) {
                         $scope.events = response.data;
 

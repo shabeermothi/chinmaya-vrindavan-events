@@ -4,9 +4,9 @@
     angular.module('events.admin')
         .factory('DefineEventService', defineEventService);
 
-    defineEventService.$inject = ['$http', '$log'];
+    defineEventService.$inject = ['$http', '$log', '$filter'];
 
-    function defineEventService ($http, $log) {
+    function defineEventService ($http, $log, $filter) {
         return {
             saveEvent: saveEvent,
             saveEventDetails: saveEventDetails,

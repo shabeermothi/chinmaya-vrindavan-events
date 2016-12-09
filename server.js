@@ -165,9 +165,20 @@ app.get("/events", function(req, res) {
   });
 });
 
+app.get("/active-events", function (req, res) {
+  db.collection(EVENTS_COLLECTION).find({'eventDate': {$gt: new Date()}}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get events.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 app.post("/events", function(req, res) {
   var newEvent = req.body;
   newEvent.createDate = new Date();
+  newEvent.eventDate = new Date(newEvent.eventDate);
 
   if (!(req.body.eventName || req.body.eventDate)) {
     handleError(res, "Invalid user input", "Must provide a name and date.", 400);
