@@ -29,6 +29,14 @@
                    });
                }]
            })
+           .state('editEvent', {
+               url: '/events/admin/edit',
+               templateUrl: 'partials/admin/edit-event/edit-an-event-home.html'
+           })
+           .state('manageEvent', {
+               url: '/events/admin/manage-events',
+               templateUrl: 'partials/admin/manage-event/manage-an-event-home.html'
+           })
            .state('manageUsers', {
                 url: '/users/admin',
                 templateUrl: 'partials/admin/user-management/home.html'

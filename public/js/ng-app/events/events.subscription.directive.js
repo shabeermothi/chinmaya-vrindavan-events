@@ -172,9 +172,7 @@
                     "eventDetails": []
                 };
 
-                SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
-                    $state.go('events.details', {'eventId': $scope.eventId, 'childId': eventUserDataModel["basicSelect-1481148532361"].value});
-                });
+                $state.go('events.details', {'eventId': $scope.eventId, 'childId': eventUserDataModel["basicSelect-1481148532361"].value});
 
             };
 

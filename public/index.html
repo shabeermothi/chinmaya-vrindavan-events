@@ -58,6 +58,7 @@
                             <a>{{userDetails.name}} <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
                                 <li ng-if="userDetails.isAdmin"><a ui-sref="addEvent">Add an Event</a></li>
+                                <li ng-if="userDetails.isAdmin"><a ui-sref="manageEvent">Manage Events</a></li>
                                 <li ng-if="userDetails.isAdmin"><a ui-sref="manageUsers">Manage Users</a></li>
                                 <li ng-if="userDetails.isAdmin"><a ui-sref="manualPaymentSetup">Manual Payment Setup</a></li>
                                 <li ng-if="userDetails.isAdmin"><a ui-sref="manageUserSubscriptions">Manage User Subscriptions</a></li>
@@ -174,6 +175,8 @@
     <script src="/js/ng-app/admin/admin.add.event.service.js" type="text/javascript"></script>
     <script src="/js/ng-app/admin/admin.user.management.directive.js" type="text/javascript"></script>
     <script src="/js/ng-app/events/events.subscription.directive.js" type="text/javascript"></script>
+    <script src="/js/ng-app/admin/admin.edit.event.directive.js" type="text/javascript"></script>
+    <script src="/js/ng-app/admin/admin.manage.event.directive.js" type="text/javascript"></script>
 
 </body>
 </html>
