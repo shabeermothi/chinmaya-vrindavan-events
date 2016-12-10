@@ -101,7 +101,7 @@
                 controller: ['$window', '$scope', '$http', '$state', function ($window, $scope, $http, $state) {
                     $http({
                         method: 'GET',
-                        url: '/active-events'
+                        url: '/events'
                     }).then(function (response) {
                         $scope.events = response.data;
 
