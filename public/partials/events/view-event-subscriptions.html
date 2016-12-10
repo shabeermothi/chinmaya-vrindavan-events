@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Subscriptions for {{viewEventSubscriptionCtrl.event.eventName}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <h1>{{viewEventSubscriptionCtrl.totalNumberOfSubscriptions}}</h1> Subscriptions
+    <ul>
+        <li ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions">
+            <h3><small>Subscribed by</small> {{subscription.subscribedBy}} <small>on</small> {{subscription.subscribedOn | date}}</h3>
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="viewEventSubscriptionCtrl.cancel()">Close</button>
+</div>

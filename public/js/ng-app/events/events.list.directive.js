@@ -6,7 +6,7 @@
         .filter('eventsFilter', EventsFilter);
 
     function EventsListDirective () {
-        EventsListDirectiveCtrl.$inject = ['$scope', '$log', 'EventsListService', '$filter'];
+        EventsListDirectiveCtrl.$inject = ['$scope', '$log', 'EventsListService', '$filter', '$uibModal', 'EventsSubscriptionService'];
 
         return {
             restrict: 'A',
@@ -18,16 +18,10 @@
             controllerAs: 'eventsList'
         };
 
-        function EventsListDirectiveCtrl ($scope, $log, EventsListService, $filter) {
+        function EventsListDirectiveCtrl ($scope, $log, EventsListService, $filter, $uibModal, EventsSubscriptionService) {
             var eventsList = this;
 
             getAllEvents();
-
-            function getAllEvents () {
-                EventsListService.getEvents().then(function (response) {
-                    eventsList.events = response;
-                });
-            }
 
             eventsList.filterEvents = function (eventType) {
                 EventsListService.getEvents().then(function (response) {
@@ -35,6 +29,33 @@
                     eventsList.events = $filter('eventsFilter')(eventsList.events, eventType);
                 });
             };
+
+            eventsList.viewSubscriptions = function (size, event) {
+                $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'partials/events/view-event-subscriptions.html',
+                    controller: 'ModalInstanceCtrl',
+                    controllerAs: 'viewEventSubscriptionCtrl',
+                    size: size,
+                    resolve: {
+                        eventSubscriptions: function () {
+                            return EventsSubscriptionService.getEventSubscriptions(event._id);
+                        },
+                        sourceEvent: function () {
+                            return event;
+                        }
+                    }
+                });
+            };
+
+            function getAllEvents () {
+                EventsListService.getEvents().then(function (response) {
+                    eventsList.events = response;
+                });
+            }
+
         }
     }
     

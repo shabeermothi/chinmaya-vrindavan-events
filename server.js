@@ -266,6 +266,17 @@ app.get("/user-events/:id/:token", function(req, res) {
   });
 });
 
+app.get("/user-events/:eventId", function(req, res) {
+    db.collection(USER_EVENTS_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
+      if (err) {
+        handleError(res, err.message, "Failed to get event");
+      } else {
+        res.status(200).json(doc);
+      }
+    });
+});
+
+
 app.delete("/user-events/:id/:userId/:token", function(req, res) {
   jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {
     if (response) {
