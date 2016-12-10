@@ -18,7 +18,7 @@
         <div class="row">
             <div class="[ col-xs-12 col-sm-12 col-md-12 ]">
                 <ul class="event-list">
-                    <li ng-repeat="event in events | orderBy:'date' | filter: searchEvents">
+                    <li ng-repeat="event in events | orderBy:'eventDate' | filter: searchEvents">
                         <time datetime="{{event.eventDate}}">
                             <span class="day">{{event.eventDate | date}}</span>
                         </time>
@@ -26,9 +26,7 @@
                             <h2 class="title">{{event.eventName}}</h2>
                             <p class="desc">{{event.eventDescription}}</p>
                             <ul>
-                                <li style="width:100%;"><a ui-sref="unsubscribeEvent(event)"><span class="fa fa-download"></span> Unsubscribe</a></li>
-                                <!--<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Website</a></li>-->
-                                <!--<li style="width:50%;"><span class="fa fa-money"></span> $39.99</li>-->
+                                <li style="width:100%;"><a ng-click="unsubscribeEvent(event)"><span class="fa fa-download"></span> Unsubscribe</a></li>
                             </ul>
                         </div>
                         <div class="social">

@@ -1,4 +1,4 @@
-<section id="home-slider">
+<section id="home-slider" ng-if="!userDetails.isAdmin">
     <div class="container">
         <div class="row">
             <div class="main-slider">
@@ -22,28 +22,47 @@
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="/images/home/icon1.png" alt="">
+                        <i class="fa fa-calendar fa-5x"></i>
                     </div>
-                    <h2>Find Events</h2>
-                    <p>Some text here...</p>
+                    <div ng-if="userDetails.isAdmin">
+                        <h2>Add Event</h2>
+                        <p>Create an Event for users to subscribe</p>
+                    </div>
+                    <div ng-if="!userDetails.isAdmin">
+                        <h2>Look for Events</h2>
+                        <p>Search Events and subscribe to them</p>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                        <img src="/images/home/icon2.png" alt="">
+                        <i class="fa fa-pencil-square-o fa-5x"></i>
                     </div>
-                    <h2>Subscribe Events</h2>
-                    <p>Some text here...</p>
+                    <div ng-if="userDetails.isAdmin">
+                        <h2>Manage Events</h2>
+                        <p>View Event subscriptions, delete event, update event and send notifications to event subscribers</p>
+                    </div>
+                    <div ng-if="!userDetails.isAdmin">
+                        <h2>Update Your Profile</h2>
+                        <p>Update your profile to add family details</p>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                        <img src="/images/home/icon3.png" alt="">
+                        <i ng-if="userDetails.isAdmin" class="fa fa-users fa-5x"></i>
+                        <i ng-if="!userDetails.isAdmin" class="fa fa-mail-reply fa-5x"></i>
                     </div>
-                    <h2>Get notified</h2>
-                    <p>Some text here...</p>
+                    <div ng-if="userDetails.isAdmin">
+                        <h2>Manage Users</h2>
+                        <p>Manage user profile, delete users and change user type</p>
+                    </div>
+                    <div ng-if="!userDetails.isAdmin">
+                        <h2>Get Notified</h2>
+                        <p>Get notified about your event subscriptions</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,7 +70,7 @@
 </section>
 <!--/#services-->
 
-<section id="action" class="responsive">
+<section id="action" class="responsive" ng-if="!userDetails.isAdmin">
     <div class="vertical-center">
         <div class="container">
             <div class="row">
