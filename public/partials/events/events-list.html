@@ -24,7 +24,7 @@
                         <ul>
                             <li style="width:25%;"><a ng-click="eventsList.viewSubscriptions('lg', event)"><span class="fa fa-user"></span> View Subscriptions</a></li>
                             <li style="width:25%;"><a ui-sref="events.notifySubscribers({eventId: event._id})"><span class="fa fa-edit"></span> Edit Event</a></li>
-                            <li style="width:25%;"><a ui-sref="events.deleteEvent({eventId: event._id})"><span class="fa fa-trash"></span> Delete Event</a></li>
+                            <li style="width:25%;"><a ng-click="eventsList.deleteEvent(event)"><span class="fa fa-trash"></span> Delete Event</a></li>
                             <li style="width:25%;"><a ui-sref="events.notifySubscribers({eventId: event._id})"><span class="fa fa-mail-forward"></span> Notify Subscribers</a></li>
                         </ul>
                     </div>

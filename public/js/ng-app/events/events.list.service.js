@@ -8,7 +8,8 @@
 
     function EventListService ($http, $log) {
         return {
-            getEvents: getEvents
+            getEvents: getEvents,
+            deleteEvent: deleteEvent
         };
 
         function getEvents () {
@@ -17,6 +18,20 @@
                 url: '/events'
             }).then(function (response) {
                 return response.data;
+            });
+        }
+        
+        function deleteEvent (eventId) {
+            return $http({
+                method: 'DELETE',
+                url: '/events/' + eventId
+            }).then(function (response) {
+                return $http({
+                   method: 'DELETE',
+                    url: '/user-events/' + eventId
+                }).then(function (res) {
+                    return res;
+                });
             });
         }
     }

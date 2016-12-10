@@ -277,6 +277,16 @@ app.get("/user-events/:eventId", function(req, res) {
 });
 
 
+app.delete("/user-events/:id", function(req, res) {
+    db.collection(USER_EVENTS_COLLECTION).deleteOne({eventId: req.params.id}, function(err, result) {
+      if (err) {
+        handleError(res, err.message, "Failed to delete user event");
+      } else {
+        res.status(204).end();
+      }
+    });
+});
+
 app.delete("/user-events/:id/:userId/:token", function(req, res) {
   jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {
     if (response) {

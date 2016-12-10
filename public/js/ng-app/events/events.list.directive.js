@@ -49,6 +49,12 @@
                     }
                 });
             };
+            
+            eventsList.deleteEvent = function (event) {
+                EventsListService.deleteEvent(event._id).then(function () {
+                    getAllEvents();
+                });
+            };
 
             function getAllEvents () {
                 EventsListService.getEvents().then(function (response) {
