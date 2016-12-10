@@ -1,6 +1,19 @@
-<input type="search" class="form-control" ng-model="searchEvents" placeholder="Search for events with date or event name or description"/>
+<div class="row">
+    <div class="col-md-1">
+        <button class="btn btn-default" ng-click="eventsList.filterEvents('all')">All</button>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-default" ng-click="eventsList.filterEvents('active')">Active</button>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-default" ng-click="eventsList.filterEvents('expired')">Expired</button>
+    </div>
+</div>
 <br />
-<!--<button ng-click="eventsList.activeEvents">Active</button>-->
+<div class="row">
+    <input type="search" class="form-control" ng-model="searchEvents" placeholder="Search for events with date or event name or description"/>
+</div>
+<br />
 <div class="row">
     <div class="[ col-xs-12 col-sm-12 col-md-12 ]">
         <ul class="event-list">
@@ -12,9 +25,9 @@
                     <h2 class="title">{{event.eventName}}</h2>
                     <p class="desc">{{event.eventDescription}}</p>
                     <ul>
-                        <li style="width:100%;"><a ui-sref="events.subscription({eventId: event._id})"><span class="fa fa-download"></span> Subscribe</a></li>
-                        <!--<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Website</a></li>-->
-                        <!--<li style="width:50%;"><span class="fa fa-money"></span> $39.99</li>-->
+                        <li style="width:33%;"><a ui-sref="events.viewSubscriptions({eventId: event._id})"><span class="fa fa-download"></span> View Subscriptions</a></li>
+                        <li style="width:33%;"><a ui-sref="events.deleteEvent({eventId: event._id})"><span class="fa fa-download"></span> Delete Event</a></li>
+                        <li style="width:33%;"><a ui-sref="events.notifySubscribers({eventId: event._id})"><span class="fa fa-download"></span> Notify Subscribers</a></li>
                     </ul>
                 </div>
                 <div class="social">
