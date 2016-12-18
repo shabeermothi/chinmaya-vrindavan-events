@@ -12,7 +12,7 @@
             saveEventDetails: saveEventDetails,
             getEventDefinition: getEventDefinition
         };
-        
+
         function saveEvent (eventData) {
             eventData.eventDetails = [];
 
@@ -22,7 +22,7 @@
                 data: eventData
             });
         }
-        
+
         function saveEventDetails (eventDetails, eventId) {
             $http({
                 method: 'GET',
@@ -38,7 +38,7 @@
                 });
             });
         }
-        
+
         function getEventDefinition () {
             return [
                 {
@@ -100,7 +100,7 @@
                                 "selectedControl": "",
                                 "subtype": "",
                                 "templateOptions": {
-                                    "label": "Event Date",
+                                    "label": "Event From Date",
                                     "required": true,
                                     "description": "",
                                     "placeholder": "",
@@ -115,7 +115,85 @@
                             }
                         }
                     ]
-                }/*,
+                },
+                {
+                    "line": 0,
+                    "activeColumn": 2,
+                    "columns": [
+                        {
+                            "numColumn": 1,
+                            "exist": true,
+                            "control": {
+                                "type": "datepicker",
+                                "key": "eventToDate",
+                                "selectedControl": "",
+                                "subtype": "",
+                                "templateOptions": {
+                                    "label": "Event To Date",
+                                    "required": true,
+                                    "description": "",
+                                    "placeholder": "",
+                                    "options": []
+                                },
+                                "formlyExpressionProperties": {
+                                    "templateOptions.disabled": "!model.eventDate"
+                                },
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": true
+                            }
+                        },
+                        {
+                            "numColumn": 2,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventFbPage",
+                                "selectedControl": "TextInput",
+                                "subtype": "",
+                                "templateOptions": {
+                                    "label": "Event Facebook URL",
+                                    "required": true,
+                                    "description": "Facebook page of the event",
+                                    "placeholder": "",
+                                    "options": []
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": true
+                            }
+                        },
+                        {
+                            "numColumn": 3,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventTwitterPage",
+                                "selectedControl": "TextInput",
+                                "subtype": "",
+                                "templateOptions": {
+                                    "label": "Event Twitter URL",
+                                    "required": true,
+                                    "description": "Twitter page of the event",
+                                    "placeholder": "",
+                                    "options": []
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": true
+                            }
+                        }
+                    ]
+                }
+                /*,
                 {
                     "line": -1,
                     "activeColumn": 1,
