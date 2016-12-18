@@ -13,9 +13,9 @@
                                                 'events']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
-        easyFormSteWayConfigProvider.showPreviewPanel(true);
+        easyFormSteWayConfigProvider.showPreviewPanel(false);
         //show/hide models in preview panel => default is true
-        easyFormSteWayConfigProvider.showPreviewModels(true);
+        easyFormSteWayConfigProvider.showPreviewModels(false);
 
         $urlRouterProvider.otherwise('/home');
 
