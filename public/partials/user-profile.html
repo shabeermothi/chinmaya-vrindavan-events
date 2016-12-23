@@ -27,14 +27,21 @@
                 <div class="contact-form">
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label>Name *</label>
-                            <input type="text" name="name" class="form-control" ng-required="required" placeholder="Name"
+                            <label>Name
+                                <div ng-messages="userProfileForm.name.$error">
+                                    <p class="label label-primary" ng-message="required">User Name is required</p>
+                                </div>
+                            </label>
+                            <input type="text" name="name" class="form-control" required placeholder="Name"
                                    ng-model="userDetails.name">
-                            <span class="help-inline" ng-show="userProfileForm.$submitted && userProfileForm.name.$error.required">Required</span>
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" name="addressLine" placeholder="Address"
+                            <label>Address
+                                <div ng-messages="userProfileForm.addressLine.$error">
+                                    <p class="label label-primary" ng-message="required">Address is required</p>
+                                </div>
+                            </label>
+                            <textarea class="form-control" name="addressLine" placeholder="Address" required
                                       ng-model="userDetails.addressLine"></textarea>
                         </div>
                         <div class="form-group">
@@ -48,15 +55,20 @@
                                    ng-model="userDetails.addressState">
                         </div>
                         <div class="form-group">
-                            <label>Zip</label>
-                            <input type="number" name="zip" class="form-control" placeholder="Zip"
+                            <label>Zip
+                                <div ng-messages="userProfileForm.zip.$error">
+                                    <p class="label label-danger" ng-message="pattern">Enter a valid Zipcode</p>
+                                </div>
+                            </label>
+                            <input type="text" name="zip" class="form-control" placeholder="Zip"
+                                   ng-pattern="/^[0-9]*$/"
                                    ng-model="userDetails.addressZip">
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" required="required"
+                            <input type="email" name="email" class="form-control" required
                                    placeholder="Email Id" ng-model="userDetails.email" ng-disabled="true">
                         </div>
                         <div class="form-group">

@@ -30,13 +30,23 @@
             <div class="contact-form">
                 <form name="loginForm" novalidate>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control" ng-required="true" ng-model="loginEmail"
+                        <label>Email
+                            <div ng-messages="loginForm.email.$error">
+                                <p class="label label-primary" ng-message="required">Email is required</p>
+                                <p class="label label-primary" ng-message="email">Enter a valid email</p>
+                            </div>
+                        </label>
+                        <input type="email" name="email" class="form-control" required ng-model="loginEmail"
                                placeholder="Email Id"/>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="phone" id="password" ng-required="true" class="form-control"
+                        <label>Password
+                            <div ng-messages="loginForm.password.$error">
+                                <p class="label label-primary" ng-message="required">Password is required</p>
+                                <p class="label label-primary" ng-message="minlength">Enter valid password. Password must be 5 characters long</p>
+                            </div>
+                        </label>
+                        <input type="password" name="password" id="password" required class="form-control"
                                ng-model="loginPassword"
                                placeholder="Password" ng-minlength="5"/>
                     </div>
@@ -68,30 +78,47 @@
                 <div class="contact-form">
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" required="required" placeholder="Name" ng-model="user.name">
+                                <label>Name
+                                    <div ng-messages="registerForm.name.$error">
+                                        <p class="label label-primary" ng-message="required">User Name is required</p>
+                                    </div>
+                                </label>
+                                <input type="text" name="name" class="form-control" required placeholder="Name" ng-model="user.name">
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
+                                <label>Address
+                                    <div ng-messages="registerForm.addressLine.$error">
+                                        <p class="label label-primary" ng-message="required">Address is required</p>
+                                    </div>
+                                </label>
                                 <textarea class="form-control" name="addressLine" required="required" placeholder="Address" ng-model="user.addressLine"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>City</label>
-                                <input type="text" name="city" class="form-control" required="required" placeholder="City" ng-model="user.addressCity">
+                                <input type="text" name="city" class="form-control" placeholder="City" ng-model="user.addressCity">
                             </div>
                             <div class="form-group">
                                 <label>State</label>
-                                <input type="text" name="state" class="form-control" required="required" placeholder="State" ng-model="user.addressState">
+                                <input type="text" name="state" class="form-control" placeholder="State" ng-model="user.addressState">
                             </div>
                             <div class="form-group">
-                                <label>Zip</label>
-                                <input type="number" name="zip" class="form-control" required="required" placeholder="Zip" ng-model="user.addressZip">
+                                <label>Zip
+                                    <div ng-messages="registerForm.zip.$error">
+                                        <p class="label label-danger" ng-message="pattern">Enter a valid Zipcode</p>
+                                    </div>
+                                </label>
+                                <input type="text" ng-pattern="/^[0-9]*$/" name="zip" class="form-control" placeholder="Zip" ng-model="user.addressZip">
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" name="email" class="form-control" required="required"
+                                <label>Email
+                                    <div ng-messages="registerForm.email.$error">
+                                        <p class="label label-primary" ng-message="required">Email is required</p>
+                                        <p class="label label-danger" ng-message="email">Enter a valid email</p>
+                                    </div>
+                                </label>
+                                <input type="email" name="email" class="form-control" required
                                        placeholder="Email Id" ng-model="user.email">
                             </div>
                             <div class="form-group">
@@ -110,8 +137,14 @@
                                        placeholder="111 111 1111" ng-model="user.workPhone">
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" id="password" required="required" class="form-control" ng-minlength="5" ng-model="user.password">
+                                <label>Password
+                                    <div ng-messages="registerForm.password.$error">
+                                        <p class="label label-primary" ng-message="required">Password is required</p>
+                                        <p class="label label-primary" ng-message="minlength">Password must be atleast 5 characters long</p>
+                                    </div>
+                                </label>
+                                <input type="password" name="password" id="password" required
+                                       class="form-control" ng-minlength="5" ng-model="user.password">
                             </div>
                         </div>
             </div>

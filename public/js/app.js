@@ -10,7 +10,8 @@
                                                 'formlyBootstrap',
                                                 'eda.easyformGen.stepway',
                                                 'eda.easyFormViewer',
-                                                'events']);
+                                                'angular-zipcode-filter',
+                                                'events', 'ngMessages']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);

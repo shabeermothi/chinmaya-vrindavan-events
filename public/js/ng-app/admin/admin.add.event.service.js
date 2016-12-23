@@ -63,7 +63,9 @@
                                 "formlyExpressionProperties": {},
                                 "formlyValidators": {},
                                 "formlyValidation": {
-                                    "messages": {}
+                                    "messages": {
+                                        "minlength": "Event Name must be atleast 5 characters long."
+                                    }
                                 },
                                 "edited": true
                             }
@@ -155,7 +157,7 @@
                                 "subtype": "",
                                 "templateOptions": {
                                     "label": "Event Facebook URL",
-                                    "required": true,
+                                    "required": false,
                                     "description": "Facebook page of the event",
                                     "placeholder": "",
                                     "options": []
@@ -178,7 +180,7 @@
                                 "subtype": "",
                                 "templateOptions": {
                                     "label": "Event Twitter URL",
-                                    "required": true,
+                                    "required": false,
                                     "description": "Twitter page of the event",
                                     "placeholder": "",
                                     "options": []
