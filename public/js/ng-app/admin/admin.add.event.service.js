@@ -51,14 +51,11 @@
                             "control": {
                                 "type": "input",
                                 "key": "eventName",
-                                "selectedControl": "TextInput",
-                                "subtype": "",
                                 "templateOptions": {
                                     "label": "Event Name",
                                     "required": true,
                                     "description": "Name of the event",
-                                    "placeholder": "",
-                                    "options": []
+                                    "placeholder": ""
                                 },
                                 "formlyExpressionProperties": {},
                                 "formlyValidators": {},
@@ -67,7 +64,7 @@
                                         "minlength": "Event Name must be atleast 5 characters long."
                                     }
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         },
                         {
@@ -76,21 +73,18 @@
                             "control": {
                                 "type": "textarea",
                                 "key": "eventDescription",
-                                "selectedControl": "TextArea",
-                                "subtype": "",
                                 "templateOptions": {
                                     "label": "Event Description",
                                     "required": true,
                                     "description": "Description of the event",
-                                    "placeholder": "",
-                                    "options": []
+                                    "placeholder": ""
                                 },
                                 "formlyExpressionProperties": {},
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         },
                         {
@@ -99,21 +93,18 @@
                             "control": {
                                 "type": "datepicker",
                                 "key": "eventDate",
-                                "selectedControl": "",
-                                "subtype": "",
                                 "templateOptions": {
                                     "label": "Event From Date",
                                     "required": true,
                                     "description": "",
-                                    "placeholder": "",
-                                    "options": []
+                                    "placeholder": ""
                                 },
                                 "formlyExpressionProperties": {},
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         }
                     ]
@@ -128,23 +119,18 @@
                             "control": {
                                 "type": "datepicker",
                                 "key": "eventToDate",
-                                "selectedControl": "",
-                                "subtype": "",
                                 "templateOptions": {
                                     "label": "Event To Date",
                                     "required": true,
                                     "description": "",
-                                    "placeholder": "",
-                                    "options": []
+                                    "placeholder": ""
                                 },
-                                "formlyExpressionProperties": {
-                                    "templateOptions.disabled": "!model.eventDate"
-                                },
+                                "formlyExpressionProperties": {},
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         },
                         {
@@ -167,7 +153,7 @@
                                 "formlyValidation": {
                                     "messages": {}
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         },
                         {
@@ -190,41 +176,11 @@
                                 "formlyValidation": {
                                     "messages": {}
                                 },
-                                "edited": true
+                                "edited": false
                             }
                         }
                     ]
                 }
-                /*,
-                {
-                    "line": -1,
-                    "activeColumn": 1,
-                    "columns": [
-                        {
-                            "numColumn": 1,
-                            "exist": true,
-                            "control": {
-                                "type": "input",
-                                "key": "eventTag",
-                                "selectedControl": "TextInput",
-                                "subtype": "",
-                                "templateOptions": {
-                                    "label": "Event Tag(s)",
-                                    "required": true,
-                                    "description": "Tags/Categories for the event",
-                                    "placeholder": "",
-                                    "options": []
-                                },
-                                "formlyExpressionProperties": {},
-                                "formlyValidators": {},
-                                "formlyValidation": {
-                                    "messages": {}
-                                },
-                                "edited": true
-                            }
-                        }
-                    ]
-                }*/
             ];
         }
     }

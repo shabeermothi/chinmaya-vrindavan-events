@@ -16,6 +16,26 @@
 
         function EditEventDirectiveCtrl ($scope, $log) {
             var editEvent = this;
+            editEvent.eventFromDateOpen = false;
+            editEvent.eventToDateOpen = false;
+
+            // Toggle From date calendar
+            editEvent.toggleToCalendar = function () {
+                editEvent.eventToDateOpen = !editEvent.eventToDateOpen;
+            };
+
+            // Toggle To date calendar
+            editEvent.toggleFromCalendar = function () {
+                editEvent.eventFromDateOpen = !editEvent.eventFromDateOpen;
+            };
+
+            editEvent.eventDetails = {};
+
+            editEvent.eventDetails.eventDate = new Date();
+
+            editEvent.updateEvent = function () {
+                $log.info("Updated Event Details ", eventDetails);
+            };
         }
     }
 

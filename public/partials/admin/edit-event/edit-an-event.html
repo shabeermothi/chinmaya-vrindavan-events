@@ -14,6 +14,91 @@
 
 <section id="create-new-event">
     <div class="container">
-        <h2>Edit event home</h2>
+        <form name="editEventForm" novalidate>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event Name
+                        <div ng-messages="editEventForm.eventName.$error">
+                            <p class="label label-primary" ng-message="required">Event Name is required</p>
+                        </div>
+                    </label>
+                    <input type="text" name="eventName" class="form-control" required placeholder=""
+                           ng-model="editEvent.eventDetails.eventName">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event Description
+                        <div ng-messages="editEventForm.eventDescription.$error">
+                            <p class="label label-primary" ng-message="required">Address is required</p>
+                        </div>
+                    </label>
+                            <textarea class="form-control" name="eventDescription" placeholder="" required
+                                      ng-model="editEvent.eventDetails.eventDescription"></textarea>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event From Date
+                        <div ng-messages="editEventForm.eventFromDate.$error">
+                            <p class="label label-primary" ng-message="required">Event From Date is required</p>
+                        </div>
+                    </label>
+                    <p class="input-group">
+                        <input type="text" name="eventFromDate" class="form-control" uib-datepicker-popup is-open="editEvent.eventFromDateOpen"
+                               ng-model="editEvent.eventDetails.eventDate" required close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="editEvent.toggleFromCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event To Date
+                        <div ng-messages="editEventForm.eventToDate.$error">
+                            <p class="label label-primary" ng-message="required">Event To Date is required</p>
+                        </div>
+                    </label>
+                    <p class="input-group">
+                        <input type="text" name="eventToDate" class="form-control" uib-datepicker-popup is-open="editEvent.eventToDateOpen"
+                               ng-model="editEvent.eventDetails.eventToDate" required close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="editEvent.toggleToCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event Facebook URL
+                    </label>
+                    <input type="text" name="eventFbPage" class="form-control" placeholder=""
+                           ng-model="editEvent.eventDetails.eventFbPage">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <label>Event Twitter Page
+                    </label>
+                    <input type="text" name="eventTwitterPage" class="form-control" placeholder=""
+                           ng-model="editEvent.eventDetails.eventTwitterPage">
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <input ng-disabled="editEventForm.$invalid" type="submit" name="submit" class="btn btn-submit"
+                           ng-click="editEvent.updateEvent()" value="Update Event">
+                </div>
+            </div>
+        </form>
     </div>
 </section>
