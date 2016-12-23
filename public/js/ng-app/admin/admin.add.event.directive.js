@@ -85,7 +85,7 @@
 
             function saveForm(easyFormGeneratorModel){
                 DefineEventService.saveEventDetails(easyFormGeneratorModel, $scope.eventId);
-                $state.go('activeEvents');
+                $state.go('events');
             }
         }
     }

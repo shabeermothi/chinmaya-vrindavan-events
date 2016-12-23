@@ -30,7 +30,7 @@
                }]
            })
            .state('editEvent', {
-               url: '/events/admin/edit',
+               url: '/events/admin/edit/:eventId',
                templateUrl: 'partials/admin/edit-event/edit-an-event-home.html'
            })
            .state('manageEvent', {
