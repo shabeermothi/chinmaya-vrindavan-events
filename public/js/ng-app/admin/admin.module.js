@@ -31,7 +31,17 @@
            })
            .state('editEvent', {
                url: '/events/admin/edit/:eventId',
-               templateUrl: 'partials/admin/edit-event/edit-an-event-home.html'
+               templateUrl: 'partials/admin/edit-event/edit-an-event-home.html',
+               controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                   $scope.eventId = $stateParams.eventId;
+               }]
+           })
+           .state('editEventDetails', {
+               url: '/events/admin/edit-details/:eventId',
+               templateUrl: 'partials/admin/edit-event/edit-event-details-home.html',
+               controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                   $scope.eventId = $stateParams.eventId;
+               }]
            })
            .state('manageEvent', {
                url: '/events/admin/manage-events',

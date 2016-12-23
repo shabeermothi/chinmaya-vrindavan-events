@@ -18,23 +18,30 @@
         <h5>Click on an user to delete the user or update user profile</h5>
         <br />
         <input type="search" class="form-control" ng-model="searchUsers" placeholder="Search for user name or email to find users"/>
+        <br />
+        <div class="row pull-right">
+                <button ng-disabled="vm.currentPage == 0" ng-click="vm.currentPage=vm.currentPage-1">
+                    Previous
+                </button>
+                {{vm.currentPage+1}}/{{vm.numberOfPages()}}
+                <button ng-disabled="vm.currentPage >= vm.users.length/vm.pageSize - 1" ng-click="vm.currentPage=vm.currentPage+1">
+                    Next
+                </button>
+            <br /><br />
+        </div>
         <table class="table table-hover">
             <tbody>
-            <tr ng-repeat="user in vm.users | filter: searchUsers" style="cursor:pointer">
+            <tr ng-repeat="user in vm.users | filter: searchUsers | startFrom:vm.currentPage*vm.pageSize | limitTo:vm.pageSize" style="cursor:pointer">
                 <td>
                     <a ui-sref="manageUsers.editUser({userId: user._id})">{{ user.name }}</a>
                 </td>
                 <td>
                     <a ui-sref="manageUsers.editUser({userId: user._id})"><i class="fa fa-user"></i> Manage User Profile</a>
                 </td>
-                <td>
-                    <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i> Delete User</a>
-                </td>
-                <td ng-if="!user.isAdmin">
-                    <a ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i> Make an admin</a>
-                </td>
-                <td ng-if="user.isAdmin">
-                    <a ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user-circle-o"></i> Remove from Admin</a>
+                <td class="pull-right">
+                    <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i></a>
+                    <a ng-if="!user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i></a>
+                    <a ng-if="user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
             </tbody>

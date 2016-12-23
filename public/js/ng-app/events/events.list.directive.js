@@ -21,6 +21,9 @@
         function EventsListDirectiveCtrl ($scope, $log, EventsListService, $filter, $uibModal, EventsSubscriptionService) {
             var eventsList = this;
 
+            eventsList.currentPage = 0;
+            eventsList.pageSize = 5;
+
             getAllEvents();
 
             eventsList.filterEvents = function (eventType) {
@@ -49,7 +52,7 @@
                     }
                 });
             };
-            
+
             eventsList.deleteEvent = function (event) {
                 EventsListService.deleteEvent(event._id).then(function () {
                     getAllEvents();
@@ -59,12 +62,18 @@
             function getAllEvents () {
                 EventsListService.getEvents().then(function (response) {
                     eventsList.events = response;
+
+                    eventsList.currentPage = 0;
+                    eventsList.pageSize = 5;
+                    eventsList.numberOfPages=function(){
+                        return Math.ceil(eventsList.events.length/eventsList.pageSize);
+                    };
                 });
             }
 
         }
     }
-    
+
     function EventsFilter () {
         return function (events, eventType) {
             var filteredEvent, filteredEvents = [];

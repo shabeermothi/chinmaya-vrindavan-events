@@ -19,8 +19,18 @@
         <br />
         <div class="row">
             <div class="[ col-xs-12 col-sm-12 col-md-12 ]">
+                <div class="pull-right">
+                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                    Previous
+                </button>
+                {{currentPage+1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= events.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                    Next
+                </button>
+                </div>
+                <br /><br />
                 <ul class="event-list">
-                    <li ng-repeat="event in events | orderBy:'event.eventDate' | filter: searchEvents">
+                    <li ng-repeat="event in events | orderBy:'event.eventDate' | filter: searchEvents | startFrom:currentPage*pageSize | limitTo:pageSize">
                         <time datetime="{{event.eventDate}}">
                             <span class="day">{{event.eventDate | date}}</span>
                         </time>

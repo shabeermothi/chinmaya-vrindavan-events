@@ -64,7 +64,7 @@
 
             eventDetails.eventName = $scope.eventName;
 
-            eventDetails.easyFormGeneratorModel	= {}; // TIP : save a form then look at the console to get a better idea of this model
+            eventDetails.easyFormGeneratorModel	= {};
             eventDetails.saveForm 							= saveForm;
             eventDetails.currentLangue					= refreshCurrentLanguage();
             eventDetails.switchLanguage					= switchLanguage;

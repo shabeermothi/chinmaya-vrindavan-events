@@ -106,6 +106,12 @@
                     }).then(function (response) {
                         $scope.events = response.data;
 
+                        $scope.currentPage = 0;
+                        $scope.pageSize = 5;
+                        $scope.numberOfPages=function(){
+                            return Math.ceil($scope.events.length/$scope.pageSize);
+                        };
+
                         if ($window.sessionStorage.token) {
                             $scope.canSubscribe = true;
                         }
@@ -354,4 +360,10 @@
             }
         }]);
 
+    eventsApp.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        }
+    });
 })();
