@@ -1,0 +1,22 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12" ng-if="editEventDetails.eventName">
+                        <h1 class="title">Edit Event Details - {{editEventDetails.eventName}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="create-new-event">
+    <div class="container">
+        <eda-step-way-easy-form-gen
+                eda-easy-form-generator-model="editEventDetails.easyFormGeneratorModel"
+                eda-save-form-event="editEventDetails.saveForm(edaEasyFormGeneratorModel)">
+        </eda-step-way-easy-form-gen>
+    </div>
+</section>
