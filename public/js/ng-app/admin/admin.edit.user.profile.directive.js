@@ -5,7 +5,7 @@
         .directive('editUserProfile', editUserProfileDirective);
 
     function editUserProfileDirective () {
-        EditUserProfileDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'EditUserService'];
+        EditUserProfileDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'EditUserService', 'uuid'];
 
         return {
             restrict: 'A',
@@ -17,7 +17,7 @@
             controllerAs: 'vm'
         };
 
-        function EditUserProfileDirectiveCtrl($scope, $log, $timeout, EditUserService) {
+        function EditUserProfileDirectiveCtrl($scope, $log, $timeout, EditUserService, uuid) {
             var vm = this;
 
             EditUserService.getUserDetails($scope.userId).then(function (response) {
@@ -28,6 +28,23 @@
                 EditUserService.updateUserProfile(vm.userDetails).then(function () {
                     EditUserService.navigateToManageUsers();
                 });
+            };
+
+            vm.addNewChoice = function () {
+                vm.userDetails.familyDetails.push({
+                    id: uuid.new(),
+                    name: "",
+                    role: "",
+                    grade: ""
+                });
+            };
+
+            vm.removeChoice = function (familyDetails) {
+                for (var i=0; i< vm.userDetails.familyDetails.length; i++) {
+                    if (vm.userDetails.familyDetails[i].id === familyDetails.id) {
+                        vm.userDetails.familyDetails.splice(i, 1);
+                    }
+                }
             };
         }
     }

@@ -79,7 +79,7 @@
                 <div class="col-md-2 col-sm-12"></div>
                 <div class="col-md-4 col-sm-12" data-ng-repeat="family in vm.userDetails.familyDetails">
                     <div class="form-group">
-                        <label>Name <a ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
+                        <label>Name <a ng-click="vm.removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
                         <input type="text" name="phone" id="phone" class="form-control"
                                placeholder="Name" ng-model="family.name">
                         <label>Role</label>
@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-md-2 col-sm-12"></div>
                 <div class="col-md-4 col-sm-12">
-                    <button class="form-control btn btn-default" ng-click="addNewChoice()">Add family member</button>
+                    <button class="form-control btn btn-default" ng-click="vm.addNewChoice()">Add family member</button>
                 </div>
             </div>
             <div class="row">
