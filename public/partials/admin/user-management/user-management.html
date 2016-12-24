@@ -15,8 +15,6 @@
 
 <section id="create-new-event">
     <div class="container" ui-view>
-        <h5>Click on an user to delete the user or update user profile</h5>
-        <br />
         <input type="search" class="form-control" ng-model="searchUsers" placeholder="Search for user name or email to find users"/>
         <br />
         <div class="row pull-right">
@@ -30,15 +28,49 @@
             <br /><br />
         </div>
         <table class="table table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Children</th>
+                <th>Health Doc</th>
+                <th>Manage</th>
+                <th>Other Options</th>
+            </thead>
+
             <tbody>
             <tr ng-repeat="user in vm.users | filter: searchUsers | startFrom:vm.currentPage*vm.pageSize | limitTo:vm.pageSize" style="cursor:pointer">
                 <td>
-                    <a ui-sref="manageUsers.editUser({userId: user._id})">{{ user.name }}</a>
+                    <b>{{ user.name }}</b>
+                </td>
+                <td>
+                    <p>{{user.addressLine}} <span ng-if="user.addressCity">, {{user.addressCity}}</span>
+                    <span ng-if="user.addressState">, {{user.addressState}}</span>
+                    <span ng-if="user.addressZip">, {{user.addressZip}}</span></p>
+                </td>
+                <td>
+                    <p>{{user.email}} </p>
+                </td>
+                <td>
+                    <p ng-if="user.homePhone"><i class="fa fa-home"></i> {{user.homePhone}}</p>
+                        <p ng-if="user.workPhone"><i class="fa fa-building"></i> {{user.workPhone}}</p>
+                        <p ng-if="user.mobilePhone"><i class="fa fa-mobile"></i> {{user.mobilePhone}}</p>
+                        <p ng-if="user.emergencyContact"><i class="fa fa-exclamation"></i> {{user.emergencyContact}}</p>
+                </td>
+                <td>
+                    <p ng-repeat="family in user.familyDetails">
+                        Name : {{family.name}}, Role : {{family.role}}, Grade : {{family.grade}}
+                    </p>
+                </td>
+                <td>
+                    <button ng-if="user.healthDocRef" class="btn btn-primary">View Health Doc</button>
+                    <p ng-if="!user.healthDocRef">No health doc available</p>
                 </td>
                 <td>
                     <a ui-sref="manageUsers.editUser({userId: user._id})"><i class="fa fa-user"></i> Manage User Profile</a>
                 </td>
-                <td class="pull-right">
+                <td>
                     <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i></a>
                     <a ng-if="!user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i></a>
                     <a ng-if="user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-remove"></i></a>
@@ -46,5 +78,12 @@
             </tr>
             </tbody>
         </table>
+        <div class="row pull-right">
+            <h4>Other options reference</h4>
+            <i class="fa fa-trash-o"></i> Remove User
+            <i class="fa fa-user"></i> Make user an admin
+            <i class="fa fa-remove"></i> Remove user from admin group
+        </div>
+        <br /><br />
     </div>
 </section>
