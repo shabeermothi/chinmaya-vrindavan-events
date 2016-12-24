@@ -53,7 +53,7 @@
            })
            .state('manageUsers.editUser', {
                 url: '/:userId',
-                templateUrl: 'partials/admin/user-management/edit-user.html',
+                templateUrl: 'partials/admin/user-management/edit-user-profile-home.html',
                 controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
                     $scope.userId = $stateParams.userId;
                 }]
