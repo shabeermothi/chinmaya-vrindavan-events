@@ -127,3 +127,4 @@ jspm_packages
 
 # Bower Components
 public/components/
+/uploads

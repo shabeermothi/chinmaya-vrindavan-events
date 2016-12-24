@@ -4,6 +4,9 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var jwt = require("jsonwebtoken");
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
+var fs = require('fs');
 
 var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
@@ -11,6 +14,7 @@ var USER_EVENTS_COLLECTION = "userEvents";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/uploads"));
 app.use(bodyParser.json());
 
 var localMongoDbUrl = "mongodb://localhost:27017";
@@ -44,6 +48,16 @@ function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
+
+app.post('/user-profile/upload/health-docs', upload.single('file'), function (req, res, next) {
+  var tmp_path = req.file.path;
+  var target_path = 'uploads/' + req.file.originalname;
+
+  var src = fs.createReadStream(tmp_path);
+  var dest = fs.createWriteStream(target_path);
+  src.pipe(dest);
+  src.on('end', function() { res.status(200); });
+});
 
 /*  "/users"
  *    GET: finds all users

@@ -11,7 +11,8 @@
                                                 'eda.easyformGen.stepway',
                                                 'eda.easyFormViewer',
                                                 'angular-zipcode-filter',
-                                                'events', 'ngMessages']);
+                                                'events',
+                                                'ngMessages', 'ngFileUpload']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);
@@ -200,7 +201,8 @@
             .state('updateProfile', {
                 url: '/user/profile',
                 templateUrl: 'partials/user-profile.html',
-                controller: ['$window', '$scope', '$http', '$state', 'uuid', function ($window, $scope, $http, $state, uuid) {
+                controller: ['$window', '$scope', '$http', '$state', 'uuid', 'Upload',
+                    function ($window, $scope, $http, $state, uuid, Upload) {
                     $http({
                         method: 'GET',
                         url: '/users/' + $window.sessionStorage.userId
@@ -216,6 +218,24 @@
                             });
                         }
                     });
+
+                        $scope.upload = function (file) {
+                            $scope.fileName = file.name;
+                            Upload.upload({
+                                url: '/user-profile/upload/health-docs',
+                                data: {file: file}
+                            }).then(function (resp) {
+                            }, function (resp) {
+                                // error
+                                console.log("Error occurred ", resp);
+                            }, function (evt) {
+                                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                                if (progressPercentage === 100) {
+                                    $scope.userDetails.healthDocRef = file.name;
+                                    $scope.updateProfile();
+                                }
+                            });
+                        };
 
                     $scope.addNewChoice = function () {
                         $scope.userDetails.familyDetails.push({
@@ -235,6 +255,7 @@
                     };
 
                     $scope.updateProfile = function () {
+                        console.log("Update profile called ", $scope.userDetails);
                         $http({
                             method: 'PUT',
                             url: '/users/' + $window.sessionStorage.userId,
