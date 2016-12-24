@@ -31,12 +31,23 @@
             };
 
             vm.addNewChoice = function () {
-                vm.userDetails.familyDetails.push({
-                    id: uuid.new(),
-                    name: "",
-                    role: "",
-                    grade: ""
-                });
+                if (vm.userDetails.familyDetails) {
+                    vm.userDetails.familyDetails.push({
+                        id: uuid.new(),
+                        name: "",
+                        role: "",
+                        grade: ""
+                    });
+                } else {
+                    vm.userDetails.familyDetails = [];
+                    vm.userDetails.familyDetails.push({
+                        id: uuid.new(),
+                        name: "",
+                        role: "",
+                        grade: ""
+                    });
+                }
+
             };
 
             vm.removeChoice = function (familyDetails) {
