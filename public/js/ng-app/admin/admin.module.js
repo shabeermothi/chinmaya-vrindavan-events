@@ -17,6 +17,14 @@
                     $scope.eventName = $stateParams.eventName;
                }]
            })
+           .state('addEvent.linkSubEvents', {
+               url: '/link/:eventId/:eventName',
+               templateUrl: 'partials/admin/add-event/add-event-linksubevent-home.html',
+               controller: ['$scope', '$stateParams', function($scope, $stateParams) {
+                   $scope.eventId = $stateParams.eventId;
+                   $scope.eventName = $stateParams.eventName;
+               }]
+           })
            .state('activeEvents', {
                url: '/events/active',
                templateUrl: 'partials/admin/events-list/active.html',

@@ -3,7 +3,8 @@
 
     angular.module('events.admin')
         .directive('defineAnEvent', addEventDirective)
-        .directive('defineEventDetails', defineEventDetailsDirective);
+        .directive('defineEventDetails', defineEventDetailsDirective)
+        .directive('linkEventDetails', linkEventDetailsDirective);
 
     function addEventDirective () {
         AddEventDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'DefineEventService', '$state'];
@@ -85,8 +86,30 @@
 
             function saveForm(easyFormGeneratorModel){
                 DefineEventService.saveEventDetails(easyFormGeneratorModel, $scope.eventId);
-                $state.go('events');
+                $state.go('addEvent.linkSubEvents', {'eventId': $scope.eventId, 'eventName': $scope.eventName});
             }
+        }
+    }
+
+    function linkEventDetailsDirective () {
+        LinkEventDetailsDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'easyFormSteWayConfig', 'DefineEventService', '$state'];
+
+        return {
+            restrict: 'A',
+            scope: {
+                eventId: '=',
+                eventName: '='
+            },
+            templateUrl: 'partials/admin/add-event/add-event-linksubevent.html',
+            controller: LinkEventDetailsDirectiveCtrl,
+            controllerAs: 'linkEventDetails'
+        };
+
+        function LinkEventDetailsDirectiveCtrl ($scope, $log, $timeout, easyFormSteWayConfig, DefineEventService, $state) {
+            var linkEventDetails = this;
+
+            linkEventDetails.eventId = $scope.eventId;
+            linkEventDetails.eventName = $scope.eventName;
         }
     }
 
