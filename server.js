@@ -7,6 +7,10 @@ var jwt = require("jsonwebtoken");
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 var fs = require('fs');
+var helper = require('sendgrid').mail;
+var bCrypt = require('bcrypt-nodejs');
+var randomString = require('randomstring');
+var moment = require('moment');
 
 var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
@@ -18,13 +22,12 @@ app.use(express.static(__dirname + "/uploads"));
 app.use(bodyParser.json());
 
 var localMongoDbUrl = "mongodb://localhost:27017";
-var isLocal = process.argv[2];
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect((isLocal) ? localMongoDbUrl : process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || localMongoDbUrl, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -321,5 +324,64 @@ app.delete("/user-events/:id/:userId/:token", function(req, res) {
 app.get('/user-details/child-details/:userId', function (req, res) {
   db.collection(USERS_COLLECTION).find({_id: new ObjectID(req.params.userId)}).toArray(function (err, doc) {
       res.status(200).json(doc[0].familyDetails);
+  });
+});
+
+app.post('/recover-account/:userId/:passwordRecoveryHash', function (req, res) {
+  db.collection(USERS_COLLECTION).findOne({_id: new ObjectID(req.params.userId), passwordRecoveryHash: req.params.passwordRecoveryHash}, function (err, doc) {
+    if (doc) {
+      doc.password = req.body.newPassword;
+      db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(doc._id)}, doc, function(err, doc) {
+          res.sendStatus(201);
+      });
+    } else {
+      res.sendStatus(403);
+    }
+  });
+});
+
+app.get('/recover-account/:emailId', function (req, res) {
+
+  db.collection(USERS_COLLECTION).findOne({email: req.params.emailId}, function (err, doc) {
+    if (!doc) {
+      res.sendStatus(404);
+    } else {
+
+      var hash = randomString.generate(10);
+      var userId = doc._id;
+      doc.passwordRecoveryHash = hash;
+      doc.passwordRecoveryHashExpiry = moment(5, 'm');
+
+      db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(doc._id)}, doc, function(err, doc) {
+        if (err) {
+          handleError(res, err.message, "Failed to update event");
+        } else {
+          var from_email = new helper.Email("recovery-manager@chinmayavrindavanevents.com");
+          var to_email = new helper.Email(req.params.emailId);
+          var subject = "Reset your Chinmaya Vrindavan Events Account password";
+          var content = new helper.Content("text/plain", "Click on the below link to reset your password. \n " +
+              "https://chinmaya-vrindavan-events.herokuapp.com/#/recover-account/reset-password/" + userId + "/" + hash + " \n " +
+              "\n " +
+              "Please note that the above link to reset your password will be valid only for 5 mins. \n " +
+              "\n " +
+              "\n " +
+              "Have a great day! \n " +
+              "Chinmaya Vrindavan Events Team");
+          var mail = new helper.Mail(from_email, subject, to_email, content);
+
+          var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+          var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON()
+          });
+
+          sg.API(request, function(error, response) {
+            res.sendStatus(response.statusCode);
+          });
+        }
+      });
+
+    }
   });
 });

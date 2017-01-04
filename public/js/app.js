@@ -12,7 +12,9 @@
                                                 'eda.easyFormViewer',
                                                 'angular-zipcode-filter',
                                                 'events',
-                                                'ngMessages', 'ngFileUpload']);
+                                                'ngMessages',
+                                                'ngFileUpload',
+                                                'forgot.password']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);
@@ -33,6 +35,33 @@
                         $scope.test = false;
                     };
                 }]
+            })
+            .state('resetPassword', {
+                url: '/recover-account/reset-password/:userId/:passwordHash',
+                templateUrl: 'partials/util/recover-password-home.html',
+                controller: ['$state', '$scope', '$http', '$stateParams', function ($state, $scope, $http, $stateParams) {
+                    $scope.resetPassword = function (reqPassword) {
+                        $http({
+                            method: 'POST',
+                            url: '/recover-account/' + $stateParams.userId + "/" + $stateParams.passwordHash,
+                            data: {newPassword: reqPassword}
+                        }).then(function () {
+                            $state.go('login');
+                        });
+                    }
+                }]
+            })
+            .state('forgotPassword', {
+                url: '/forgot-password',
+                templateUrl: 'partials/util/forgot-password-home.html'
+            })
+            .state('forgotPassword.success', {
+                url: '/success',
+                templateUrl: 'partials/util/forgot-password-success.html'
+            })
+            .state('forgotPassword.failure', {
+                url: '/failure',
+                templateUrl: 'partials/util/forgot-password-failure.html'
             })
             .state('login', {
                 url: '/login',
