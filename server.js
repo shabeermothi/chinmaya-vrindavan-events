@@ -117,6 +117,28 @@ app.post("/users", function(req, res) {
             token: token,
             data: doc.ops
           };
+
+          var from_email = new helper.Email("fromfriendsatchinmaya@chinmayavrindavanevents.com");
+          var to_email = new helper.Email(req.params.emailId);
+          var subject = "Welcome to Chinmaya Vrindavan Events";
+          var content = new helper.Content("text/plain", " Welcome to Chinmaya Vrindavan Events \n " +
+              "Now that you are registered go ahead and subscribe to events you like" +
+              "\n " +
+              "\n " +
+              "Have a great day! \n " +
+              "Chinmaya Vrindavan Events Team");
+          var mail = new helper.Mail(from_email, subject, to_email, content);
+
+          var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+          var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON()
+          });
+
+          sg.API(request, function(error, response) {
+          });
+
           res.status(200).json(response);
         } else {
           handleError(res, "Unable to register user in system", "Unable to register user in system.");
