@@ -93,11 +93,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Address
-                                    <div ng-messages="registerForm.addressLine.$error">
-                                        <p class="label label-primary" ng-message="required">Address is required</p>
-                                    </div>
                                 </label>
-                                <textarea class="form-control" name="addressLine" required="required" placeholder="Address" ng-model="user.addressLine"></textarea>
+                                <textarea class="form-control" name="addressLine" placeholder="Address" ng-model="user.addressLine"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>City</label>
@@ -129,17 +126,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone (Home)</label>
-                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                <input type="text" name="phone" id="phone" class="form-control"
                                        placeholder="111 111 1111" ng-model="user.homePhone">
                             </div>
                             <div class="form-group">
                                 <label>Phone (Mobile)</label>
-                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                <input type="text" name="phone" id="phone" class="form-control"
                                        placeholder="111 111 1111" ng-model="user.mobilePhone">
                             </div>
                             <div class="form-group">
                                 <label>Phone (Work)</label>
-                                <input type="text" name="phone" id="phone" required="required" class="form-control"
+                                <input type="text" name="phone" id="phone" class="form-control"
                                        placeholder="111 111 1111" ng-model="user.workPhone">
                             </div>
                             <div class="form-group">
