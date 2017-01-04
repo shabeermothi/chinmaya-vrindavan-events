@@ -119,7 +119,7 @@ app.post("/users", function(req, res) {
           };
 
           var from_email = new helper.Email("fromfriendsatchinmaya@chinmayavrindavanevents.com");
-          var to_email = new helper.Email(req.params.emailId);
+          var to_email = new helper.Email(newuser.email);
           var subject = "Welcome to Chinmaya Vrindavan Events";
           var content = new helper.Content("text/plain", " Welcome to Chinmaya Vrindavan Events \n " +
               "Now that you are registered go ahead and subscribe to events you like" +
