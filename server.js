@@ -12,6 +12,8 @@ var bCrypt = require('bcrypt-nodejs');
 var randomString = require('randomstring');
 var moment = require('moment');
 
+var cveMailer = require('./api/mailer');
+
 var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
 var USER_EVENTS_COLLECTION = "userEvents";
@@ -117,6 +119,8 @@ app.post("/users", function(req, res) {
             token: token,
             data: doc.ops
           };
+
+          cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Welcome to Chinmaya Vrindavan Events");
 
           res.status(200).json(response);
         } else {
