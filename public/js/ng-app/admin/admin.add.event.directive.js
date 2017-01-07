@@ -128,6 +128,10 @@
                                     for (var b in linkEventDetails.eventFields[a].columns) {
                                         if (linkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
                                             if (linkEventDetails.eventFields[a].columns[b].control.key === linkEventDetails.links[x].targetField.control.key) {
+                                                delete linkEventDetails.eventFields[a].columns[b].control.edited;
+                                                delete linkEventDetails.eventFields[a].columns[b].control.subtype;
+                                                delete linkEventDetails.eventFields[a].columns[b].control.selectedControl;
+
                                                 if (linkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
                                                     linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
                                                         "templateOptions['disabled']": "!model['" + x + "']"
@@ -163,6 +167,11 @@
                                         if (linkEventDetails.eventFields[a].columns[b].control.type === 'basicSelect') {
                                             linkEventDetails.eventFields[a].columns[b].control.type = "select";
                                         }
+
+                                        delete linkEventDetails.eventFields[a].columns[b].control.edited;
+                                        delete linkEventDetails.eventFields[a].columns[b].control.subtype;
+                                        delete linkEventDetails.eventFields[a].columns[b].control.selectedControl;
+
                                         return linkEventDetails.eventFields[a].columns[b].control.type;
                                     }
                                 }
