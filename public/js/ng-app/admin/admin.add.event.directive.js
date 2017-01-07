@@ -113,11 +113,71 @@
             linkEventDetails.links = {};
 
             UpdateEventService.getEventDetails(linkEventDetails.eventId).then(function (response) {
+                linkEventDetails.fullEventDetails = response;
                 linkEventDetails.eventFields = response.eventDetails.edaFieldsModel;
             });
 
             linkEventDetails.saveLinks = function () {
-                $log.info('links => ', linkEventDetails.links);
+                $log.info("Links => ", linkEventDetails.links);
+
+                for (var x in linkEventDetails.links) {
+                    var sourceFieldType = getType(x);
+                    if (linkEventDetails.links.hasOwnProperty(x)) {
+                            for (var a in linkEventDetails.eventFields) {
+                                if (linkEventDetails.eventFields.hasOwnProperty(a)) {
+                                    for (var b in linkEventDetails.eventFields[a].columns) {
+                                        if (linkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
+                                            if (linkEventDetails.eventFields[a].columns[b].control.key === linkEventDetails.links[x].targetField.control.key) {
+                                                if (linkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
+                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                        "templateOptions['disabled']": "!model['" + x + "']"
+                                                    };
+                                                } else if (linkEventDetails.links[x].action === "enable" && sourceFieldType !== "select") {
+                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                        "templateOptions['disabled']": "model['" + x + "']"
+                                                    };
+                                                } else if (linkEventDetails.links[x].action === "disable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                        "templateOptions['disabled']": "model['" + x + "'] == '" + linkEventDetails.links[x].sourceValue.value + "'"
+                                                    };
+                                                } else if (linkEventDetails.links[x].action === "enable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                        "templateOptions['disabled']": "model['" + x + "'] != '" + linkEventDetails.links[x].sourceValue.value + "'"
+                                                    };
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+
+                function getType (property) {
+                    for (var a in linkEventDetails.eventFields) {
+                        if (linkEventDetails.eventFields.hasOwnProperty(a)) {
+                            for (var b in linkEventDetails.eventFields[a].columns) {
+                                if (linkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
+                                    if (linkEventDetails.eventFields[a].columns[b].control.key === property) {
+                                        if (linkEventDetails.eventFields[a].columns[b].control.type === 'basicSelect') {
+                                            linkEventDetails.eventFields[a].columns[b].control.type = "select";
+                                        }
+                                        return linkEventDetails.eventFields[a].columns[b].control.type;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                linkEventDetails.fullEventDetails.eventDetails.edaFieldsModel = linkEventDetails.eventFields;
+
+                UpdateEventService.updateEvent(linkEventDetails.fullEventDetails).then(function (response) {
+                    $log.info('Success');
+                }, function (error) {
+                    $log.info('Failure');
+                });
             };
         }
     }

@@ -33,6 +33,11 @@
                                     ng-options="fieldOptions.name for fieldOptions in source.control.templateOptions.options"
                                     ng-model="linkEventDetails.links[source.control.key].sourceValue"></select>
                         </div>
+                        <div ng-switch-when="select">
+                            <select class="form-control" name="sourceSelectOptions" id="sourceSelectOptions"
+                                    ng-options="fieldOptions.name for fieldOptions in source.control.templateOptions.options"
+                                    ng-model="linkEventDetails.links[source.control.key].sourceValue"></select>
+                        </div>
                         <div ng-switch-when="checkbox">
                             <select class="form-control" name="sourceCheckboxOptions" id="sourceCheckboxOptions"
                             ng-model="linkEventDetails.links[source.control.key].sourceValue">
@@ -50,8 +55,9 @@
                 </div>
                 <div class="col-md-3">
                     <select class="form-control col-md-4" ng-model="linkEventDetails.links[source.control.key].action">
-                        <option value="true">Disabled</option>
-                        <option value="false">Enabled</option>
+                        <option value="disable">Disable Target</option>
+                        <option value="enable">Enable Target</option>
+                        <option value="hide">Hide Target</option>
                     </select>
                 </div>
                 <br /><br /><br />
