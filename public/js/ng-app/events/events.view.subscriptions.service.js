@@ -17,7 +17,6 @@
                 method: 'GET',
                 url: '/user-events/' + eventId
             }).then(function (response) {
-
                 return response.data;
             });
         }

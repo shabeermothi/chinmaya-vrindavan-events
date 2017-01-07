@@ -89,6 +89,7 @@
                                 $window.sessionStorage.userDetails = response.data.data[0].name;
                                 $window.sessionStorage.isAdmin = response.data.data[0].isAdmin;
                                 $window.sessionStorage.userId = response.data.data[0]._id;
+                                $window.sessionStorage.userEmail = response.data.data[0].email;
                                 $rootScope.$broadcast('home.login', response.data.data);
                                 $state.go('home');
                             } else {

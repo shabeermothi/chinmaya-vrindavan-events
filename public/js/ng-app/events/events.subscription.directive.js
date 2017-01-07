@@ -36,8 +36,6 @@
             });
 
             vm.subscribeToEvent = function (eventUserDataModel) {
-                console.log('Event Payment Requested ', eventUserDataModel);
-
                 var userEventObj = {
                     "eventId": $scope.eventId,
                     "userId": $window.sessionStorage.userId,

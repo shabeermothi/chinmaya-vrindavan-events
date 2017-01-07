@@ -92,7 +92,7 @@
     }
 
     function linkEventDetailsDirective () {
-        LinkEventDetailsDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'easyFormSteWayConfig', 'DefineEventService', '$state'];
+        LinkEventDetailsDirectiveCtrl.$inject = ['$scope', '$log', '$timeout', 'easyFormSteWayConfig', 'UpdateEventService', '$state'];
 
         return {
             restrict: 'A',
@@ -105,11 +105,19 @@
             controllerAs: 'linkEventDetails'
         };
 
-        function LinkEventDetailsDirectiveCtrl ($scope, $log, $timeout, easyFormSteWayConfig, DefineEventService, $state) {
+        function LinkEventDetailsDirectiveCtrl ($scope, $log, $timeout, easyFormSteWayConfig, UpdateEventService, $state) {
             var linkEventDetails = this;
 
             linkEventDetails.eventId = $scope.eventId;
             linkEventDetails.eventName = $scope.eventName;
+
+            UpdateEventService.getEventDetails(linkEventDetails.eventId).then(function (response) {
+                linkEventDetails.eventFields = response.eventDetails.edaFieldsModel;
+            });
+            
+            $scope.$watch('linkEventDetails.chosenField', function (newVal) {
+                $log.info('new val ', newVal);
+            });
         }
     }
 

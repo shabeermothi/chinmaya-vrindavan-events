@@ -63,8 +63,7 @@
                                     "messages": {
                                         "minlength": "Event Name must be atleast 5 characters long."
                                     }
-                                },
-                                "edited": false
+                                }
                             }
                         },
                         {
@@ -129,8 +128,7 @@
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
-                                },
-                                "edited": false
+                                }
                             }
                         },
                         {
@@ -152,8 +150,7 @@
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
-                                },
-                                "edited": false
+                                }
                             }
                         },
                         {
@@ -175,8 +172,7 @@
                                 "formlyValidators": {},
                                 "formlyValidation": {
                                     "messages": {}
-                                },
-                                "edited": false
+                                }
                             }
                         }
                     ]
