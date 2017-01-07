@@ -360,6 +360,16 @@ app.post('/event-price/:eventId', function (req, res) {
   });
 });
 
+app.get('/event-price/:eventId', function (req, res) {
+  db.collection(EVENT_PRICE_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get event");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
 app.get('/recover-account/:emailId', function (req, res) {
 
   db.collection(USERS_COLLECTION).findOne({email: req.params.emailId}, function (err, doc) {

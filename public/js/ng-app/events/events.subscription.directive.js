@@ -42,10 +42,32 @@
                     "childId": $scope.childId,
                     "eventDetails": eventUserDataModel
                 };
+                
+                calculatePrice();
 
-                SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
-                    $state.go('events.subscription.success', {'eventName': vm.eventName});
-                });
+                function calculatePrice () {
+                    var price = 0;
+                    SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
+                        console.log("event price => ", response);
+                        for (var a in eventUserDataModel) {
+                            if (eventUserDataModel.hasOwnProperty(a)) {
+                                for (var b in response) {
+                                    if (response.hasOwnProperty(b)) {
+                                        for (var x in response[b]) {
+                                            if (a === x) {
+                                                price += parseInt(response[b][x][Object.keys(response[b][x])[eventUserDataModel[a]]]);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
+                             $state.go('events.subscription.success', {'eventName': vm.eventName, 'price': price});
+                         });
+                    });
+                }
             };
 
             vm.cancelSubscription = function () {
@@ -59,7 +81,8 @@
             getEventDetails: getEventDetails,
             subscribeEvent: subscribeEvent,
             getChildDetails: getChildDetails,
-            createUserEvent: createUserEvent
+            createUserEvent: createUserEvent,
+            getEventPrice: getEventPrice
         };
 
         function getEventDetails (eventId) {
@@ -89,6 +112,15 @@
                 method: 'POST',
                 url: '/user-events/' + $window.sessionStorage.token,
                 data: userEventDetails
+            });
+        }
+        
+        function getEventPrice (eventId) {
+            return $http({
+                method: 'GET',
+                url: '/event-price/' + eventId
+            }).then(function (response) {
+                return response.data;
             });
         }
     }

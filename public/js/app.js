@@ -182,9 +182,13 @@
             })
             .state('events.subscription.success', {
                 url: '/details/:eventName',
+                params: {
+                    price: 0
+                },
                 templateUrl: 'partials/events/subscribe/success.html',
                 controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
                     $scope.eventName = $stateParams.eventName;
+                    $scope.price = $stateParams.price;
                 }]
             })
             .state('userSubscriptions', {

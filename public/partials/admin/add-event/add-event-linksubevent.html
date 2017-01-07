@@ -22,7 +22,7 @@
             <div class="col-md-2"><h3>Action</h3></div>
             <div class="col-md-2"><h3>Add Price</h3></div>
         </div>
-        <div ng-repeat="eventFields in linkEventDetails.eventFields">
+        <div class="well" ng-repeat="eventFields in linkEventDetails.eventFields">
             <div class="row" ng-repeat="source in eventFields.columns" ng-if="source.control.templateOptions.label">
                 <div class="col-md-2">
                     {{source.control.templateOptions.label}}
@@ -87,7 +87,6 @@
                     <div class="col-md-1"></div>
                 <br /><br /><br />
             </div>
-            <hr/>
         </div>
         <button class="btn btn-success pull-right" ng-click="linkEventDetails.saveLinks()">Save</button>
         <br /><br /><br />
