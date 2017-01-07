@@ -11,7 +11,8 @@
             getEventDetails: getEventDetails,
             updateEvent: updateEvent,
             navigateToEventDetails: navigateToEventDetails,
-            navigaveToManageEvents: navigaveToManageEvents
+            navigaveToManageEvents: navigaveToManageEvents,
+            addPrice: addPrice
         };
 
         function updateEvent (eventData) {
@@ -37,6 +38,16 @@
 
         function navigaveToManageEvents (eventId) {
             $state.go('manageEvents');
+        }
+        
+        function addPrice (eventId, priceObject) {
+            return $http({
+                method: 'POST',
+                url: '/event-price/' + eventId,
+                data: priceObject
+            }).then(function (response) {
+                return response.data;
+            });
         }
     }
 })();

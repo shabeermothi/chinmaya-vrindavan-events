@@ -121,35 +121,45 @@
                 $log.info("Links => ", linkEventDetails.links);
 
                 for (var x in linkEventDetails.links) {
+
+                    if (linkEventDetails.links[x].price) {
+                        var priceObj = {};
+                        priceObj[x] = linkEventDetails.links[x].price;
+                        
+                        UpdateEventService.addPrice(linkEventDetails.fullEventDetails._id, priceObj);
+                    }
+
                     var sourceFieldType = getType(x);
                     if (linkEventDetails.links.hasOwnProperty(x)) {
                             for (var a in linkEventDetails.eventFields) {
                                 if (linkEventDetails.eventFields.hasOwnProperty(a)) {
                                     for (var b in linkEventDetails.eventFields[a].columns) {
                                         if (linkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
-                                            if (linkEventDetails.eventFields[a].columns[b].control.key === linkEventDetails.links[x].targetField.control.key) {
-                                                delete linkEventDetails.eventFields[a].columns[b].control.edited;
-                                                delete linkEventDetails.eventFields[a].columns[b].control.subtype;
-                                                delete linkEventDetails.eventFields[a].columns[b].control.selectedControl;
+                                            if (linkEventDetails.links[x].targetField && linkEventDetails.links[x].targetField.hasOwnProperty("control")) {
+                                                if (linkEventDetails.eventFields[a].columns[b].control.key === linkEventDetails.links[x].targetField.control.key) {
+                                                    delete linkEventDetails.eventFields[a].columns[b].control.edited;
+                                                    delete linkEventDetails.eventFields[a].columns[b].control.subtype;
+                                                    delete linkEventDetails.eventFields[a].columns[b].control.selectedControl;
 
-                                                if (linkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
-                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "!model['" + x + "']"
-                                                    };
-                                                } else if (linkEventDetails.links[x].action === "enable" && sourceFieldType !== "select") {
-                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "']"
-                                                    };
-                                                } else if (linkEventDetails.links[x].action === "disable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
-                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "'] == '" + linkEventDetails.links[x].sourceValue.value + "'"
-                                                    };
-                                                } else if (linkEventDetails.links[x].action === "enable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
-                                                    linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "'] != '" + linkEventDetails.links[x].sourceValue.value + "'"
-                                                    };
+                                                    if (linkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
+                                                        linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "!model['" + x + "']"
+                                                        };
+                                                    } else if (linkEventDetails.links[x].action === "enable" && sourceFieldType !== "select") {
+                                                        linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "']"
+                                                        };
+                                                    } else if (linkEventDetails.links[x].action === "disable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                        linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "'] == '" + linkEventDetails.links[x].sourceValue.value + "'"
+                                                        };
+                                                    } else if (linkEventDetails.links[x].action === "enable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                        linkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "'] != '" + linkEventDetails.links[x].sourceValue.value + "'"
+                                                        };
+                                                    }
+
                                                 }
-
                                             }
                                         }
                                     }

@@ -17,6 +17,7 @@ var cveMailer = require('./api/mailer');
 var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
 var USER_EVENTS_COLLECTION = "userEvents";
+var EVENT_PRICE_COLLECTION = "eventPrice";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
@@ -341,6 +342,20 @@ app.post('/recover-account/:userId/:passwordRecoveryHash', function (req, res) {
       });
     } else {
       res.sendStatus(403);
+    }
+  });
+});
+
+app.post('/event-price/:eventId', function (req, res) {
+  var eventPrice = req.body;
+  eventPrice.eventId = req.params.eventId;
+  eventPrice.createDate = new Date();
+
+  db.collection(EVENT_PRICE_COLLECTION).insertOne(eventPrice, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new price event.");
+    } else {
+      res.sendStatus(201);
     }
   });
 });
