@@ -22,19 +22,20 @@
             <div class="col-md-3"><h3>Action</h3></div>
         </div>
         <div ng-repeat="eventFields in linkEventDetails.eventFields">
-            <div class="row" ng-repeat="field in eventFields.columns">
+            <div class="row" ng-repeat="source in eventFields.columns">
                 <div class="col-md-3">
-                    {{field.control.templateOptions.label}}
+                    {{source.control.templateOptions.label}}
                 </div>
                 <div class="col-md-3">
-                    <div ng-switch="field.control.type">
+                    <div ng-switch="source.control.type">
                         <div ng-switch-when="basicSelect">
                             <select class="form-control" name="sourceSelectOptions" id="sourceSelectOptions"
-                                    ng-options="fieldOptions.name for fieldOptions in field.control.templateOptions.options"
-                                    ng-model="linkEventDetails.sourceFieldOptions"></select>
+                                    ng-options="fieldOptions.name for fieldOptions in source.control.templateOptions.options"
+                                    ng-model="linkEventDetails.links[source.control.key].sourceValue"></select>
                         </div>
                         <div ng-switch-when="checkbox">
-                            <select class="form-control" name="sourceCheckboxOptions" id="sourceCheckboxOptions">
+                            <select class="form-control" name="sourceCheckboxOptions" id="sourceCheckboxOptions"
+                            ng-model="linkEventDetails.links[source.control.key].sourceValue">
                                 <option></option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
@@ -45,17 +46,19 @@
                 <div class="col-md-3">
                     <select class="form-control col-md-4" name="targetField" id="targetField"
                             ng-options="field.control.templateOptions.label for field in eventFields.columns"
-                            ng-model="linkEventDetails.targetField"></select>
+                            ng-model="linkEventDetails.links[source.control.key].targetField"></select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-control col-md-4" ng-model="linkEventDetails.chosenField.control.templateOptions.disabled">
+                    <select class="form-control col-md-4" ng-model="linkEventDetails.links[source.control.key].action">
                         <option value="true">Disabled</option>
                         <option value="false">Enabled</option>
                     </select>
                 </div>
                 <br /><br /><br />
             </div>
+            <hr/>
         </div>
+        <button class="btn btn-success pull-right" ng-click="linkEventDetails.saveLinks()">Save</button>
         <br /><br /><br />
     </div>
 </section>

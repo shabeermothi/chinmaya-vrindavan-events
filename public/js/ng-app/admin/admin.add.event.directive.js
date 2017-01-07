@@ -110,14 +110,15 @@
 
             linkEventDetails.eventId = $scope.eventId;
             linkEventDetails.eventName = $scope.eventName;
+            linkEventDetails.links = {};
 
             UpdateEventService.getEventDetails(linkEventDetails.eventId).then(function (response) {
                 linkEventDetails.eventFields = response.eventDetails.edaFieldsModel;
             });
-            
-            $scope.$watch('linkEventDetails.chosenField', function (newVal) {
-                $log.info('new val ', newVal);
-            });
+
+            linkEventDetails.saveLinks = function () {
+                $log.info('links => ', linkEventDetails.links);
+            };
         }
     }
 
