@@ -361,11 +361,23 @@ app.post('/event-price/:eventId', function (req, res) {
 });
 
 app.get('/event-price/:eventId', function (req, res) {
-  db.collection(EVENT_PRICE_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
+  db.collection(EVENTS_COLLECTION).findOne({ _id: new ObjectID(req.params.eventId) }, function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get event");
+      handleError(res, err.message, "Failed to get events.");
     } else {
-      res.status(200).json(doc);
+      console.log("event price ", docs.eventBasePrice);
+      var eventBasePrice = (docs.eventBasePrice) ? docs.eventBasePrice : 0;
+      db.collection(EVENT_PRICE_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
+        if (err) {
+          handleError(res, err.message, "Failed to get event");
+        } else {
+          var response = {
+            eventBasePrice: eventBasePrice,
+            eventFieldPrices: doc
+          };
+          res.status(200).json(response);
+        }
+      });
     }
   });
 });

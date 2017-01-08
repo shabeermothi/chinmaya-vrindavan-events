@@ -85,9 +85,15 @@
                                 },
                                 "edited": false
                             }
-                        },
+                        }
+                    ]
+                },
+                {
+                    "line": 0,
+                    "activeColumn": 2,
+                    "columns": [
                         {
-                            "numColumn": 3,
+                            "numColumn": 1,
                             "exist": true,
                             "control": {
                                 "type": "datepicker",
@@ -105,15 +111,9 @@
                                 },
                                 "edited": false
                             }
-                        }
-                    ]
-                },
-                {
-                    "line": 0,
-                    "activeColumn": 2,
-                    "columns": [
+                        },
                         {
-                            "numColumn": 1,
+                            "numColumn": 2,
                             "exist": true,
                             "control": {
                                 "type": "datepicker",
@@ -132,7 +132,34 @@
                             }
                         },
                         {
-                            "numColumn": 2,
+                            "numColumn": 3,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventBasePrice",
+                                "templateOptions": {
+                                    "type": "number",
+                                    "label": "Event Base Price",
+                                    "required": false,
+                                    "description": "",
+                                    "placeholder": ""
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "line": 1,
+                    "activeColumn": 3,
+                    "columns": [
+                        {
+                            "numColumn": 1,
                             "exist": true,
                             "control": {
                                 "type": "input",
@@ -154,7 +181,7 @@
                             }
                         },
                         {
-                            "numColumn": 3,
+                            "numColumn": 2,
                             "exist": true,
                             "control": {
                                 "type": "input",

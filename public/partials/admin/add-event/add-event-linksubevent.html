@@ -67,14 +67,14 @@
                             <div ng-repeat="option in source.control.templateOptions.options">
                                 {{option.name}} <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
                                                         ng-pattern="/^[0-9]*$/"
-                                                        ng-model="linkEventDetails.links[source.control.key].price[option.name]">
+                                                        ng-model="linkEventDetails.links[source.control.key].price[option.value]">
                             </div>
                         </div>
                         <div ng-switch-when="select">
                             <div ng-repeat="option in source.control.templateOptions.options">
                                 {{option.name}} <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
                                                        ng-pattern="/^[0-9]*$/"
-                                                       ng-model="linkEventDetails.links[source.control.key].price[option.name]">
+                                                       ng-model="linkEventDetails.links[source.control.key].price[option.value]">
                             </div>
                         </div>
                         <div ng-switch-when="checkbox">

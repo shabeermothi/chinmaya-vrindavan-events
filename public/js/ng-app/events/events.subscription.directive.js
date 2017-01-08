@@ -48,14 +48,15 @@
                 function calculatePrice () {
                     var price = 0;
                     SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
-                        console.log("event price => ", response);
+                        price = parseInt(price) + parseInt(response.eventBasePrice);
                         for (var a in eventUserDataModel) {
                             if (eventUserDataModel.hasOwnProperty(a)) {
-                                for (var b in response) {
-                                    if (response.hasOwnProperty(b)) {
-                                        for (var x in response[b]) {
+                                var eventFieldPrices = response.eventFieldPrices;
+                                for (var b in eventFieldPrices) {
+                                    if (eventFieldPrices.hasOwnProperty(b)) {
+                                        for (var x in eventFieldPrices[b]) {
                                             if (a === x) {
-                                                price += parseInt(response[b][x][Object.keys(response[b][x])[eventUserDataModel[a]]]);
+                                                price = parseInt(price) + parseInt(eventFieldPrices[b][x][(eventUserDataModel[a] === true) ? "yes" : eventUserDataModel[a]]);
                                             }
                                         }
                                     }
