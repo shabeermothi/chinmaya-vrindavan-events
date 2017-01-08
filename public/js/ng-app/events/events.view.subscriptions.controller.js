@@ -13,14 +13,26 @@
         viewEventSubscriptionCtrl.totalNumberOfSubscriptions = eventSubscriptions.length;
         viewEventSubscriptionCtrl.event = sourceEvent;
 
+        console.log("Event subscriptions => ", eventSubscriptions);
+
         viewEventSubscriptionCtrl.subscriptions = [];
 
         for (var i=0; i<eventSubscriptions.length; i++) {
             var subscribedDate = eventSubscriptions[i].createDate;
 
             EventsSubscriptionService.getSubscriptionDetails(eventSubscriptions[i]).then(function (response) {
+                var childName;
+                for (var i in response.familyDetails) {
+                    if (response.familyDetails.hasOwnProperty(i)) {
+                        if (response.familyDetails[i].id === eventSubscriptions[i].childId) {
+                            childName = response.familyDetails[i].name;
+                        }
+                    }
+                }
+
                 viewEventSubscriptionCtrl.subscriptions.push({
                     subscribedOn: subscribedDate,
+                    subscribedFor: childName,
                     subscribedBy: response.name
                 });
             });
