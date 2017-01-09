@@ -37,7 +37,7 @@
         }
 
         function navigaveToManageEvents (eventId) {
-            $state.go('manageEvents');
+            $state.go('manageEvent');
         }
         
         function addPrice (eventId, priceObject) {
