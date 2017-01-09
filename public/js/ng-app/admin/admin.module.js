@@ -51,7 +51,7 @@
                    $scope.eventId = $stateParams.eventId;
                }]
            })
-           .state('manageEvent', {
+           .state('manageEvents', {
                url: '/events/admin/manage-events',
                templateUrl: 'partials/admin/manage-event/manage-an-event-home.html'
            })

@@ -139,7 +139,7 @@
                                 "key": "eventBasePrice",
                                 "templateOptions": {
                                     "type": "number",
-                                    "label": "Event Base Price",
+                                    "label": "Event Base Price ($)",
                                     "required": false,
                                     "description": "",
                                     "placeholder": ""
