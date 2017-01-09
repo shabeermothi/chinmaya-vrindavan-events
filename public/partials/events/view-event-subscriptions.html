@@ -5,7 +5,7 @@
     <h1>{{viewEventSubscriptionCtrl.totalNumberOfSubscriptions}}</h1> Subscriptions
     <ul>
         <li ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions">
-            <h3><small>Subscribed by</small> {{subscription.subscribedBy}} for {{subscription.subscribedFor}} <small>on</small> {{subscription.subscribedOn | date}}</h3>
+            <h3><small>Subscribed by</small> {{subscription.subscribedBy}} <small>on</small> {{subscription.subscribedOn | date}}</h3>
         </li>
     </ul>
 </div>
