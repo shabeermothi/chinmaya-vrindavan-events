@@ -194,6 +194,7 @@
 
                 UpdateEventService.updateEvent(linkEventDetails.fullEventDetails).then(function (response) {
                     $log.info('Success');
+                    $state.go('manageEvent');
                 }, function (error) {
                     $log.info('Failure');
                 });
