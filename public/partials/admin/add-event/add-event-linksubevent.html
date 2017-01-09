@@ -82,6 +82,11 @@
                                                    ng-pattern="/^[0-9]*$/"
                                                    ng-model="linkEventDetails.links[source.control.key].price['yes']">
                         </div>
+                        <div ng-switch-default>
+                            <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
+                                   ng-pattern="/^[0-9]*$/"
+                                   ng-model="linkEventDetails.links[source.control.key].price[option]">
+                        </div>
                     </div>
                 </div>
                     <div class="col-md-1"></div>
