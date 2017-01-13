@@ -382,6 +382,43 @@ app.get('/event-price/:eventId', function (req, res) {
   });
 });
 
+app.post('/event-field-details', function (req, res) {
+    var eventFields = req.body;
+    var eventId = eventFields[0].eventId;
+    var responseArr = [], responseObj = {};
+
+    db.collection(EVENTS_COLLECTION).findOne({ _id: new ObjectID(eventId) }, function(err, response) {
+        var fields = response.eventDetails.edaFieldsModel;
+
+        for (var a in eventFields) {
+            if (eventFields.hasOwnProperty(a)) {
+              for (var x in eventFields[a]) {
+                  if (eventFields[a].hasOwnProperty(x) && x !== '_id' && x !== 'eventId' && x !== 'createDate') {
+                    for (var field of fields) {
+                      for (var column of field.columns) {
+                        console.log("x => ", x);
+                        console.log("column.control.key => ", column.control.key);
+                        if (x === column.control.key) {
+                          responseObj[column.control.key] = {};
+                          if (column.control.templateOptions.options.length > 0) {
+                            responseObj[column.control.key].actualValue = column.control.templateOptions.options;
+                          } else {
+                            responseObj[column.control.key].actualValue = column.control.templateOptions.label;
+                          }
+
+                          responseObj[column.control.key].priceValue = eventFields[a][x];
+                        }
+                      }
+                    }
+
+                  }
+              }
+            }
+        }
+        res.status(200).json(responseObj);
+    });
+});
+
 app.get('/recover-account/:emailId', function (req, res) {
 
   db.collection(USERS_COLLECTION).findOne({email: req.params.emailId}, function (err, doc) {

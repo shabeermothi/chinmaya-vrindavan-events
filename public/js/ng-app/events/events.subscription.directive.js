@@ -38,7 +38,9 @@
                     size: size,
                     resolve: {
                         eventFieldPrice: function () {
-                            return eventFieldPrices;
+                            return SubscribeEventService.resolveFields(eventFieldPrices).then(function (response) {
+                                return response;
+                            });
                         }
                     }
                 });
@@ -111,7 +113,8 @@
             subscribeEvent: subscribeEvent,
             getChildDetails: getChildDetails,
             createUserEvent: createUserEvent,
-            getEventPrice: getEventPrice
+            getEventPrice: getEventPrice,
+            resolveFields: resolveFields
         };
 
         function getEventDetails (eventId) {
@@ -149,6 +152,17 @@
                 method: 'GET',
                 url: '/event-price/' + eventId
             }).then(function (response) {
+                return response.data;
+            });
+        }
+
+        function resolveFields (eventFields) {
+            return $http({
+                method: 'POST',
+                url: '/event-field-details/',
+                data: eventFields
+            }).then(function (response) {
+                console.log('response => ', response);
                 return response.data;
             });
         }
