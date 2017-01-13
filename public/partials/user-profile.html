@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label>Name
                                 <div ng-messages="userProfileForm.name.$error">
-                                    <p class="label label-primary" ng-message="required">User Name is required</p>
+                                    <p class="label label-danger" ng-message="required">User Name is required</p>
                                 </div>
                             </label>
                             <input type="text" name="name" class="form-control" required placeholder="Name"
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label>Address
                                 <div ng-messages="userProfileForm.addressLine.$error">
-                                    <p class="label label-primary" ng-message="required">Address is required</p>
+                                    <p class="label label-danger" ng-message="required">Address is required</p>
                                 </div>
                             </label>
                             <textarea class="form-control" name="addressLine" placeholder="Address" required

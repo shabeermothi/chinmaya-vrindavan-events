@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label>Event Name
                         <div ng-messages="editEventForm.eventName.$error">
-                            <p class="label label-primary" ng-message="required">Event Name is required</p>
+                            <p class="label label-danger" ng-message="required">Event Name is required</p>
                         </div>
                     </label>
                     <input type="text" name="eventName" class="form-control" required placeholder=""
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label>Event Description
                         <div ng-messages="editEventForm.eventDescription.$error">
-                            <p class="label label-primary" ng-message="required">Address is required</p>
+                            <p class="label label-danger" ng-message="required">Address is required</p>
                         </div>
                     </label>
                             <textarea class="form-control" name="eventDescription" placeholder="" required
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label>Event From Date
                         <div ng-messages="editEventForm.eventFromDate.$error">
-                            <p class="label label-primary" ng-message="required">Event From Date is required</p>
+                            <p class="label label-danger" ng-message="required">Event From Date is required</p>
                         </div>
                     </label>
                     <p class="input-group">
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label>Event To Date
                         <div ng-messages="editEventForm.eventToDate.$error">
-                            <p class="label label-primary" ng-message="required">Event To Date is required</p>
+                            <p class="label label-danger" ng-message="required">Event To Date is required</p>
                         </div>
                     </label>
                     <p class="input-group">

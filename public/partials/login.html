@@ -32,18 +32,18 @@
                     <div class="form-group">
                         <label>Email
                             <div ng-messages="loginForm.email.$error">
-                                <p class="label label-primary" ng-message="required">Email is required</p>
-                                <p class="label label-primary" ng-message="email">Enter a valid email</p>
+                                <p class="label label-danger" ng-message="required">Email is required</p>
+                                <p class="label label-danger" ng-message="email">Enter a valid email</p>
                             </div>
                         </label>
                         <input type="email" name="email" class="form-control" required ng-model="loginEmail"
-                               placeholder="Email Id"/>
+                               />
                     </div>
                     <div class="form-group">
                         <label>Password
                             <div ng-messages="loginForm.password.$error">
-                                <p class="label label-primary" ng-message="required">Password is required</p>
-                                <p class="label label-primary" ng-message="minlength">Enter valid password. Password must be 5 characters long</p>
+                                <p class="label label-danger" ng-message="required">Password is required</p>
+                                <p class="label label-danger" ng-message="minlength">Enter valid password. Password must be 5 characters long</p>
                             </div>
                         </label>
                         <input type="password" name="password" id="password" required class="form-control"
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label>Name
                                     <div ng-messages="registerForm.name.$error">
-                                        <p class="label label-primary" ng-message="required">User Name is required</p>
+                                        <p class="label label-danger" ng-message="required">User Name is required</p>
                                     </div>
                                 </label>
                                 <input type="text" name="name" class="form-control" required placeholder="Name" ng-model="user.name">
@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 <label>Email
                                     <div ng-messages="registerForm.email.$error">
-                                        <p class="label label-primary" ng-message="required">Email is required</p>
+                                        <p class="label label-danger" ng-message="required">Email is required</p>
                                         <p class="label label-danger" ng-message="email">Enter a valid email</p>
                                     </div>
                                 </label>
@@ -142,8 +142,8 @@
                             <div class="form-group">
                                 <label>Password
                                     <div ng-messages="registerForm.password.$error">
-                                        <p class="label label-primary" ng-message="required">Password is required</p>
-                                        <p class="label label-primary" ng-message="minlength">Password must be atleast 5 characters long</p>
+                                        <p class="label label-danger" ng-message="required">Password is required</p>
+                                        <p class="label label-danger" ng-message="minlength">Password must be atleast 5 characters long</p>
                                     </div>
                                 </label>
                                 <input type="password" name="password" id="password" required
