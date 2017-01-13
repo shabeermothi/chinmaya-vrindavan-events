@@ -9,7 +9,7 @@
     SubscribeEventService.$inject = ['$http', '$log', '$window'];
 
     function subscribeEventDirective () {
-        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state', '$q'];
+        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state', '$q', '$uibModal'];
 
         return {
             restrict: 'A',
@@ -22,10 +22,27 @@
             controllerAs: 'vm'
         };
 
-        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state, $q) {
+        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state, $q, $uibModal) {
             var vm = this;
 
             vm.eventDataModel = {};
+
+            vm.viewFieldPrices = function (size, eventFieldPrices) {
+                $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'partials/events/view-event-field-prices.html',
+                    controller: 'EventFieldPricesCtrl',
+                    controllerAs: 'viewEventFieldPrices',
+                    size: size,
+                    resolve: {
+                        eventFieldPrice: function () {
+                            return eventFieldPrices;
+                        }
+                    }
+                });
+            };
 
             SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
                 vm.eventName = response.eventName;
@@ -58,6 +75,7 @@
                 var deferred = $q.defer();
                 var price = 0;
                 SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
+                    vm.eventFieldPrices = response.eventFieldPrices;
                     price = parseInt(price) + parseInt(response.eventBasePrice);
                     if (eventUserDataModel) {
                         for (var a in eventUserDataModel) {

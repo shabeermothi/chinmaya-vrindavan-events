@@ -1,11 +1,12 @@
 (function () {
     'use strict';
-    
+
     angular.module('events')
-        .controller('ModalInstanceCtrl', ViewSubscriptionsCtrl);
+        .controller('ModalInstanceCtrl', ViewSubscriptionsCtrl)
+        .controller('EventFieldPricesCtrl', EventFieldPricesCtrl);
 
     ViewSubscriptionsCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventSubscriptions', 'sourceEvent', 'EventsSubscriptionService'];
-    
+
     function ViewSubscriptionsCtrl ($scope, $log, $uibModalInstance, eventSubscriptions, sourceEvent, EventsSubscriptionService) {
         var viewEventSubscriptionCtrl = this;
 
@@ -39,6 +40,18 @@
         }
 
         viewEventSubscriptionCtrl.cancel = function () {
+            $uibModalInstance.close();
+        };
+    }
+
+    EventFieldPricesCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventFieldPrice'];
+
+    function EventFieldPricesCtrl ($scope, $log, $uibModalInstance, eventFieldPrice) {
+        var viewEventFieldPrices = this;
+
+        viewEventFieldPrices.eventFieldPrices = eventFieldPrice;
+
+        viewEventFieldPrices.cancel = function () {
             $uibModalInstance.close();
         };
     }
