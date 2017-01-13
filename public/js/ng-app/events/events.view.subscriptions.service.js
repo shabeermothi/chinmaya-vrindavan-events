@@ -10,6 +10,7 @@
         return {
             getEventSubscriptions: getEventSubscriptions,
             getSubscriptionDetails: getSubscriptionDetails,
+            getEventBasePrice: getEventBasePrice
         };
 
         function getEventSubscriptions (eventId) {
@@ -20,7 +21,7 @@
                 return response.data;
             });
         }
-        
+
         function getSubscriptionDetails (eventSubscription) {
             var deferred = $q.defer();
 
@@ -32,6 +33,15 @@
             });
 
             return deferred.promise;
+        }
+
+        function getEventBasePrice (eventId) {
+            return $http({
+                method: 'GET',
+                url: '/event-price/' + eventId
+            }).then(function (response) {
+                return response.data;
+            });
         }
     }
 })();

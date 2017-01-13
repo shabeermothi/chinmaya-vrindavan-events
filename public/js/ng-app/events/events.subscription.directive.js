@@ -9,7 +9,7 @@
     SubscribeEventService.$inject = ['$http', '$log', '$window'];
 
     function subscribeEventDirective () {
-        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state'];
+        SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state', '$q'];
 
         return {
             restrict: 'A',
@@ -22,7 +22,7 @@
             controllerAs: 'vm'
         };
 
-        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state) {
+        function SubscribeEventDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state, $q) {
             var vm = this;
 
             vm.eventDataModel = {};
@@ -33,6 +33,10 @@
                 vm.eventDetails = response.eventDetails.edaFieldsModel;
                 vm.submitButtonText = response.eventDetails.btnSubmitText;
                 vm.cancelButtonText = response.eventDetails.btnCancelText;
+
+                calculatePrice().then(function (price) {
+                    vm.eventPrice = price;
+                });
             });
 
             vm.subscribeToEvent = function (eventUserDataModel) {
@@ -42,13 +46,20 @@
                     "childId": $scope.childId,
                     "eventDetails": eventUserDataModel
                 };
-                
-                calculatePrice();
 
-                function calculatePrice () {
-                    var price = 0;
-                    SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
-                        price = parseInt(price) + parseInt(response.eventBasePrice);
+                calculatePrice(eventUserDataModel).then(function (price) {
+                    SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
+                        $state.go('events.subscription.success', {'eventName': vm.eventName, 'price': price});
+                    });
+                });
+            };
+
+            function calculatePrice (eventUserDataModel) {
+                var deferred = $q.defer();
+                var price = 0;
+                SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
+                    price = parseInt(price) + parseInt(response.eventBasePrice);
+                    if (eventUserDataModel) {
                         for (var a in eventUserDataModel) {
                             if (eventUserDataModel.hasOwnProperty(a)) {
                                 var eventFieldPrices = response.eventFieldPrices;
@@ -63,20 +74,19 @@
                                 }
                             }
                         }
+                    }
+                    deferred.resolve(price);
+                });
 
-                        SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
-                             $state.go('events.subscription.success', {'eventName': vm.eventName, 'price': price});
-                         });
-                    });
-                }
-            };
+                return deferred.promise;
+            }
 
             vm.cancelSubscription = function () {
                 console.log('Subscription cancellation requested!');
             };
         }
     }
-    
+
     function SubscribeEventService ($http, $log, $window) {
         return {
             getEventDetails: getEventDetails,
@@ -115,7 +125,7 @@
                 data: userEventDetails
             });
         }
-        
+
         function getEventPrice (eventId) {
             return $http({
                 method: 'GET',
@@ -125,7 +135,7 @@
             });
         }
     }
-    
+
     function userEventSubscriptionDirective () {
         UserEventSubscriptionDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state'];
 
@@ -138,7 +148,7 @@
             controller: UserEventSubscriptionDirectiveCtrl,
             controllerAs: 'userSubscription'
         };
-        
+
         function UserEventSubscriptionDirectiveCtrl ($scope, $log, SubscribeEventService, $window, $state) {
             var userSubscription = this;
 
