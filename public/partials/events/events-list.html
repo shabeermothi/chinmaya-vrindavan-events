@@ -35,7 +35,7 @@
                             <li style="width:20%;"><a ng-click="eventsList.viewSubscriptions('lg', event)"><span class="fa fa-user"></span> View Subscriptions</a></li>
                             <li style="width:20%;"><a ui-sref="editEvent({eventId: event._id})"><span class="fa fa-edit"></span> Edit Event Summary</a></li>
                             <li style="width:20%;"><a ui-sref="editEventDetails({eventId: event._id})"><span class="fa fa-edit"></span> Edit Event Details</a></li>
-                            <li style="width:20%;"><a ui-sref="addEvent.linkSubEvents({eventId: event._id, eventName: event.eventName})"><span class="fa fa-edit"></span> Add subevent links</a></li>
+                            <li style="width:20%;"><a ui-sref="addEvent.linkSubEvents({eventId: event._id, eventName: event.eventName})"><span class="fa fa-edit"></span> Edit subevent links</a></li>
                             <li style="width:20%;"><a confirm-click="Are you sure you want to delete {{event.eventName}} ?" ng-click="confirmClick() && eventsList.deleteEvent(event)"><span class="fa fa-trash"></span> Delete Event</a></li>
                         </ul>
                     </div>
