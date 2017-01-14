@@ -1,6 +1,8 @@
 <h1>Subscribe to {{vm.eventName}}</h1>
-<h4>{{vm.eventPrice | currency}}
-    <span ng-if="vm.eventFieldPrices.length > 0">| <a ng-click="vm.viewFieldPrices('lg', vm.eventFieldPrices)">View subevent price details</a></span></h4>
+<h4>{{vm.eventPrice | currency}} <small>Base Price</small>
+    <span ng-if="vm.eventFieldPrices.length > 0">|
+        <a ng-click="vm.viewFieldPrices('lg', vm.eventFieldPrices)">View subevent price details</a></span>
+</h4>
 <eda-easy-form-viewer
         eda-easy-form-viewer-data-model="vm.eventDataModel"
         eda-easy-form-viewer-easy-form-generator-fields-model="vm.eventDetails"

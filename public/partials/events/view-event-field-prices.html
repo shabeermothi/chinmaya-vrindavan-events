@@ -1,14 +1,28 @@
 <div class="modal-header">
-    <!--<h3 class="modal-title" id="modal-title">Subscriptions for {{viewEventFieldPrices.event.eventName}}</h3>-->
+    <h3 class="modal-title" id="modal-title">Subevent Prices</h3>
 </div>
 <div class="modal-body" id="modal-body">
-    <div ng-repeat="eventField in viewEventFieldPrices.eventFieldPrices">
-        <div ng-repeat="(key, value) in eventField">
-            <div ng-if="key !== '_id' && key !== 'eventId' && key !== 'createDate'">
-                {{key}} => {{value}}
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-4">Field</div>
+        <div class="col-md-4">Option</div>
+        <div class="col-md-4">Price</div>
     </div>
+    <div ng-repeat="subEvent in viewEventFieldPrices.subEventPrices">
+        <div class="row">
+            <div class="col-md-4">
+                <div ng-if="subEvent.parentField">{{subEvent.parentField}}</div>
+                <div ng-if="!subEvent.parentField">{{subEvent.field}}</div>
+            </div>
+            <div class="col-md-4">
+                <div ng-if="subEvent.parentField">{{subEvent.field}}</div>
+                <div ng-if="!subEvent.parentField">N/A</div>
+            </div>
+            <div class="col-md-4">
+                {{subEvent.price}}
+            </div>
+        <div>
+        </div>
+            </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="viewEventFieldPrices.cancel()">Close</button>

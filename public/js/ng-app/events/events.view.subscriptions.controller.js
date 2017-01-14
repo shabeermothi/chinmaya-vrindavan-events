@@ -50,6 +50,42 @@
         var viewEventFieldPrices = this;
 
         viewEventFieldPrices.eventFieldPrices = eventFieldPrice;
+        var responseArr = [];
+
+        for (var fieldPrice of viewEventFieldPrices.eventFieldPrices) {
+            for (var a in fieldPrice) {
+                var fieldValues = fieldPrice[a];
+                if (Array.isArray(fieldValues.actualValue)) {
+                    for (var c in fieldValues.actualValue) {
+                        for (var d in fieldValues.priceValue) {
+                            if (fieldValues.actualValue[c].value == d) {
+                                responseArr.push(
+                                    {
+                                        "parentField": fieldValues.label,
+                                        "field": fieldValues.actualValue[c].name,
+                                        "price": fieldValues.priceValue[d]
+                                    }
+                                );
+                            }
+                        }
+                    }
+                } else {
+                    for (var b in fieldValues.priceValue) {
+                        responseArr.push(
+                            {
+                                "field": fieldValues.actualValue,
+                                "price": fieldValues.priceValue[b]
+                            }
+                        );
+                    }
+                }
+            }
+        }
+
+        $log.info("response Arr => ", responseArr);
+        viewEventFieldPrices.subEventPrices = responseArr;
+
+        viewEventFieldPrices.isArray = angular.isArray;
 
         viewEventFieldPrices.cancel = function () {
             $uibModalInstance.close();

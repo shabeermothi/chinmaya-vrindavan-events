@@ -365,7 +365,6 @@ app.get('/event-price/:eventId', function (req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get events.");
     } else {
-      console.log("event price ", docs.eventBasePrice);
       var eventBasePrice = (docs.eventBasePrice) ? docs.eventBasePrice : 0;
       db.collection(EVENT_PRICE_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
         if (err) {
@@ -385,7 +384,7 @@ app.get('/event-price/:eventId', function (req, res) {
 app.post('/event-field-details', function (req, res) {
     var eventFields = req.body;
     var eventId = eventFields[0].eventId;
-    var responseArr = [], responseObj = {};
+    var responseArr = [];
 
     db.collection(EVENTS_COLLECTION).findOne({ _id: new ObjectID(eventId) }, function(err, response) {
         var fields = response.eventDetails.edaFieldsModel;
@@ -396,17 +395,18 @@ app.post('/event-field-details', function (req, res) {
                   if (eventFields[a].hasOwnProperty(x) && x !== '_id' && x !== 'eventId' && x !== 'createDate') {
                     for (var field of fields) {
                       for (var column of field.columns) {
-                        console.log("x => ", x);
-                        console.log("column.control.key => ", column.control.key);
                         if (x === column.control.key) {
+                          var responseObj = {};
                           responseObj[column.control.key] = {};
                           if (column.control.templateOptions.options.length > 0) {
                             responseObj[column.control.key].actualValue = column.control.templateOptions.options;
+                            responseObj[column.control.key].label = column.control.templateOptions.label;
                           } else {
                             responseObj[column.control.key].actualValue = column.control.templateOptions.label;
                           }
 
                           responseObj[column.control.key].priceValue = eventFields[a][x];
+                          responseArr.push(responseObj);
                         }
                       }
                     }
@@ -415,7 +415,7 @@ app.post('/event-field-details', function (req, res) {
               }
             }
         }
-        res.status(200).json(responseObj);
+        res.status(200).json(responseArr);
     });
 });
 
