@@ -166,7 +166,7 @@
                                 "key": "eventDiscount",
                                 "templateOptions": {
                                     "type": "number",
-                                    "label": "Event Discount ($)",
+                                    "label": "Event Discount (%)",
                                     "required": false,
                                     "description": "",
                                     "placeholder": ""
