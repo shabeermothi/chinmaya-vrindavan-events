@@ -114,7 +114,8 @@
             getChildDetails: getChildDetails,
             createUserEvent: createUserEvent,
             getEventPrice: getEventPrice,
-            resolveFields: resolveFields
+            resolveFields: resolveFields,
+            getUserEventDetails: getUserEventDetails
         };
 
         function getEventDetails (eventId) {
@@ -166,6 +167,15 @@
                 return response.data;
             });
         }
+
+        function getUserEventDetails () {
+            return $http({
+                method: 'GET',
+                url: '/user-events/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token
+            }).then(function (userEventsReponse) {
+                return userEventsReponse.data;
+            });
+        }
     }
 
     function userEventSubscriptionDirective () {
@@ -188,10 +198,17 @@
 
             SubscribeEventService.getChildDetails($window.sessionStorage.userId).then(function (response) {
                  var childNames = [];
+
                  for (var i=0; i<response.length; i++) {
-                     childNames.push({
-                        name: response[i].name,
-                        value: response[i].id
+                     SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
+                         for (var a in userEventResponse) {
+                             if (userEventResponse[a].eventId === $scope.eventId && userEventResponse[a].childId !== response[i].id) {
+                                 childNames.push({
+                                     name: response[i].name,
+                                     value: response[i].id
+                                 });
+                             }
+                         }
                      });
                  }
 
