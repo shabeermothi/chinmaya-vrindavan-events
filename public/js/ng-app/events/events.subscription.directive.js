@@ -198,18 +198,34 @@
 
             SubscribeEventService.getChildDetails($window.sessionStorage.userId).then(function (response) {
                 userSubscription.childNames = [];
+                var childIds = [];
                 SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
-                 for (var i=0; i<response.length; i++) {
-                         for (var a in userEventResponse) {
-                             if (userEventResponse[a].eventId === $scope.eventId && userEventResponse[a].childId !== response[i].id) {
-                                 userSubscription.childNames.push({
-                                     name: response[i].name,
-                                     value: response[i].id
-                                 });
-                             }
-                         }
+                    console.log("user event response => ", userEventResponse);
 
-                 }
+
+                    for (var a in userEventResponse) {
+                        if (userEventResponse[a].eventId === $scope.eventId) {
+                            childIds.push(userEventResponse[a].childId);
+                        }
+                    }
+
+                    for (var i=0; i<response.length; i++) {
+                        userSubscription.childNames.push({
+                            name: response[i].name,
+                            value: response[i].id
+                        });
+                    }
+
+                    for (var i=0; i<response.length; i++) {
+                        for (var x in childIds) {
+                            if (childIds[x] === response[i].id) {
+                                userSubscription.childNames.splice(i, 1);
+                            }
+                        }
+                    }
+
+
+                    userSubscription.childNames = _.uniq(userSubscription.childNames);
                     userSubscription.childNameForm =  [
                         {
                             "line" : -1,
@@ -225,7 +241,7 @@
                                         "subtype" : "",
                                         "templateOptions" : {
                                             "label" : "Choose Child",
-                                            "required" : false,
+                                            "required" : true,
                                             "description" : "",
                                             "placeholder" : "",
                                             "options" : userSubscription.childNames
