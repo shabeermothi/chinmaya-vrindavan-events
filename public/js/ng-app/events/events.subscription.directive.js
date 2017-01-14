@@ -76,26 +76,42 @@
             function calculatePrice (eventUserDataModel) {
                 var deferred = $q.defer();
                 var price = 0;
-                SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
-                    vm.eventFieldPrices = response.eventFieldPrices;
-                    price = parseInt(price) + parseInt(response.eventBasePrice);
-                    if (eventUserDataModel) {
-                        for (var a in eventUserDataModel) {
-                            if (eventUserDataModel.hasOwnProperty(a)) {
-                                var eventFieldPrices = response.eventFieldPrices;
-                                for (var b in eventFieldPrices) {
-                                    if (eventFieldPrices.hasOwnProperty(b)) {
-                                        for (var x in eventFieldPrices[b]) {
-                                            if (a === x) {
-                                                price = parseInt(price) + parseInt(eventFieldPrices[b][x][(eventUserDataModel[a] === true) ? "yes" : eventUserDataModel[a]]);
+                SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
+                    var fieldSubscribed = [];
+
+                    for (var a in userEventResponse) {
+                        for (var key in userEventResponse[a].eventDetails) {
+                            fieldSubscribed.push(key);
+                        }
+                    }
+
+                    SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
+                        vm.eventFieldPrices = response.eventFieldPrices;
+                        var eventSiblingDiscount = parseInt(response.eventDiscount);
+                        price = parseInt(price) + parseInt(response.eventBasePrice);
+                        if (eventUserDataModel) {
+                            for (var a in eventUserDataModel) {
+                                if (eventUserDataModel.hasOwnProperty(a)) {
+                                    var eventFieldPrices = response.eventFieldPrices;
+                                    for (var b in eventFieldPrices) {
+                                        if (eventFieldPrices.hasOwnProperty(b)) {
+                                            for (var x in eventFieldPrices[b]) {
+                                                if (a === x) {
+                                                    var additionalPrice = parseInt(eventFieldPrices[b][x][(eventUserDataModel[a] === true) ? "yes" : eventUserDataModel[a]]);
+                                                    if (fieldSubscribed.indexOf(a) > -1) {
+                                                        var eventDiscount = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
+                                                        additionalPrice = additionalPrice - ((additionalPrice * eventDiscount)/100);
+                                                    }
+                                                    price = parseInt(price) + additionalPrice;
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    deferred.resolve(price);
+                        deferred.resolve(price);
+                    });
                 });
 
                 return deferred.promise;
@@ -163,7 +179,6 @@
                 url: '/event-field-details/',
                 data: eventFields
             }).then(function (response) {
-                console.log('response => ', response);
                 return response.data;
             });
         }
@@ -200,9 +215,6 @@
                 userSubscription.childNames = [];
                 var childIds = [];
                 SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
-                    console.log("user event response => ", userEventResponse);
-
-
                     for (var a in userEventResponse) {
                         if (userEventResponse[a].eventId === $scope.eventId) {
                             childIds.push(userEventResponse[a].childId);

@@ -366,12 +366,14 @@ app.get('/event-price/:eventId', function (req, res) {
       handleError(res, err.message, "Failed to get events.");
     } else {
       var eventBasePrice = (docs.eventBasePrice) ? docs.eventBasePrice : 0;
+      var eventDiscount = (docs.eventDiscount) ? docs.eventDiscount : 20;
       db.collection(EVENT_PRICE_COLLECTION).find({ eventId: req.params.eventId }).toArray(function(err, doc) {
         if (err) {
           handleError(res, err.message, "Failed to get event");
         } else {
           var response = {
             eventBasePrice: eventBasePrice,
+            eventDiscount: eventDiscount,
             eventFieldPrices: doc
           };
           res.status(200).json(response);
