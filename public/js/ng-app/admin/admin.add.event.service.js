@@ -163,6 +163,27 @@
                             "exist": true,
                             "control": {
                                 "type": "input",
+                                "key": "eventDiscount",
+                                "templateOptions": {
+                                    "type": "number",
+                                    "label": "Event Discount ($)",
+                                    "required": false,
+                                    "description": "",
+                                    "placeholder": ""
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
+                        },
+                        {
+                            "numColumn": 2,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
                                 "key": "eventFbPage",
                                 "selectedControl": "TextInput",
                                 "subtype": "",
@@ -181,7 +202,7 @@
                             }
                         },
                         {
-                            "numColumn": 2,
+                            "numColumn": 3,
                             "exist": true,
                             "control": {
                                 "type": "input",
