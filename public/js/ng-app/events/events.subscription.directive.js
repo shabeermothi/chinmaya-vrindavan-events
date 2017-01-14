@@ -197,22 +197,20 @@
             userSubscription.eventDataModel = {};
 
             SubscribeEventService.getChildDetails($window.sessionStorage.userId).then(function (response) {
-                 var childNames = [];
-
+                userSubscription.childNames = [];
+                SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
                  for (var i=0; i<response.length; i++) {
-                     SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
                          for (var a in userEventResponse) {
                              if (userEventResponse[a].eventId === $scope.eventId && userEventResponse[a].childId !== response[i].id) {
-                                 childNames.push({
+                                 userSubscription.childNames.push({
                                      name: response[i].name,
                                      value: response[i].id
                                  });
                              }
                          }
-                     });
-                 }
 
-                userSubscription.childNameForm =  [
+                 }
+                    userSubscription.childNameForm =  [
                         {
                             "line" : -1,
                             "activeColumn" : 1,
@@ -230,7 +228,7 @@
                                             "required" : false,
                                             "description" : "",
                                             "placeholder" : "",
-                                            "options" : childNames
+                                            "options" : userSubscription.childNames
                                         },
                                         "formlyExpressionProperties" : {},
                                         "formlyValidators" : {},
@@ -243,6 +241,9 @@
                             ]
                         }
                     ];
+                });
+
+
              });
 
             SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
