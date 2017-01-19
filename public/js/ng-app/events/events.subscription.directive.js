@@ -228,13 +228,13 @@
                         });
                     }
 
-                    /*for (var x in childIds) {
-                        for (var j=0; j<response.length; j++) {
-                            if (childIds[x] === response[j].id) {
+                    for (var x in childIds) {
+                        for (var j=0; j<childNames.length; j++) {
+                            if (childIds[x] === childNames[j].value) {
                                 childNames.splice(j, 1);
                             }
                         }
-                    }*/
+                    }
 
                     userSubscription.childNameForm =  [
                         {
