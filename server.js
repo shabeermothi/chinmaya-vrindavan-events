@@ -11,6 +11,7 @@ var helper = require('sendgrid').mail;
 var bCrypt = require('bcrypt-nodejs');
 var randomString = require('randomstring');
 var moment = require('moment');
+var helmet = require('helmet');
 
 var cveMailer = require('./api/mailer');
 
@@ -20,6 +21,8 @@ var USER_EVENTS_COLLECTION = "userEvents";
 var EVENT_PRICE_COLLECTION = "eventPrice";
 
 var app = express();
+
+app.use(helmet());
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/uploads"));
 app.use(bodyParser.json());
