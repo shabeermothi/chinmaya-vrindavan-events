@@ -22,6 +22,7 @@
   "homepage": "",
   "dependencies": {
     "angular-uuid": "0.0.4",
+    "authorizenet": "^1.0.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.3",
     "bower": "^1.7.9",
