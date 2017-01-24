@@ -206,17 +206,33 @@
 
                         $http({
                             method: 'GET',
-                            url: '/user-events/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token
-                        }).then(function (userEventsReponse) {
-                            for (var x in response.data) {
+                            url: '/users/' + $window.sessionStorage.userId
+                        }).then(function (userDetails) {
+                            $http({
+                                method: 'GET',
+                                url: '/user-events/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token
+                            }).then(function (userEventsReponse) {
+
                                 for (var y in userEventsReponse.data) {
-                                    if (response.data[x]._id === userEventsReponse.data[y].eventId) {
-                                        events.push(response.data[x]);
+                                    for (var x in response.data) {
+                                        if (response.data[x]._id === userEventsReponse.data[y].eventId) {
+                                            var userEventObj = {};
+                                            userEventObj = angular.copy(response.data[x]);
+                                            userEventObj.familySubscriptionDetails = angular.copy(userEventsReponse.data[y]);
+
+                                            for (var z in userDetails.data.familyDetails) {
+                                                if (userDetails.data.familyDetails[z].id === userEventsReponse.data[y].childId) {
+                                                    userEventObj.familySubscriptionDetails.childName = userDetails.data.familyDetails[z].name;
+                                                }
+                                            }
+
+                                            events.push(userEventObj);
+                                        }
                                     }
                                 }
-                            }
 
-                            $scope.events = events;
+                                $scope.events = events;
+                            });
                         });
                     });
 
