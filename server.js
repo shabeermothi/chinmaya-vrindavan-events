@@ -14,6 +14,7 @@ var moment = require('moment');
 var helmet = require('helmet');
 
 var cveMailer = require('./api/mailer');
+var payment = require('./api/payments/make-payment');
 
 var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
@@ -468,4 +469,10 @@ app.get('/recover-account/:emailId', function (req, res) {
 
     }
   });
+});
+
+app.post('/events/make-payment', function (req, res) {
+  payment.chargeCreditCard(function (paymentResponse) {
+      res.status(200).json(paymentResponse);
+  }, req.body);
 });

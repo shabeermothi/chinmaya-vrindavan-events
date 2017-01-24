@@ -14,7 +14,9 @@
                                                 'events',
                                                 'ngMessages',
                                                 'ngFileUpload',
-                                                'forgot.password']);
+                                                'forgot.password',
+                                                'events.payments',
+                                                'credit-cards']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);

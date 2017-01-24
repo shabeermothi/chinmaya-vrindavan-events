@@ -1,0 +1,41 @@
+<form name="paymentForm">
+    <div class="form-group">
+        <div class="col-md-4">
+            <div ng-if="!paymentForm.cardNumber.$valid">
+
+            </div>
+            <label for="card-number">Card Number</label>
+            <input type="text" name="cardNumber" cc-number cc-eager-type id="card-number"
+                   ng-required="true" ng-model="vm.cardNumber" class="form-control" />
+            <span class="label label-info" ng-show="paymentForm.cardNumber.$invalid && paymentForm.cardNumber.$ccEagerType">
+                {{paymentForm.cardNumber.$ccEagerType}}
+            </span>
+        </div>
+        <div class="col-md-2">
+            <label for="card-cvc">Card CVV</label>
+            <input type="text" cc-cvc ng-required="true"
+                   ng-model="vm.cardCVV" class="form-control" id="card-cvc" />
+        </div>
+        <div class="col-md-2">
+            <label for="card-expiry-month">Card Expiry Month</label>
+            <input cc-exp-month ng-required="true"
+                   class="form-control" id="card-expiry-month" ng-model="vm.cardExpiryMonth" />
+        </div>
+        <div class="col-md-2">
+                <label for="card-expiry-year">Card Expiry Year</label>
+                <input cc-exp-year ng-required="true"
+                       ng-model="vm.cardExpiryYear" class="form-control" id="card-expiry-year" />
+        </div>
+        <div class="col-md-2">
+                <label for="card-price">Card Price</label>
+                <h3>{{vm.price | currency}}</h3>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="pull-right">
+            <br />
+            <button class="btn btn-success" ng-click="vm.makePayment()" ng-disabled="paymentForm.$invalid">Make Payment</button>
+        </div>
+    </div>
+    <br /><br />
+</form>

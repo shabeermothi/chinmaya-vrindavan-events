@@ -6,7 +6,7 @@
         .directive('userEventSubscription', userEventSubscriptionDirective)
         .factory('SubscribeEventService', SubscribeEventService);
 
-    SubscribeEventService.$inject = ['$http', '$log', '$window'];
+    SubscribeEventService.$inject = ['$http', '$log', '$window', '$state'];
 
     function subscribeEventDirective () {
         SubscribeEventDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$window', '$state', '$q', '$uibModal'];
@@ -67,9 +67,7 @@
                 };
 
                 calculatePrice(eventUserDataModel).then(function (price) {
-                    SubscribeEventService.createUserEvent(userEventObj).then(function (response) {
-                        $state.go('events.subscription.success', {'eventName': vm.eventName, 'price': price});
-                    });
+                    $state.go('events.details.cardDetails', {'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName});
                 });
             };
 
@@ -123,7 +121,7 @@
         }
     }
 
-    function SubscribeEventService ($http, $log, $window) {
+    function SubscribeEventService ($http, $log, $window, $state) {
         return {
             getEventDetails: getEventDetails,
             subscribeEvent: subscribeEvent,
@@ -131,7 +129,9 @@
             createUserEvent: createUserEvent,
             getEventPrice: getEventPrice,
             resolveFields: resolveFields,
-            getUserEventDetails: getUserEventDetails
+            getUserEventDetails: getUserEventDetails,
+            makePayment: makePayment,
+            go: go
         };
 
         function getEventDetails (eventId) {
@@ -190,6 +190,20 @@
             }).then(function (userEventsReponse) {
                 return userEventsReponse.data;
             });
+        }
+
+        function makePayment (paymentDetails) {
+            return $http({
+                method: 'POST',
+                url: '/events/make-payment',
+                data: paymentDetails
+            }).then(function (paymentResponse) {
+                return paymentResponse;
+            });
+        }
+
+        function go (stateName, params) {
+            $state.go(stateName, params);
         }
     }
 
