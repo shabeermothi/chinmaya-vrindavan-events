@@ -20,6 +20,7 @@ var USERS_COLLECTION = "contacts";
 var EVENTS_COLLECTION = "events";
 var USER_EVENTS_COLLECTION = "userEvents";
 var EVENT_PRICE_COLLECTION = "eventPrice";
+var EVENT_PRICE_DETAILS = "eventSubscriptionPrice";
 
 var app = express();
 
@@ -314,21 +315,14 @@ app.delete("/user-events/:id", function(req, res) {
     });
 });
 
-app.delete("/user-events/:id/:userId/:token", function(req, res) {
-  jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {
-    if (response) {
-
-      db.collection(USER_EVENTS_COLLECTION).deleteOne({eventId: req.params.id, userId: req.params.userId}, function(err, result) {
+app.delete("/user-events/:id/:userId/:childId", function(req, res) {
+      db.collection(USER_EVENTS_COLLECTION).deleteOne({eventId: req.params.id, userId: req.params.userId, childId: req.params.childId}, function(err, result) {
         if (err) {
           handleError(res, err.message, "Failed to delete user event");
         } else {
           res.status(204).end();
         }
       });
-    } else {
-      res.sendStatus(403);
-    }
-  });
 });
 
 app.get('/user-details/child-details/:userId', function (req, res) {
@@ -475,4 +469,39 @@ app.post('/events/make-payment', function (req, res) {
   payment.chargeCreditCard(function (paymentResponse) {
       res.status(200).json(paymentResponse);
   }, req.body);
+});
+
+
+app.post('/events/save-price', function (req, res) {
+  var eventPrice = req.body;
+  eventPrice.createDate = new Date();
+
+  db.collection(EVENT_PRICE_DETAILS).insertOne(eventPrice, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new price event.");
+    } else {
+      var childName;
+      db.collection(USERS_COLLECTION).findOne({eventId: req.params.eventId, childId: req.params.childId}, function (err, doc) {
+        for (var i=0; i<doc.familyDetails.length; i++) {
+            if (doc.familyDetails[i].id === eventPrice.childId) {
+              childName = doc.familyDetails[i].name;
+            }
+        }
+        cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Chinmaya Vrindavan Events - Subscription",
+            new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
+                "\n " +
+                "View your subscription under 'My Subscriptions' in your account. \n \n " +
+                "Have a great day! \n " +
+                "Chinmaya Vrindavan Events Team"));
+        res.sendStatus(201);
+      });
+    }
+  });
+});
+
+
+app.get('/events/subscription-price/:eventId/:childId', function (req, res) {
+  db.collection(EVENT_PRICE_DETAILS).find({eventId: req.params.eventId, childId: req.params.childId}).toArray(function (err, doc) {
+    res.status(200).json(doc[0]);
+  });
 });

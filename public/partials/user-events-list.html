@@ -16,6 +16,10 @@
 <section id="view-events">
     <div class="container">
         <div class="row">
+            <input type="search" class="form-control" ng-model="searchEvents" placeholder="Search for events with date or event name or description or name of the child"/>
+            <br />
+        </div>
+        <div class="row">
             <div class="[ col-xs-12 col-sm-12 col-md-12 ]">
                 <ul class="event-list">
                     <li ng-repeat="event in events | orderBy:'eventDate' | filter: searchEvents">
@@ -25,8 +29,8 @@
                         <div class="info">
                             <h2 class="title">{{event.eventName}}</h2>
                             <p class="desc">{{event.eventDescription}}</p>
-                            <p class="desc">Subscribed for {{event.familySubscriptionDetails.childName}}</p>
-                            <p class="desc">Subscribed on {{event.familySubscriptionDetails.createDate | date}}</p>
+                            <p class="desc">Subscribed for {{event.familySubscriptionDetails.childName}} on {{event.familySubscriptionDetails.createDate | date}}</p>
+                            <p class="desc"><a ng-click="showDetails('lg', event)">View Subscription Details</a></p>
                             <ul>
                                 <li style="width:100%;"><a ng-click="unsubscribeEvent(event)"><span class="fa fa-download"></span> Unsubscribe</a></li>
                             </ul>

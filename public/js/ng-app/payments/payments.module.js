@@ -9,6 +9,7 @@
                     params: {
                         price: 0,
                         eventDetails: {},
+                        eventFieldPrices: {},
                         eventName: ""
                     },
                     templateUrl: 'partials/payments/home.html',
@@ -16,6 +17,7 @@
                         $scope.eventDetails = $stateParams.eventDetails;
                         $scope.price = $stateParams.price;
                         $scope.eventName = $stateParams.eventName;
+                        $scope.eventFieldPrices = $stateParams.eventFieldPrices;
                     }]
                 });
         });

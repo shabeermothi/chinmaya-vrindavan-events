@@ -1,42 +1,80 @@
-<form name="paymentForm">
-    <div class="form-group">
-        <div class="col-md-4">
-            <label for="card-number">Card Number
+<div class="row">
+    <uib-accordion>
+        <div uib-accordion-group class="panel-default" is-open="false">
+            <uib-accordion-heading>
+                Subscription Details
+            </uib-accordion-heading>
+            <div class="row well">
+                <div class="col-md-4">Subevent</div>
+                <div class="col-md-4">Options (if any)</div>
+                <div class="col-md-4">Price ($)</div>
+            </div>
+            <div class="row" ng-repeat="priceDetails in vm.priceDetailsArr">
+                <div class="col-md-4">{{priceDetails.label}}</div>
+                <div class="col-md-4" ng-if="priceDetails.subLabel">{{priceDetails.subLabel}}</div>
+                <div class="col-md-4" ng-if="!priceDetails.subLabel">N/A</div>
+                <div class="col-md-4">{{priceDetails.price | currency}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Base Price</div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 pull-right"><b>{{vm.eventBasePrice | currency}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Total</div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 pull-right"><b>{{vm.price | currency}}</b></div>
+            </div>
+        </div>
+        <div uib-accordion-group class="panel-default" is-open="true">
+            <uib-accordion-heading>
+                Payment Details
+            </uib-accordion-heading>
+            <form name="paymentForm">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="card-number">Card Number
                 <span ng-messages="paymentForm.cardNumber.$invalid">
                     <p class="label label-danger" ng-show="!paymentForm.cardNumber.$valid ">Invalid Credit Card</p>
                 </span>
-            </label>
-            <input type="text" name="cardNumber" cc-number cc-eager-type id="card-number"
-                   ng-required="true" ng-model="vm.cardNumber" class="form-control" />
-            <span class="label label-info" ng-show="paymentForm.cardNumber.$valid && paymentForm.cardNumber.$ccEagerType">
+                        </label>
+                        <input type="text" name="cardNumber" cc-number cc-eager-type id="card-number"
+                               ng-required="true" ng-model="vm.cardNumber" class="form-control"/>
+            <span class="label label-info"
+                  ng-show="paymentForm.cardNumber.$valid && paymentForm.cardNumber.$ccEagerType">
                 {{paymentForm.cardNumber.$ccEagerType}}
             </span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="card-cvc">Card CVV</label>
+                        <input type="text" cc-cvc ng-required="true"
+                               ng-model="vm.cardCVV" class="form-control" id="card-cvc"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="card-expiry-month">Card Expiry Month</label>
+                        <input cc-exp-month ng-required="true" placeholder="MM"
+                               class="form-control" id="card-expiry-month" ng-model="vm.cardExpiryMonth"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="card-expiry-year">Card Expiry Year</label>
+                        <input cc-exp-year ng-required="true" placeholder="YY"
+                               ng-model="vm.cardExpiryYear" class="form-control" id="card-expiry-year"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="card-price">Card Price</label>
+                        <h3>{{vm.price | currency}}</h3>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="pull-right">
+                        <br/>
+                        <button class="btn btn-success" ng-click="vm.makePayment()" ng-disabled="paymentForm.$invalid">
+                            Make Payment
+                        </button>
+                    </div>
+                </div>
+                <br/><br/>
+            </form>
         </div>
-        <div class="col-md-2">
-            <label for="card-cvc">Card CVV</label>
-            <input type="text" cc-cvc ng-required="true"
-                   ng-model="vm.cardCVV" class="form-control" id="card-cvc" />
-        </div>
-        <div class="col-md-2">
-            <label for="card-expiry-month">Card Expiry Month</label>
-            <input cc-exp-month ng-required="true" placeholder="MM"
-                   class="form-control" id="card-expiry-month" ng-model="vm.cardExpiryMonth" />
-        </div>
-        <div class="col-md-2">
-                <label for="card-expiry-year">Card Expiry Year</label>
-                <input cc-exp-year ng-required="true" placeholder="YY"
-                       ng-model="vm.cardExpiryYear" class="form-control" id="card-expiry-year" />
-        </div>
-        <div class="col-md-2">
-                <label for="card-price">Card Price</label>
-                <h3>{{vm.price | currency}}</h3>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="pull-right">
-            <br />
-            <button class="btn btn-success" ng-click="vm.makePayment()" ng-disabled="paymentForm.$invalid">Make Payment</button>
-        </div>
-    </div>
-    <br /><br />
-</form>
+    </uib-accordion>
+</div>

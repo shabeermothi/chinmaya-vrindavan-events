@@ -3,7 +3,8 @@
 
     angular.module('events')
         .controller('ModalInstanceCtrl', ViewSubscriptionsCtrl)
-        .controller('EventFieldPricesCtrl', EventFieldPricesCtrl);
+        .controller('EventFieldPricesCtrl', EventFieldPricesCtrl)
+        .controller('SubscriptionPricesCtrl', SubscriptionPricesCtrl);
 
     ViewSubscriptionsCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventSubscriptions', 'sourceEvent', 'EventsSubscriptionService'];
 
@@ -88,6 +89,21 @@
         viewEventFieldPrices.isArray = angular.isArray;
 
         viewEventFieldPrices.cancel = function () {
+            $uibModalInstance.close();
+        };
+    }
+
+    SubscriptionPricesCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'subscriptionDetails', 'subscriptionPriceDetails'];
+
+    function SubscriptionPricesCtrl ($scope, $log, $uibModalInstance, subscriptionDetails, subscriptionPriceDetails) {
+        var subscriptionPricesCtrl = this;
+
+        subscriptionPricesCtrl.subscription = {
+            details: subscriptionDetails,
+            price: subscriptionPriceDetails
+        };
+
+        subscriptionPricesCtrl.cancel = function () {
             $uibModalInstance.close();
         };
     }

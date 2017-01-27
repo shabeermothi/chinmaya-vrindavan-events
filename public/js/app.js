@@ -196,7 +196,7 @@
             .state('userSubscriptions', {
                 url: '/user-events',
                 templateUrl: 'partials/user-events-list.html',
-                controller: ['$window', '$scope', '$http', '$state', function ($window, $scope, $http, $state) {
+                controller: ['$window', '$uibModal', '$scope', '$http', '$state', 'SubscribeEventService', function ($window, $uibModal, $scope, $http, $state, SubscribeEventService) {
                     $http({
                         method: 'GET',
                         url: '/events'
@@ -239,11 +239,33 @@
                     $scope.unsubscribeEvent = function (event) {
                         $http({
                             method: 'DELETE',
-                            url: '/user-events/' + event._id + '/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token
+                            url: '/user-events/' + event._id + '/' + $window.sessionStorage.userId + '/' + event.familySubscriptionDetails.childId
                         }).then(function () {
                             for (var i=0; i<$scope.events.length; i++) {
-                                if ($scope.events[i]._id === event._id) {
+                                if ($scope.events[i]._id === event._id && $scope.events[i].familySubscriptionDetails.childId === event.familySubscriptionDetails.childId) {
                                     $scope.events.splice(i, 1);
+                                }
+                            }
+                        });
+                    };
+
+                    $scope.showDetails = function (size, event) {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'partials/events/subscribe/view-subscription-details.html',
+                            controller: 'SubscriptionPricesCtrl',
+                            controllerAs: 'subscriptionPricesCtrl',
+                            size: size,
+                            resolve: {
+                                subscriptionPriceDetails: function () {
+                                    return SubscribeEventService.getSubscriptionPrice(event._id, event.familySubscriptionDetails.childId).then(function (response) {
+                                        return response;
+                                    });
+                                },
+                                subscriptionDetails: function () {
+                                    return event;
                                 }
                             }
                         });
