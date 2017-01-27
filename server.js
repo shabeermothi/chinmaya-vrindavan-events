@@ -482,17 +482,28 @@ app.post('/events/save-price', function (req, res) {
     } else {
       var childName;
       db.collection(USERS_COLLECTION).findOne({eventId: req.params.eventId, childId: req.params.childId}, function (err, doc) {
-        for (var i=0; i<doc.familyDetails.length; i++) {
+        console.log("details => ", doc);
+        if (doc.familyDetails && doc.email) {
+          for (var i=0; i<doc.familyDetails.length; i++) {
             if (doc.familyDetails[i].id === eventPrice.childId) {
               childName = doc.familyDetails[i].name;
             }
+          }
+          cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
+              new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
+                  "\n " +
+                  "View your subscription under 'My Subscriptions' in your account. \n \n " +
+                  "Have a great day! \n " +
+                  "Chinmaya Vrindavan Events Team"));
+        } else {
+          cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
+              new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " \n " +
+                  "\n " +
+                  "View your subscription under 'My Subscriptions' in your account. \n \n " +
+                  "Have a great day! \n " +
+                  "Chinmaya Vrindavan Events Team"));
         }
-        cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Chinmaya Vrindavan Events - Subscription",
-            new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
-                "\n " +
-                "View your subscription under 'My Subscriptions' in your account. \n \n " +
-                "Have a great day! \n " +
-                "Chinmaya Vrindavan Events Team"));
+
         res.sendStatus(201);
       });
     }
