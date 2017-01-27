@@ -472,7 +472,7 @@ app.post('/events/make-payment', function (req, res) {
 });
 
 
-app.post('/events/save-price', function (req, res) {
+app.post('/events/save-price/:userId', function (req, res) {
   var eventPrice = req.body;
   eventPrice.createDate = new Date();
 
@@ -481,7 +481,7 @@ app.post('/events/save-price', function (req, res) {
       handleError(res, err.message, "Failed to create new price event.");
     } else {
       var childName;
-      db.collection(USERS_COLLECTION).findOne({eventId: req.params.eventId, childId: req.params.childId}, function (err, doc) {
+      db.collection(USERS_COLLECTION).findOne({_id: new ObjectID(req.params.userId)}, function (err, doc) {
         console.log("details => ", doc);
         if (doc.familyDetails && doc.email) {
           for (var i=0; i<doc.familyDetails.length; i++) {

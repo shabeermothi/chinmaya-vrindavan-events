@@ -106,7 +106,7 @@
 
             return $http({
                method: 'POST',
-                url: '/events/save-price',
+                url: '/events/save-price/' + $window.sessionStorage.userId,
                 data: priceObj
             });
         }
