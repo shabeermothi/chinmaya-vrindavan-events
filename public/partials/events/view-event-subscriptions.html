@@ -3,11 +3,16 @@
 </div>
 <div class="modal-body" id="modal-body">
     <h1>{{viewEventSubscriptionCtrl.totalNumberOfSubscriptions}}</h1> Subscriptions
-    <ul>
-        <li ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions">
-            <h3><small>Subscribed by</small> {{subscription.subscribedBy}} <small>on</small> {{subscription.subscribedOn | date}}</h3>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-md-4">Subscribed By</div>
+        <div class="col-md-4">Subscribed For</div>
+        <div class="col-md-4">Subscribed On</div>
+    </div>
+    <div class="row" ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions">
+        <div class="col-md-4">{{subscription.subscribedBy}}</div>
+        <div class="col-md-4">{{subscription.subscribedFor}}</div>
+        <div class="col-md-4">{{subscription.subscribedOn | date}}</div>
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="viewEventSubscriptionCtrl.cancel()">Close</button>

@@ -35,7 +35,7 @@
                 <th>Phone</th>
                 <th>Children</th>
                 <th>Health Doc</th>
-                <th>Manage</th>
+                <th>User Details</th>
                 <th>Other Options</th>
             </thead>
 
@@ -68,7 +68,8 @@
                     <p ng-if="!user.healthDocRef">No health doc available</p>
                 </td>
                 <td>
-                    <a ui-sref="manageUsers.editUser({userId: user._id})"><i class="fa fa-user"></i> Manage User Profile</a>
+                    <a ui-sref="manageUsers.editUser({userId: user._id})"><i class="fa fa-user"></i></a>
+                    <a ng-click="vm.viewSubscriptions()"><i class="fa fa-rss"></i></a>
                 </td>
                 <td>
                     <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i></a>

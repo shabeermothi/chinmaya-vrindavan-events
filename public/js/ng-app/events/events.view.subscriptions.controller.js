@@ -21,22 +21,22 @@
 
         for (var i=0; i<eventSubscriptions.length; i++) {
             var subscribedDate = eventSubscriptions[i].createDate;
+            var childId = eventSubscriptions[i].childId;
 
             EventsSubscriptionService.getSubscriptionDetails(eventSubscriptions[i]).then(function (response) {
-                var childName;
-                for (var i in response.familyDetails) {
-                    if (response.familyDetails.hasOwnProperty(i)) {
-                        if (response.familyDetails[i].id === eventSubscriptions[i].childId) {
-                            childName = response.familyDetails[i].name;
+                for (var x in response.familyDetails) {
+                    var subscriptionObj = {};
+                    if (response.familyDetails.hasOwnProperty(x)) {
+                        if (response.familyDetails[x].id === childId) {
+                            var childName = response.familyDetails[x].name;
+                            console.log("eventSubscriptions[i].childId", childName);
+                            subscriptionObj.subscribedOn = subscribedDate;
+                            subscriptionObj.subscribedFor = response.familyDetails[x].name;
+                            subscriptionObj.subscribedBy = response.name;
+                            viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
                         }
                     }
                 }
-
-                viewEventSubscriptionCtrl.subscriptions.push({
-                    subscribedOn: subscribedDate,
-                    subscribedFor: childName,
-                    subscribedBy: response.name
-                });
             });
         }
 
@@ -83,7 +83,6 @@
             }
         }
 
-        $log.info("response Arr => ", responseArr);
         viewEventFieldPrices.subEventPrices = responseArr;
 
         viewEventFieldPrices.isArray = angular.isArray;

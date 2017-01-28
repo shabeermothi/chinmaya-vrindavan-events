@@ -482,7 +482,6 @@ app.post('/events/save-price/:userId', function (req, res) {
     } else {
       var childName;
       db.collection(USERS_COLLECTION).findOne({_id: new ObjectID(req.params.userId)}, function (err, doc) {
-        console.log("details => ", doc);
         if (doc.familyDetails && doc.email) {
           for (var i=0; i<doc.familyDetails.length; i++) {
             if (doc.familyDetails[i].id === eventPrice.childId) {
