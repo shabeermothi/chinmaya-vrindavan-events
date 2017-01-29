@@ -15,8 +15,6 @@
         viewEventSubscriptionCtrl.totalNumberOfSubscriptions = eventSubscriptions.length;
         viewEventSubscriptionCtrl.event = sourceEvent;
 
-        console.log("Event subscriptions => ", eventSubscriptions);
-
         viewEventSubscriptionCtrl.subscriptions = [];
 
         for (var i=0; i<eventSubscriptions.length; i++) {

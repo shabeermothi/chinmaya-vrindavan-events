@@ -279,19 +279,13 @@ app.post("/user-events/:token", function(req, res) {
   });
 
 app.get("/user-events/:id/:token", function(req, res) {
-  jwt.verify(req.params.token, 'dsghkasdl235689sahfk', function (err, response) {
-    if (response) {
-      db.collection(USER_EVENTS_COLLECTION).find({ userId: req.params.id }).toArray(function(err, doc) {
-        if (err) {
-          handleError(res, err.message, "Failed to get event");
-        } else {
-          res.status(200).json(doc);
-        }
-      });
-    } else {
-      res.sendStatus(403);
-    }
-  });
+    db.collection(USER_EVENTS_COLLECTION).find({ userId: req.params.id }).toArray(function(err, doc) {
+      if (err) {
+        handleError(res, err.message, "Failed to get event");
+      } else {
+        res.status(200).json(doc);
+      }
+    });
 });
 
 app.get("/user-events/:eventId", function(req, res) {
