@@ -2,16 +2,23 @@
     <h3 class="modal-title" id="modal-title">Subscriptions for {{viewEventSubscriptionCtrl.event.eventName}}</h3>
 </div>
 <div class="modal-body" id="modal-body">
-    <h1>{{viewEventSubscriptionCtrl.totalNumberOfSubscriptions}}</h1> Subscriptions
-    <div class="row">
-        <div class="col-md-4">Subscribed By</div>
-        <div class="col-md-4">Subscribed For</div>
-        <div class="col-md-4">Subscribed On</div>
-    </div>
-    <div class="row" ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions">
-        <div class="col-md-4">{{subscription.subscribedBy}}</div>
-        <div class="col-md-4">{{subscription.subscribedFor}}</div>
-        <div class="col-md-4">{{subscription.subscribedOn | date}}</div>
+    <br/>
+    <h1>{{viewEventSubscriptionCtrl.totalNumberOfSubscriptions}} <small>Subscriptions</small></h1>
+    <div ng-if="viewEventSubscriptionCtrl.subscriptions.length > 0">
+        <div class="row">
+            <input type="text" ng-model="searchSubscriptions" class="form-control" placeholder="Search subscriptions"/>
+        </div>
+        <div class="well row">
+            <div class="col-md-4">Subscribed By</div>
+            <div class="col-md-4">Subscribed For</div>
+            <div class="col-md-4">Subscribed On</div>
+        </div>
+        <div class="row"
+             ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions | filter:searchSubscriptions">
+            <div class="col-md-4">{{subscription.subscribedBy}}</div>
+            <div class="col-md-4">{{subscription.subscribedFor}}</div>
+            <div class="col-md-4">{{subscription.subscribedOn | date}}</div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

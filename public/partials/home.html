@@ -6,11 +6,11 @@
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
                         <i class="fa fa-calendar fa-5x"></i>
                     </div>
-                    <div ng-if="userDetails.isAdmin">
+                    <div ng-if="userDetails.isAdmin" ui-sref="addEvent" style="cursor: pointer">
                         <h2>Add Event</h2>
                         <p>Create an Event for users to subscribe</p>
                     </div>
-                    <div ng-if="!userDetails.isAdmin">
+                    <div ng-if="!userDetails.isAdmin" ui-sref="events" style="cursor: pointer">
                         <h2>Look for Events</h2>
                         <p>Search Events and subscribe to them</p>
                     </div>
@@ -21,11 +21,11 @@
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
                         <i class="fa fa-pencil-square-o fa-5x"></i>
                     </div>
-                    <div ng-if="userDetails.isAdmin">
+                    <div ng-if="userDetails.isAdmin" ui-sref="manageEvent" style="cursor: pointer">
                         <h2>Manage Events</h2>
                         <p>View Event subscriptions, delete event, update event and send notifications to event subscribers</p>
                     </div>
-                    <div ng-if="!userDetails.isAdmin">
+                    <div ng-if="!userDetails.isAdmin" ui-sref="updateProfile" style="cursor: pointer">
                         <h2>Update Your Profile</h2>
                         <p>Update your profile to add family details</p>
                     </div>
@@ -37,13 +37,13 @@
                         <i ng-if="userDetails.isAdmin" class="fa fa-users fa-5x"></i>
                         <i ng-if="!userDetails.isAdmin" class="fa fa-mail-reply fa-5x"></i>
                     </div>
-                    <div ng-if="userDetails.isAdmin">
+                    <div ng-if="userDetails.isAdmin" ui-sref="manageUsers" style="cursor: pointer">
                         <h2>Manage Users</h2>
                         <p>Manage user profile, delete users and change user type</p>
                     </div>
-                    <div ng-if="!userDetails.isAdmin">
-                        <h2>Get Notified</h2>
-                        <p>Get notified about your event subscriptions</p>
+                    <div ng-if="!userDetails.isAdmin" ui-sref="userSubscriptions" style="cursor: pointer">
+                        <h2>View Subscriptions</h2>
+                        <p>View your event subscriptions</p>
                     </div>
                 </div>
             </div>

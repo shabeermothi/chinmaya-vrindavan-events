@@ -19,17 +19,16 @@
 
         for (var i=0; i<eventSubscriptions.length; i++) {
             var subscribedDate = eventSubscriptions[i].createDate;
-            var childId = eventSubscriptions[i].childId;
+            const childId = eventSubscriptions[i].childId;
 
             EventsSubscriptionService.getSubscriptionDetails(eventSubscriptions[i]).then(function (response) {
                 for (var x in response.familyDetails) {
                     var subscriptionObj = {};
                     if (response.familyDetails.hasOwnProperty(x)) {
                         if (response.familyDetails[x].id === childId) {
-                            var childName = response.familyDetails[x].name;
-                            console.log("eventSubscriptions[i].childId", childName);
+                            const childName = response.familyDetails[x].name;
                             subscriptionObj.subscribedOn = subscribedDate;
-                            subscriptionObj.subscribedFor = response.familyDetails[x].name;
+                            subscriptionObj.subscribedFor = childName;
                             subscriptionObj.subscribedBy = response.name;
                             viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
                         }
