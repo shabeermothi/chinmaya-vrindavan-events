@@ -115,7 +115,7 @@
                 });
             });
         }
-        
+
         function getUserSubscriptions (userId) {
             return $http({
                method: 'GET',
@@ -132,20 +132,23 @@
         ManageUserService.getUserSubscriptions(userObj._id).then(function (userSubscriptions) {
             subscriptionCtrl.userEvents = [];
 
-            console.log("user subscriptions => ", userSubscriptions);
-
             for (var i=0; i<userSubscriptions.length; i++) {
                 var childId = userSubscriptions[i].childId;
-                SubscribeEventService.getSubscriptionPrice(userSubscriptions[i].eventId, childId).then(function (subscriptionPriceResponse) {
-                    if (subscriptionPriceResponse !== "") {
-                        for (var k=0; k<userObj.familyDetails.length; k++) {
-                            if (userObj.familyDetails[k].id === childId) {
-                                subscriptionPriceResponse.childName = userObj.familyDetails[k].name;
+                for (var k=0; k<userObj.familyDetails.length; k++) {
+
+                    if (userObj.familyDetails[k].id === childId) {
+                        const childName = angular.copy(userObj.familyDetails[k].name);
+
+                        SubscribeEventService.getSubscriptionPrice(userSubscriptions[i].eventId, childId).then(function (subscriptionPriceResponse) {
+                            if (subscriptionPriceResponse !== "") {
+                                var userSubscriptions = angular.copy(subscriptionPriceResponse);
+                                userSubscriptions.childName = childName;
+                                subscriptionCtrl.userEvents.push(userSubscriptions);
                             }
-                        }
-                        subscriptionCtrl.userEvents.push(subscriptionPriceResponse);
+                        });
                     }
-                });
+                }
+
             }
         });
 
