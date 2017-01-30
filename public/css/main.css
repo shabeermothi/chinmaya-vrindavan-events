@@ -303,7 +303,7 @@ ul.sub-menu {
   display: none;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: -15px;
 }
 
 #header .navbar-nav li ul.sub-menu li a{
@@ -2927,4 +2927,8 @@ span.stButton_gradient,
 
 :required.ng-invalid {
   border: 1px solid #990000;
+}
+
+.ta-hidden-input {
+  display: none;
 }

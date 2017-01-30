@@ -132,6 +132,8 @@
         ManageUserService.getUserSubscriptions(userObj._id).then(function (userSubscriptions) {
             subscriptionCtrl.userEvents = [];
 
+            console.log("user subscriptions => ", userSubscriptions);
+
             for (var i=0; i<userSubscriptions.length; i++) {
                 var childId = userSubscriptions[i].childId;
                 SubscribeEventService.getSubscriptionPrice(userSubscriptions[i].eventId, childId).then(function (subscriptionPriceResponse) {
