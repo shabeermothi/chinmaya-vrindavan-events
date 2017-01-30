@@ -13,6 +13,9 @@
                 </uib-accordion-heading>
                 <div class="row">
                     <h3>Transaction Id : {{subscription.paymentResponse.data.transactionResponse.transId}}</h3>
+                    <div class="pull-right">
+                        <a ng-click="subscriptionCtrl.unsubscribe(subscription)" class="btn btn-small btn-danger">Unsubscribe</a>
+                    </div>
                     <div class="alert alert-error" ng-if="subscription.paymentResponse.data.transactionResponse.errors">
                         <h4>{{subscription.paymentResponse.data.transactionResponse.errors.error[0].errorText}}</h4>
                     </div>

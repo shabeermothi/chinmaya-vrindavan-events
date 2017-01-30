@@ -236,19 +236,6 @@
                         });
                     });
 
-                    $scope.unsubscribeEvent = function (event) {
-                        $http({
-                            method: 'DELETE',
-                            url: '/user-events/' + event._id + '/' + $window.sessionStorage.userId + '/' + event.familySubscriptionDetails.childId
-                        }).then(function () {
-                            for (var i=0; i<$scope.events.length; i++) {
-                                if ($scope.events[i]._id === event._id && $scope.events[i].familySubscriptionDetails.childId === event.familySubscriptionDetails.childId) {
-                                    $scope.events.splice(i, 1);
-                                }
-                            }
-                        });
-                    };
-
                     $scope.showDetails = function (size, event) {
                         $uibModal.open({
                             animation: true,

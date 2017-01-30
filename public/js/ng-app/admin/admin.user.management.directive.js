@@ -77,7 +77,8 @@
             getUsers: getUsers,
             deleteUser: deleteUser,
             updateUserDetails: updateUserDetails,
-            getUserSubscriptions: getUserSubscriptions
+            getUserSubscriptions: getUserSubscriptions,
+            unsubscribe: unsubscribe
         };
 
         function getUsers () {
@@ -124,6 +125,13 @@
                 return response.data;
             });
         }
+
+        function unsubscribe (event) {
+            return $http({
+                method: 'DELETE',
+                url: '/user-events/' + event.eventId + '/' + event.userId + '/' + event.childId
+            });
+        }
     }
 
     function SubscriptionCtrl ($scope, $log, $uibModalInstance, userObj, ManageUserService, SubscribeEventService) {
@@ -133,7 +141,9 @@
             subscriptionCtrl.userEvents = [];
 
             for (var i=0; i<userSubscriptions.length; i++) {
-                var childId = userSubscriptions[i].childId;
+                const childId = userSubscriptions[i].childId;
+                const eventId = userSubscriptions[i].eventId;
+                const userId = userSubscriptions[i].userId;
                 for (var k=0; k<userObj.familyDetails.length; k++) {
 
                     if (userObj.familyDetails[k].id === childId) {
@@ -143,6 +153,10 @@
                             if (subscriptionPriceResponse !== "") {
                                 var userSubscriptions = angular.copy(subscriptionPriceResponse);
                                 userSubscriptions.childName = childName;
+                                userSubscriptions.childId = childId;
+                                userSubscriptions.eventId = eventId;
+                                userSubscriptions.userId = userId;
+
                                 subscriptionCtrl.userEvents.push(userSubscriptions);
                             }
                         });
@@ -151,6 +165,12 @@
 
             }
         });
+
+        subscriptionCtrl.unsubscribe = function (subscriptionObj) {
+            ManageUserService.unsubscribe(subscriptionObj).then(function () {
+                subscriptionCtrl.userEvents.splice(subscriptionCtrl.userEvents.indexOf(subscriptionObj), 1);
+            });
+        };
 
         subscriptionCtrl.cancel = function () {
             $uibModalInstance.close();
