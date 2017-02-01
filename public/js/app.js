@@ -132,12 +132,12 @@
             .state('events', {
                 url: '/events',
                 templateUrl: 'partials/events-list.html',
-                controller: ['$window', '$scope', '$http', '$state', function ($window, $scope, $http, $state) {
+                controller: ['$window', '$scope', '$http', '$state', '$filter', function ($window, $scope, $http, $state, $filter) {
                     $http({
                         method: 'GET',
                         url: '/events'
                     }).then(function (response) {
-                        $scope.events = response.data;
+                        $scope.events = $filter('eventsFilter')(response.data, 'active');
 
                         $scope.currentPage = 0;
                         $scope.pageSize = 5;
