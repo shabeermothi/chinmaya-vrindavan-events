@@ -24,7 +24,8 @@
                         </div>
                     </label>
                     <input type="text" name="eventName" class="form-control" required placeholder=""
-                           ng-model="editEvent.eventDetails.eventName">
+                           ng-model="editEvent.eventDetails.eventName"
+                           ng-required="true">
                 </div>
             </div>
             <div class="col-md-8 col-sm-12">
@@ -35,12 +36,13 @@
                         </div>
                     </label>
                             <textarea class="form-control" name="eventDescription" placeholder="" required
-                                      ng-model="editEvent.eventDetails.eventDescription"></textarea>
+                                      ng-model="editEvent.eventDetails.eventDescription"
+                                      ng-required="true"></textarea>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-2 col-sm-12">
                 <div class="form-group">
                     <label>Event From Date
                         <div ng-messages="editEventForm.eventFromDate.$error">
@@ -49,7 +51,8 @@
                     </label>
                     <p class="input-group">
                         <input type="text" name="eventFromDate" class="form-control" uib-datepicker-popup is-open="editEvent.eventFromDateOpen"
-                               ng-model="editEvent.eventDetails.eventDate" required close-text="Close" />
+                               ng-model="editEvent.eventDetails.eventDate" required close-text="Close"
+                               ng-required="true"/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="editEvent.toggleFromCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -57,7 +60,7 @@
 
                 </div>
             </div>
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-2 col-sm-12">
                 <div class="form-group">
                     <label>Event To Date
                         <div ng-messages="editEventForm.eventToDate.$error">
@@ -66,7 +69,8 @@
                     </label>
                     <p class="input-group">
                         <input type="text" name="eventToDate" class="form-control" uib-datepicker-popup is-open="editEvent.eventToDateOpen"
-                               ng-model="editEvent.eventDetails.eventToDate" required close-text="Close" />
+                               ng-model="editEvent.eventDetails.eventToDate" required close-text="Close"
+                               ng-required="true"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="editEvent.toggleToCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -74,15 +78,24 @@
 
                 </div>
             </div>
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-2 col-sm-12">
                 <div class="form-group">
-                    <label>Event Base Price
+                    <label>Event Base Price ($)
                     </label>
                     <input type="text" name="eventBasePrice" class="form-control" placeholder=""
-                           ng-model="editEvent.eventDetails.eventBasePrice">
+                           ng-model="editEvent.eventDetails.eventBasePrice"
+                           ng-required="true">
                 </div>
             </div>
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-2 col-sm-12">
+                <div class="form-group">
+                    <label>Event Discount (%)
+                    </label>
+                    <input type="text" name="eventDiscount" class="form-control" placeholder=""
+                           ng-model="editEvent.eventDetails.eventDiscount">
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
                 <div class="form-group">
                     <label>Event Facebook URL
                     </label>
@@ -90,7 +103,7 @@
                            ng-model="editEvent.eventDetails.eventFbPage">
                 </div>
             </div>
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-2 col-sm-12">
                 <div class="form-group">
                     <label>Event Twitter Page
                     </label>

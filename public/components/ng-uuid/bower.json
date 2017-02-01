@@ -1,0 +1,21 @@
+{
+  "name": "ng-uuid",
+  "version": "0.1.0",
+  "authors": [
+    "Josh Chang <jspaper.chang@gmail.com>"
+  ],
+  "description": "angular.js service and directive for uuid.",
+  "main": "build/ng-uuid.min.js",
+  "keywords": [
+    "uuid",
+    "angular.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
