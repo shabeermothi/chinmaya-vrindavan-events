@@ -118,8 +118,6 @@
             });
 
             linkEventDetails.saveLinks = function () {
-                $log.info("Links => ", linkEventDetails.links);
-
                 for (var x in linkEventDetails.links) {
 
                     if (linkEventDetails.links[x].price) {

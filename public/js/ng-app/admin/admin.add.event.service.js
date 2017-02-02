@@ -85,6 +85,27 @@
                                 },
                                 "edited": false
                             }
+                        },
+                        {
+                            "numColumn": 3,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventTotalDiscount",
+                                "templateOptions": {
+                                    "type": "number",
+                                    "label": "Event Discount (%)",
+                                    "required": false,
+                                    "description": "Applicable when the number of subevents chosen are greater than 4.",
+                                    "placeholder": ""
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
                         }
                     ]
                 },
@@ -166,9 +187,9 @@
                                 "key": "eventDiscount",
                                 "templateOptions": {
                                     "type": "number",
-                                    "label": "Event Discount (%)",
+                                    "label": "SubEvent Sibling Discount (%)",
                                     "required": false,
-                                    "description": "",
+                                    "description": "Applicable when the subevent has been already subscribed by the user for an existing family member.",
                                     "placeholder": ""
                                 },
                                 "formlyExpressionProperties": {},
@@ -180,7 +201,7 @@
                             }
                         },
                         {
-                            "numColumn": 2,
+                            "numColumn": 3,
                             "exist": true,
                             "control": {
                                 "type": "input",
@@ -202,7 +223,7 @@
                             }
                         },
                         {
-                            "numColumn": 3,
+                            "numColumn": 4,
                             "exist": true,
                             "control": {
                                 "type": "input",
