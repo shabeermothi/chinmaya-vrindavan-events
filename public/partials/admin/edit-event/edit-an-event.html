@@ -28,11 +28,11 @@
                            ng-required="true">
                 </div>
             </div>
-            <div class="col-md-8 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Event Description
                         <div ng-messages="editEventForm.eventDescription.$error">
-                            <p class="label label-danger" ng-message="required">Address is required</p>
+                            <p class="label label-danger" ng-message="required">Event Description is required</p>
                         </div>
                     </label>
                             <textarea class="form-control" name="eventDescription" placeholder="" required
@@ -40,9 +40,17 @@
                                       ng-required="true"></textarea>
                 </div>
             </div>
+            <div class="col-md-2 col-sm-12">
+                <div class="form-group">
+                    <label>Event Discount (%)
+                    </label>
+                    <input type="text" name="eventDiscount" class="form-control" placeholder=""
+                           ng-model="editEvent.eventDetails.eventTotalDiscount">
+                </div>
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-2 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                     <label>Event From Date
                         <div ng-messages="editEventForm.eventFromDate.$error">
@@ -60,7 +68,7 @@
 
                 </div>
             </div>
-            <div class="col-md-2 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                     <label>Event To Date
                         <div ng-messages="editEventForm.eventToDate.$error">
@@ -78,7 +86,7 @@
 
                 </div>
             </div>
-            <div class="col-md-2 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                     <label>Event Base Price ($)
                     </label>
@@ -87,31 +95,33 @@
                            ng-required="true">
                 </div>
             </div>
-            <div class="col-md-2 col-sm-12">
-                <div class="form-group">
-                    <label>Event Discount (%)
-                    </label>
-                    <input type="text" name="eventDiscount" class="form-control" placeholder=""
-                           ng-model="editEvent.eventDetails.eventDiscount">
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-12">
-                <div class="form-group">
-                    <label>Event Facebook URL
-                    </label>
-                    <input type="text" name="eventFbPage" class="form-control" placeholder=""
-                           ng-model="editEvent.eventDetails.eventFbPage">
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-12">
-                <div class="form-group">
-                    <label>Event Twitter Page
-                    </label>
-                    <input type="text" name="eventTwitterPage" class="form-control" placeholder=""
-                           ng-model="editEvent.eventDetails.eventTwitterPage">
-                </div>
-            </div>
         </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>SubEvent Sibling Discount (%)
+                        </label>
+                        <input type="text" name="eventDiscount" class="form-control" placeholder=""
+                               ng-model="editEvent.eventDetails.eventDiscount">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>Event Facebook URL
+                        </label>
+                        <input type="text" name="eventFbPage" class="form-control" placeholder=""
+                               ng-model="editEvent.eventDetails.eventFbPage">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>Event Twitter Page
+                        </label>
+                        <input type="text" name="eventTwitterPage" class="form-control" placeholder=""
+                               ng-model="editEvent.eventDetails.eventTwitterPage">
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>
