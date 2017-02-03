@@ -38,14 +38,14 @@
                 if (err) {
                     handleError(res, err.message, "Failed to get user.");
                 } else if (docs.length > 0) {
-                    var token = jwt.sign(req.body, "dsghkasdl235689sahfk", {expiresIn: "1h"});
+                    var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
                     var response = {
                         token: token,
                         data: docs
                     };
                     res.status(200).json(response);
                 } else {
-                    handleError(res, "User does not exist", "User does not exist in system.", 403);
+                    handleError(res, "User does not exist", "User does not exist in system.", 404);
                 }
             });
         });
@@ -68,7 +68,7 @@
                         if (err) {
                             handleError(res, err.message, "Failed to create new user.");
                         } else if (doc.ops.length > 0) {
-                            var token = jwt.sign(req.body, "dsghkasdl235689sahfk", {expiresIn: "1h"});
+                            var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
                             var response = {
                                 token: token,
                                 data: doc.ops
@@ -78,7 +78,7 @@
 
                             res.status(200).json(response);
                         } else {
-                            handleError(res, "Unable to register user in system", "Unable to register user in system.");
+                            handleError(res, "Unable to register user in system", "Unable to register user in system.", 500);
                         }
                     });
                 }
@@ -139,7 +139,7 @@
                         res.sendStatus(201);
                     });
                 } else {
-                    res.sendStatus(403);
+                    res.sendStatus(404);
                 }
             });
         });

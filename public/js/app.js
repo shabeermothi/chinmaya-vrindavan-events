@@ -19,14 +19,48 @@
                                                 'credit-cards',
                                                 'angular-loading-bar', 'ngCsv']);
 
-    eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
+    eventsApp.factory('EventsInterceptor', EventsInterceptor);
+
+    EventsInterceptor.$inject = ['$window', '$injector', '$rootScope', '$q'];
+
+    function EventsInterceptor ($window, $injector, $rootScope, $q) {
+        return {
+            request: function (config) {
+                config.headers['x-access-token'] = $window.sessionStorage.token;
+                return config;
+            },
+            requestError: function(config) {
+                return config;
+            },
+            response: function(res) {
+                return res;
+            },
+            responseError: function(res) {
+                if (res.status === 403) {
+                    $window.sessionStorage.clear();
+                    $rootScope.$broadcast('home.logout');
+                    $injector.get('$state').go('error');
+                }
+
+                return $q.reject(res);
+            }
+        }
+    }
+
+    eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider, $httpProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);
         //show/hide models in preview panel => default is true
         easyFormSteWayConfigProvider.showPreviewModels(false);
 
+        $httpProvider.interceptors.push('EventsInterceptor');
+
         $urlRouterProvider.otherwise('/home');
 
         $stateProvider
+            .state('error', {
+                url: '/error/unauthorized',
+                templateUrl: 'partials/error-unauthorized.html'
+            })
             .state('home', {
                 url: '/home',
                 templateUrl: 'partials/home.html',

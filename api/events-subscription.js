@@ -79,7 +79,6 @@
         });
 
 
-
         app.post('/event-price/:eventId', function (req, res) {
             var eventPrice = req.body;
             eventPrice.eventId = req.params.eventId;

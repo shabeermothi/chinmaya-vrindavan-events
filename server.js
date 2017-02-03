@@ -5,21 +5,66 @@ var mongodb = require("mongodb");
 var fs = require('fs');
 var moment = require('moment');
 var helmet = require('helmet');
+var jwt = require("jsonwebtoken");
 
 var user = require('./api/user');
 var events = require('./api/events');
 var eventsSubscription = require('./api/events-subscription');
+var config = require('./config');
+
 
 var app = express();
+var appRouter = express.Router();
 
 app.use(helmet());
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/uploads"));
 app.use(bodyParser.json());
 
-var localMongoDbUrl = "mongodb://localhost:27017";
+app.set('secretToken', config.secret);
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
+// route middleware to verify a token
+appRouter.use(function(req, res, next) {
+
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+
+    // verifies secret and checks exp
+    jwt.verify(token, app.get('secretToken'), function(err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+
+  } else {
+
+    if ((req.method === "POST" && req.originalUrl === "/users") ||
+        (req.method === "GET" && req.originalUrl === "/events")) {
+      next();
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
+      });
+    }
+  }
+});
+
+app.use('/events', appRouter);
+app.use('/users', appRouter);
+app.use('/user-details', appRouter);
+app.use('/user-events', appRouter);
+app.use('/event-price', appRouter);
+app.use('/event-field-details', appRouter);
+
+var localMongoDbUrl = "mongodb://localhost:27017";
 var db;
 
 // Connect to the database before starting the application server.
