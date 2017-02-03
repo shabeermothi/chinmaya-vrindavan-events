@@ -17,7 +17,7 @@
                                                 'forgot.password',
                                                 'events.payments',
                                                 'credit-cards',
-                                                'angular-loading-bar']);
+                                                'angular-loading-bar', 'ngCsv']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);

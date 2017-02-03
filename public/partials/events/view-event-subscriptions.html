@@ -20,14 +20,39 @@
             <div class="col-md-2">{{subscription.subscribedFor}}</div>
             <div class="col-md-2">{{subscription.subscribedOn | date}}</div>
             <div class="col-md-6">
-                Transaction id : {{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}
-                <div class="row" ng-repeat="price in subscription.pricingDetails.priceDetails">
-                    Item : {{price.label}}
-                    <span ng-if="price.sublabel">Subitem : {{price.sublabel}}</span>
-                    Price : {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                <div class="row">
+                    <div class="col-md-4">Transaction id </div>
+                    <div class="col-md-6">{{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}</div>
+                    <hr>
                 </div>
-                Base Price : {{subscription.pricingDetails.basePrice | currency}}
-                Total : ${{subscription.pricingDetails.total.price || subscription.pricingDetails.total}} <span ng-if="subscription.pricingDetails.total.discount">({{subscription.pricingDetails.total.discount}})</span>
+                <div class="row">
+                    <h4>Subscription Item Details</h4>
+                </div>
+                <div class="row" ng-repeat="price in subscription.pricingDetails.priceDetails">
+                    <div class="col-md-4">{{price.label}}</div>
+                    <div class="col-md-4">
+                        <span ng-if="price.sublabel">{{price.sublabel}}</span>
+                        <span ng-if="!price.sublabel">N/A</span>
+                    </div>
+                    <div class="col-md-4">
+                        {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Base Price</div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">{{subscription.pricingDetails.basePrice | currency}}</div>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Total</div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        ${{subscription.pricingDetails.total.price || subscription.pricingDetails.total}} <span ng-if="subscription.pricingDetails.total.discount">({{subscription.pricingDetails.total.discount}})</span>
+                    </div>
+                </div>
+                <hr>
             </div>
         </div>
     </div>
