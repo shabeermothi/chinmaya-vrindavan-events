@@ -272,6 +272,47 @@
                                 "edited": false
                             }
                         },
+                        {
+                            "numColumn": 2,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "eventExtendedPrice",
+                                "templateOptions": {
+                                    "type": "number",
+                                    "label": "Event Price after cutoff date ($)",
+                                    "required": false,
+                                    "description": "Event Base Price after the cutoff date",
+                                    "placeholder": ""
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
+                        },
+                        {
+                            "numColumn": 3,
+                            "exist": true,
+                            "control": {
+                                "type": "datepicker",
+                                "key": "extendedEventDate",
+                                "templateOptions": {
+                                    "label": "Cutoff date for extended pricing",
+                                    "required": false,
+                                    "description": "Date from which the extended pricing will be applicable",
+                                    "placeholder": ""
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
+                        }
                     ]
                 }
             ];

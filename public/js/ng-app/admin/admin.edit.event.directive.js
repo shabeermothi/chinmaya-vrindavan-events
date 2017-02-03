@@ -24,6 +24,7 @@
             editEvent.eventDetails = {};
             editEvent.eventFromDateOpen = false;
             editEvent.eventToDateOpen = false;
+            editEvent.extendedEventDateOpen = false;
 
             // Toggle From date calendar
             editEvent.toggleToCalendar = function () {
@@ -33,6 +34,10 @@
             // Toggle To date calendar
             editEvent.toggleFromCalendar = function () {
                 editEvent.eventFromDateOpen = !editEvent.eventFromDateOpen;
+            };
+
+            editEvent.toggleExtendedEventDateCalendar = function () {
+                editEvent.extendedEventDateOpen = !editEvent.extendedEventDateOpen;
             };
 
             UpdateEventService.getEventDetails($scope.eventId).then(function (response) {
