@@ -45,7 +45,7 @@
   },
   "resolutions": {
     "angular-bootstrap": "^2.3.0",
-    "angular": "^1.5.1",
+    "angular": "^1.4.1",
     "api-check": "~7.2.4",
     "angular-loading-bar": "~0.7.1"
   }

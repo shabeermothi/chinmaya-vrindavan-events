@@ -33,7 +33,7 @@
                             subscriptionObj.subscribedBy = response.name;
 
                             SubscribeEventService.getSubscriptionPrice(eventId, childId).then(function (subscriptionPriceResponse) {
-                                $log.info("Subscription price details ", subscriptionPriceResponse);
+                                subscriptionObj.pricingDetails = subscriptionPriceResponse;
                                 viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
                             });
 

@@ -9,15 +9,26 @@
             <input type="text" ng-model="searchSubscriptions" class="form-control" placeholder="Search subscriptions"/>
         </div>
         <div class="well row">
-            <div class="col-md-4">Subscribed By</div>
-            <div class="col-md-4">Subscribed For</div>
-            <div class="col-md-4">Subscribed On</div>
+            <div class="col-md-2">Subscribed By</div>
+            <div class="col-md-2">Subscribed For</div>
+            <div class="col-md-2">Subscribed On</div>
+            <div class="col-md-6">Subscribed Details</div>
         </div>
         <div class="row"
              ng-repeat="subscription in viewEventSubscriptionCtrl.subscriptions | filter:searchSubscriptions">
-            <div class="col-md-4">{{subscription.subscribedBy}}</div>
-            <div class="col-md-4">{{subscription.subscribedFor}}</div>
-            <div class="col-md-4">{{subscription.subscribedOn | date}}</div>
+            <div class="col-md-2">{{subscription.subscribedBy}}</div>
+            <div class="col-md-2">{{subscription.subscribedFor}}</div>
+            <div class="col-md-2">{{subscription.subscribedOn | date}}</div>
+            <div class="col-md-6">
+                Transaction id : {{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}
+                <div class="row" ng-repeat="price in subscription.pricingDetails.priceDetails">
+                    Item : {{price.label}}
+                    <span ng-if="price.sublabel">Subitem : {{price.sublabel}}</span>
+                    Price : {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                </div>
+                Base Price : {{subscription.pricingDetails.basePrice | currency}}
+                Total : ${{subscription.pricingDetails.total.price || subscription.pricingDetails.total}} <span ng-if="subscription.pricingDetails.total.discount">({{subscription.pricingDetails.total.discount}})</span>
+            </div>
         </div>
     </div>
 </div>
