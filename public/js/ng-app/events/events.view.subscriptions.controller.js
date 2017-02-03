@@ -6,9 +6,9 @@
         .controller('EventFieldPricesCtrl', EventFieldPricesCtrl)
         .controller('SubscriptionPricesCtrl', SubscriptionPricesCtrl);
 
-    ViewSubscriptionsCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventSubscriptions', 'sourceEvent', 'EventsSubscriptionService'];
+    ViewSubscriptionsCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventSubscriptions', 'sourceEvent', 'EventsSubscriptionService', 'SubscribeEventService'];
 
-    function ViewSubscriptionsCtrl ($scope, $log, $uibModalInstance, eventSubscriptions, sourceEvent, EventsSubscriptionService) {
+    function ViewSubscriptionsCtrl ($scope, $log, $uibModalInstance, eventSubscriptions, sourceEvent, EventsSubscriptionService, SubscribeEventService) {
         var viewEventSubscriptionCtrl = this;
 
         viewEventSubscriptionCtrl.eventSubscriptions = eventSubscriptions;
@@ -18,19 +18,25 @@
         viewEventSubscriptionCtrl.subscriptions = [];
 
         for (var i=0; i<eventSubscriptions.length; i++) {
-            var subscribedDate = eventSubscriptions[i].createDate;
+            const subscribedDate = eventSubscriptions[i].createDate;
             const childId = eventSubscriptions[i].childId;
+            const eventId = eventSubscriptions[i].eventId;
 
             EventsSubscriptionService.getSubscriptionDetails(eventSubscriptions[i]).then(function (response) {
                 for (var x in response.familyDetails) {
-                    var subscriptionObj = {};
+                    const subscriptionObj = {};
                     if (response.familyDetails.hasOwnProperty(x)) {
                         if (response.familyDetails[x].id === childId) {
                             const childName = response.familyDetails[x].name;
                             subscriptionObj.subscribedOn = subscribedDate;
                             subscriptionObj.subscribedFor = childName;
                             subscriptionObj.subscribedBy = response.name;
-                            viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+
+                            SubscribeEventService.getSubscriptionPrice(eventId, childId).then(function (subscriptionPriceResponse) {
+                                $log.info("Subscription price details ", subscriptionPriceResponse);
+                                viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+                            });
+
                         }
                     }
                 }

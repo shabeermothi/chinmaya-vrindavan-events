@@ -80,7 +80,13 @@
 
                 SubscribeEventService.makePayment(paymentInfo).then(function (paymentResponse) {
                     SubscribeEventService.createUserEvent($scope.eventDetails).then(function (userResponse) {
-                        SubscribeEventService.saveEventPrice(vm.eventDetails.eventId, vm.eventDetails.childId, vm.priceDetailsArr, vm.eventBasePrice, vm.price, paymentResponse, $scope.eventName).then(function () {
+                        const totalPriceObj = {
+                            price: vm.price,
+                            discount: vm.totalDiscount
+                        };
+
+                        delete paymentResponse.config;
+                        SubscribeEventService.saveEventPrice(vm.eventDetails.eventId, vm.eventDetails.childId, vm.priceDetailsArr, vm.eventBasePrice, totalPriceObj, paymentResponse, $scope.eventName).then(function () {
                             SubscribeEventService.go('events.subscription.success', {'eventName': $scope.eventName, 'price': vm.price});
                         });
                     });
