@@ -13,7 +13,8 @@
                 eventDetails: '=',
                 eventFieldPrices: '=',
                 price: '@',
-                eventName: '='
+                eventName: '=',
+                discountDetails: '='
             },
             templateUrl: 'partials/payments/card-details.html',
             controller: PaymentFormDirectiveCtrl,
@@ -25,12 +26,14 @@
             vm.price = parseInt($scope.price);
             vm.eventFieldPrices = $scope.eventFieldPrices;
             vm.eventDetails = $scope.eventDetails;
+            vm.totalDiscount = $scope.discountDetails.totalDiscount;
 
 
             SubscribeEventService.resolveFields(vm.eventFieldPrices).then(function (fieldsResponse) {
                 vm.fieldsResponse = fieldsResponse;
                 vm.priceDetailsArr = [];
                 var eventDetailKeys = Object.keys(vm.eventDetails.eventDetails);
+                const discountEventFieldArr = Object.keys($scope.discountDetails.eventFieldDiscount);
 
                 SubscribeEventService.getEventPrice(vm.eventDetails.eventId).then(function (eventResponse) {
                     vm.eventBasePrice = eventResponse.eventBasePrice;
@@ -49,7 +52,12 @@
                                             priceDetails.price = vm.fieldsResponse[x][key].priceValue["yes"];
                                             priceDetails.label = vm.fieldsResponse[x][key].actualValue;
                                         }
+                                    }
 
+                                    if (discountEventFieldArr.indexOf(key) > -1) {
+                                        priceDetails.discount = $scope.discountDetails.eventFieldDiscount[key] + "% of $" + ((vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]]) ?
+                                            vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]] : vm.fieldsResponse[x][key].priceValue["yes"]);
+                                        priceDetails.price = priceDetails.price - ((priceDetails.price * parseInt($scope.discountDetails.eventFieldDiscount[key])) / 100);
                                     }
 
                                     vm.priceDetailsArr.push(priceDetails);

@@ -97,7 +97,7 @@
             </div>
         </div>
             <div class="row">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                     <div class="form-group">
                         <label>SubEvent Sibling Discount (%)
                         </label>
@@ -105,7 +105,7 @@
                                ng-model="editEvent.eventDetails.eventDiscount">
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                     <div class="form-group">
                         <label>Event Facebook URL
                         </label>
@@ -113,12 +113,20 @@
                                ng-model="editEvent.eventDetails.eventFbPage">
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                     <div class="form-group">
                         <label>Event Twitter Page
                         </label>
                         <input type="text" name="eventTwitterPage" class="form-control" placeholder=""
                                ng-model="editEvent.eventDetails.eventTwitterPage">
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>Number of subevents to be chosen for total discount
+                        </label>
+                        <input type="text" name="eventDiscount" class="form-control" placeholder="4"
+                               ng-model="editEvent.eventDetails.maxTotalDiscount">
                     </div>
                 </div>
             </div>

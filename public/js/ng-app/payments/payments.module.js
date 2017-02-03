@@ -10,7 +10,8 @@
                         price: 0,
                         eventDetails: {},
                         eventFieldPrices: {},
-                        eventName: ""
+                        eventName: "",
+                        discountDetails: {}
                     },
                     templateUrl: 'partials/payments/home.html',
                     controller: ['$stateParams', '$scope', function ($stateParams, $scope) {
@@ -18,6 +19,7 @@
                         $scope.price = $stateParams.price;
                         $scope.eventName = $stateParams.eventName;
                         $scope.eventFieldPrices = $stateParams.eventFieldPrices;
+                        $scope.discountDetails = $stateParams.discountDetails;
                     }]
                 });
         });

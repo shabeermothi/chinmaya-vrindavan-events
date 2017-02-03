@@ -245,6 +245,34 @@
                             }
                         }
                     ]
+                },
+                {
+                    "line": 1,
+                    "activeColumn": 4,
+                    "columns": [
+                        {
+                            "numColumn": 1,
+                            "exist": true,
+                            "control": {
+                                "type": "input",
+                                "key": "maxTotalDiscount",
+                                "defaultValue": 4,
+                                "templateOptions": {
+                                    "type": "number",
+                                    "label": "Number of subevents to be chosen for total discount",
+                                    "required": false,
+                                    "description": "Defaults to 4",
+                                    "placeholder": "4"
+                                },
+                                "formlyExpressionProperties": {},
+                                "formlyValidators": {},
+                                "formlyValidation": {
+                                    "messages": {}
+                                },
+                                "edited": false
+                            }
+                        },
+                    ]
                 }
             ];
         }

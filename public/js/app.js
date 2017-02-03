@@ -16,7 +16,8 @@
                                                 'ngFileUpload',
                                                 'forgot.password',
                                                 'events.payments',
-                                                'credit-cards']);
+                                                'credit-cards',
+                                                'angular-loading-bar']);
 
     eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);

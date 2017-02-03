@@ -46,6 +46,10 @@
             SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
                 vm.eventName = response.eventName;
                 vm.eventId = response._id;
+                vm.eventSiblingDiscount = (response.eventDiscount) ? parseInt(response.eventDiscount) : 20;
+                vm.eventTotalDiscount = (response.eventTotalDiscount) ? parseInt(response.eventTotalDiscount) : 0;
+                vm.eventMaxNumSubEventsForSiblingDiscount =  (response.maxSiblingDiscount) ? parseInt(response.maxSiblingDiscount) : 1;
+                vm.eventMaxSubEventsForTotalDiscount =  (response.maxTotalDiscount) ? parseInt(response.maxTotalDiscount) : 4;
                 vm.eventDetails = response.eventDetails.edaFieldsModel;
                 vm.submitButtonText = response.eventDetails.btnSubmitText;
                 vm.cancelButtonText = response.eventDetails.btnCancelText;
@@ -56,6 +60,8 @@
             });
 
             vm.subscribeToEvent = function (eventUserDataModel) {
+
+                var discountDetails = {};
                 var userEventObj = {
                     "eventId": $scope.eventId,
                     "userId": $window.sessionStorage.userId,
@@ -64,7 +70,28 @@
                 };
 
                 calculatePrice(eventUserDataModel).then(function (price) {
-                    $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName});
+                    var applyTotalDiscountCounter = 0;
+                    for (var userChosenField in eventUserDataModel) {
+                        for (var eventFields of vm.eventDetails) {
+                            for (var eventFieldColumn of eventFields.columns) {
+                                if (eventFieldColumn.control.key === userChosenField) {
+                                    applyTotalDiscountCounter++;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
+                        const oldPrice = price;
+
+                        price = price - ((price * vm.eventTotalDiscount)/100);
+                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice;
+                    }
+
+                    discountDetails.eventFieldDiscount = vm.fieldDiscount;
+
+                    $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName, 'discountDetails': discountDetails});
                 });
             };
 
@@ -82,6 +109,7 @@
 
                     SubscribeEventService.getEventPrice($scope.eventId).then(function (response) {
                         vm.eventFieldPrices = response.eventFieldPrices;
+                        vm.fieldDiscount = {};
                         var eventSiblingDiscount = parseInt(response.eventDiscount);
                         price = parseInt(price) + parseInt(response.eventBasePrice);
                         if (eventUserDataModel) {
@@ -95,6 +123,7 @@
                                                     var additionalPrice = parseInt(eventFieldPrices[b][x][(eventUserDataModel[a] === true) ? "yes" : eventUserDataModel[a]]);
                                                     if (fieldSubscribed.indexOf(a) > -1) {
                                                         var eventDiscount = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
+                                                        vm.fieldDiscount[a] = eventDiscount;
                                                         additionalPrice = additionalPrice - ((additionalPrice * eventDiscount)/100);
                                                     }
                                                     price = parseInt(price) + additionalPrice;
