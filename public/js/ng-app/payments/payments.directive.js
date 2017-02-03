@@ -5,7 +5,7 @@
         .directive('paymentForm', PaymentFormDirective);
 
     function PaymentFormDirective () {
-        PaymentFormDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService'];
+        PaymentFormDirectiveCtrl.$inject = ['$scope', '$log', 'SubscribeEventService', '$state'];
 
         return {
             restrict: 'A',
@@ -21,7 +21,7 @@
             controllerAs: 'vm'
         };
 
-        function PaymentFormDirectiveCtrl ($scope, $log, SubscribeEventService) {
+        function PaymentFormDirectiveCtrl ($scope, $log, SubscribeEventService, $state) {
             var vm = this;
             vm.price = parseInt($scope.price);
             vm.eventFieldPrices = $scope.eventFieldPrices;
@@ -85,6 +85,10 @@
                         });
                     });
                 });
+            };
+
+            vm.goToPreviousState = function () {
+                SubscribeEventService.go('^');
             };
         }
     }
