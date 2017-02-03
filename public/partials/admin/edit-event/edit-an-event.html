@@ -91,13 +91,12 @@
                     <label>Event Base Price ($)
                     </label>
                     <input type="text" name="eventBasePrice" class="form-control" placeholder=""
-                           ng-model="editEvent.eventDetails.eventBasePrice"
-                           ng-required="true">
+                           ng-model="editEvent.eventDetails.eventBasePrice">
                 </div>
             </div>
         </div>
             <div class="row">
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label>SubEvent Sibling Discount (%)
                         </label>
@@ -105,7 +104,7 @@
                                ng-model="editEvent.eventDetails.eventDiscount">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label>Event Facebook URL
                         </label>
@@ -113,7 +112,7 @@
                                ng-model="editEvent.eventDetails.eventFbPage">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label>Event Twitter Page
                         </label>
@@ -121,13 +120,36 @@
                                ng-model="editEvent.eventDetails.eventTwitterPage">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12">
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         <label>Number of subevents to be chosen for total discount
                         </label>
                         <input type="text" name="eventDiscount" class="form-control" placeholder="4"
                                ng-model="editEvent.eventDetails.maxTotalDiscount">
                     </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>Event Price after cutoff date ($)
+                        </label>
+                        <input type="text" name="eventBasePrice" class="form-control" placeholder=""
+                               ng-model="editEvent.eventDetails.eventExtendedPrice">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Cutoff date for extended pricing
+                    </label>
+                    <p class="input-group">
+                        <input type="text" name="extendedEventDate" class="form-control" uib-datepicker-popup is-open="editEvent.extendedEventDateOpen"
+                               ng-model="editEvent.eventDetails.extendedEventDate" required close-text="Close"
+                                ng-required="false" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="editEvent.toggleExtendedEventDateCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </p>
+
                 </div>
             </div>
             <div class="row">
