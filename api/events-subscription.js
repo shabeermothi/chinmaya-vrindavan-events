@@ -9,6 +9,7 @@
     let cveMailer = require('./mailer');
     let mongodb = require("mongodb");
     let payment = require('./payments/make-payment');
+    let paymentDetails = require('./payments/get-transaction-details');
     let ObjectID = mongodb.ObjectID;
 
     // Generic error handler used by all endpoints.
@@ -142,6 +143,12 @@
         app.get('/events/subscription-price/:eventId/:childId', function (req, res) {
             db.collection(EVENT_PRICE_DETAILS).find({eventId: req.params.eventId, childId: req.params.childId}).toArray(function (err, doc) {
                 res.status(200).json(doc[0]);
+            });
+        });
+        
+        app.get('/events/subscription/:transId', function (req, res) {
+            paymentDetails.getTransactionDetails(req.params.transId, function (transactionDetails) {
+                res.status(200).json(transactionDetails);
             });
         });
 

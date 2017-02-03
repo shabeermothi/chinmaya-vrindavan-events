@@ -34,7 +34,14 @@
 
                             SubscribeEventService.getSubscriptionPrice(eventId, childId).then(function (subscriptionPriceResponse) {
                                 subscriptionObj.pricingDetails = subscriptionPriceResponse;
-                                viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+
+                                SubscribeEventService.getTransactionDetails(subscriptionPriceResponse.paymentResponse.data.transactionResponse.transId).then(function (transactionResponse) {
+                                    subscriptionObj.pricingDetails.transactionStatus = angular.copy(transactionResponse.messages.message[0].text);
+                                    subscriptionObj.pricingDetails.transactionType = angular.copy((transactionResponse.transaction) ? transactionResponse.transaction.transactionType : "");
+                                    viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+                                }, function (error) {
+                                    viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+                                });
                             });
 
                         }

@@ -18,7 +18,8 @@
             makePayment: makePayment,
             saveEventPrice: saveEventPrice,
             getSubscriptionPrice: getSubscriptionPrice,
-            go: go
+            go: go,
+            getTransactionDetails: getTransactionDetails
         };
 
         function getEventDetails (eventId) {
@@ -115,6 +116,15 @@
             return $http({
                 method: 'GET',
                 url: '/events/subscription-price/' + eventId + "/" + childId
+            }).then(function (response) {
+                return response.data;
+            });
+        }
+        
+        function getTransactionDetails (transId) {
+            return $http({
+                method: 'GET',
+                url: '/events/subscription/' + transId
             }).then(function (response) {
                 return response.data;
             });

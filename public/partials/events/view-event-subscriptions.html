@@ -22,8 +22,12 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-4">Transaction id </div>
-                    <div class="col-md-6">{{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}</div>
-                    <hr>
+                    <div class="col-md-6">{{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}
+                        <i class="fa fa-info-circle" ng-if="subscription.pricingDetails.transactionStatus"
+                           uib-tooltip="{{subscription.pricingDetails.transactionStatus}}"
+                           tooltip-placement="top"></i>
+                        <hr>
+                    </div>
                 </div>
                 <div class="row">
                     <h4>Subscription Item Details</h4>
