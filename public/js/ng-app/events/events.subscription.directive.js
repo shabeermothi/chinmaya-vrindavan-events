@@ -83,10 +83,11 @@
                     }
 
                     if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
-                        const oldPrice = price;
+                        const oldPrice = vm.totalFirstFieldPrice;
 
-                        price = price - ((price * vm.eventTotalDiscount)/100);
-                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice;
+                        price = vm.additionalFieldPrice + (oldPrice - (oldPrice * (vm.eventTotalDiscount/100)));
+                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice + "- tuition fee";
+
                     }
 
                     discountDetails.eventFieldDiscount = vm.fieldDiscount;
@@ -100,10 +101,16 @@
                 var price = 0;
                 SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
                     var fieldSubscribed = [];
+                    vm.subscribedFields = [];
+                    var totalDiscountOnFirstField = 0;
+                    var additionalFieldPrice = 0;
 
                     for (var a in userEventResponse) {
                         for (var key in userEventResponse[a].eventDetails) {
-                            fieldSubscribed.push(key);
+                            if (userEventResponse[a].eventDetails.hasOwnProperty(key)) {
+                                fieldSubscribed.push(key);
+                                vm.subscribedFields.push(key);
+                            }
                         }
                     }
 
@@ -115,6 +122,7 @@
                         if (eventUserDataModel) {
                             for (var a in eventUserDataModel) {
                                 if (eventUserDataModel.hasOwnProperty(a)) {
+
                                     var eventFieldPrices = response.eventFieldPrices;
                                     for (var b in eventFieldPrices) {
                                         if (eventFieldPrices.hasOwnProperty(b)) {
@@ -122,15 +130,41 @@
                                                 if (a === x) {
                                                     var additionalPrice = parseInt(eventFieldPrices[b][x][(eventUserDataModel[a] === true) ? "yes" : eventUserDataModel[a]]);
                                                     if (fieldSubscribed.indexOf(a) > -1) {
-                                                        var eventDiscount = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
-                                                        vm.fieldDiscount[a] = eventDiscount;
-                                                        additionalPrice = additionalPrice - ((additionalPrice * eventDiscount)/100);
+                                                        if (eventFieldPrices[b][x].hasOwnProperty(0)) {
+                                                            var eventDiscount1 = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
+                                                            vm.fieldDiscount[a] = eventDiscount1;
+                                                            additionalPrice = additionalPrice - ((additionalPrice * eventDiscount1)/100);
+
+                                                            totalDiscountOnFirstField = totalDiscountOnFirstField + additionalPrice;
+
+                                                            price = parseInt(price) + additionalPrice;
+                                                        } else {
+                                                            additionalFieldPrice = additionalFieldPrice + additionalPrice;
+                                                            price = parseInt(price) + additionalPrice;
+                                                        }
+                                                    } else {
+                                                        if (eventFieldPrices[b][x].hasOwnProperty(0)) {
+                                                            var eventDiscount1 = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
+                                                            vm.fieldDiscount[a] = eventDiscount1;
+                                                            additionalPrice = additionalPrice - ((additionalPrice * eventDiscount1)/100);
+
+                                                            totalDiscountOnFirstField = totalDiscountOnFirstField + additionalPrice;
+
+                                                            price = parseInt(price) + additionalPrice;
+                                                        } else {
+                                                            //$log.info("additional price => ", additionalPrice);
+                                                            additionalFieldPrice = additionalFieldPrice + additionalPrice;
+                                                        }
                                                     }
-                                                    price = parseInt(price) + additionalPrice;
+
+
                                                 }
                                             }
                                         }
                                     }
+
+                                    vm.additionalFieldPrice = additionalFieldPrice;
+                                    vm.totalFirstFieldPrice = totalDiscountOnFirstField;
                                 }
                             }
                         }
