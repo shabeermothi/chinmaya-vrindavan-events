@@ -86,7 +86,7 @@
                         const oldPrice = vm.totalFirstFieldPrice;
 
                         price = vm.additionalFieldPrice + (oldPrice - (oldPrice * (vm.eventTotalDiscount/100)));
-                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice + "- tuition fee";
+                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice + " - tuition fee";
 
                     }
 
@@ -144,15 +144,10 @@
                                                         }
                                                     } else {
                                                         if (eventFieldPrices[b][x].hasOwnProperty(0)) {
-                                                            var eventDiscount1 = (eventSiblingDiscount) ? eventSiblingDiscount : 20 ;
-                                                            vm.fieldDiscount[a] = eventDiscount1;
-                                                            additionalPrice = additionalPrice - ((additionalPrice * eventDiscount1)/100);
-
                                                             totalDiscountOnFirstField = totalDiscountOnFirstField + additionalPrice;
 
                                                             price = parseInt(price) + additionalPrice;
                                                         } else {
-                                                            //$log.info("additional price => ", additionalPrice);
                                                             additionalFieldPrice = additionalFieldPrice + additionalPrice;
                                                         }
                                                     }
