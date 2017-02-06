@@ -12,7 +12,11 @@
             updateEvent: updateEvent,
             navigateToEventDetails: navigateToEventDetails,
             navigaveToManageEvents: navigaveToManageEvents,
-            addPrice: addPrice
+            addPrice: addPrice,
+            deleteLinksAndPrices: deleteLinksAndPrices,
+            getLinks: getLinks,
+            updateLinks: updateLinks,
+            persistLinkDetails: persistLinkDetails
         };
 
         function updateEvent (eventData) {
@@ -39,7 +43,7 @@
         function navigaveToManageEvents (eventId) {
             $state.go('manageEvent');
         }
-        
+
         function addPrice (eventId, priceObject) {
             return $http({
                 method: 'POST',
@@ -47,6 +51,42 @@
                 data: priceObject
             }).then(function (response) {
                 return response.data;
+            });
+        }
+
+        function deleteLinksAndPrices (event) {
+            return $http({
+                method: 'DELETE',
+                url: '/event/price-and-links/' + event._id
+            }).then(function (response) {
+                return response;
+            });
+        }
+
+        function getLinks (eventId) {
+            return $http({
+                method: 'GET',
+                url: '/events/update-links/' + eventId
+            }).then(function (response) {
+                return response.data;
+            });
+        }
+
+        function updateLinks (links, eventId) {
+            return $http({
+                method: 'PUT',
+                url: '/events/update-links/' + eventId,
+                data: links
+            }).then(function (response) {
+                return response;
+            });
+        }
+
+        function persistLinkDetails (links, eventId) {
+            return $http({
+                method: 'POST',
+                url: '/events/update-links/' + eventId,
+                data: links
             });
         }
     }

@@ -107,14 +107,20 @@
 
             editLinkEventDetails.eventId = $scope.eventId;
             editLinkEventDetails.eventName = $scope.eventName;
-            editLinkEventDetails.links = {};
+
+            UpdateEventService.getLinks(editLinkEventDetails.eventId).then(function (response) {
+                delete response._id;
+                delete response.eventId;
+                delete response.createdDate;
+                editLinkEventDetails.links = angular.copy(response);
+            });
+
 
             UpdateEventService.getEventDetails(editLinkEventDetails.eventId).then(function (response) {
                 editLinkEventDetails.fullEventDetails = response;
                 editLinkEventDetails.eventFields = response.eventDetails.edaFieldsModel;
 
                 SubscribeEventService.getEventPrice(editLinkEventDetails.eventId).then(function (eventPriceResp) {
-                    $log.info("event price response => ", eventPriceResp);
                     for (var price of eventPriceResp.eventFieldPrices) {
                         for (var key in price) {
                             if (key.indexOf("basicSelect") > -1 || key.indexOf("select") > -1) {
@@ -139,52 +145,53 @@
                                 }
                             }
                         }
-
                     }
-
                 });
             });
 
             editLinkEventDetails.updateLinks = function () {
-                for (var x in editLinkEventDetails.links) {
 
-                    if (editLinkEventDetails.links[x].price) {
-                        var priceObj = {};
-                        priceObj[x] = editLinkEventDetails.links[x].price;
+                UpdateEventService.deleteLinksAndPrices(editLinkEventDetails.fullEventDetails).then(function () {
+                    for (var x in editLinkEventDetails.links) {
 
-                        UpdateEventService.addPrice(editLinkEventDetails.fullEventDetails._id, priceObj);
-                    }
+                        if (editLinkEventDetails.links[x].price) {
+                            var priceObj = {};
+                            priceObj[x] = editLinkEventDetails.links[x].price;
 
-                    var sourceFieldType = getType(x);
-                    if (editLinkEventDetails.links.hasOwnProperty(x)) {
-                        for (var a in editLinkEventDetails.eventFields) {
-                            if (editLinkEventDetails.eventFields.hasOwnProperty(a)) {
-                                for (var b in editLinkEventDetails.eventFields[a].columns) {
-                                    if (editLinkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
-                                        if (editLinkEventDetails.links[x].targetField && editLinkEventDetails.links[x].targetField.hasOwnProperty("control")) {
-                                            if (editLinkEventDetails.eventFields[a].columns[b].control.key === editLinkEventDetails.links[x].targetField.control.key) {
-                                                delete editLinkEventDetails.eventFields[a].columns[b].control.edited;
-                                                delete editLinkEventDetails.eventFields[a].columns[b].control.subtype;
-                                                delete editLinkEventDetails.eventFields[a].columns[b].control.selectedControl;
+                            UpdateEventService.addPrice(editLinkEventDetails.fullEventDetails._id, priceObj);
+                        }
 
-                                                if (editLinkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
-                                                    editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "!model['" + x + "']"
-                                                    };
-                                                } else if (editLinkEventDetails.links[x].action === "enable" && sourceFieldType !== "select") {
-                                                    editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "']"
-                                                    };
-                                                } else if (editLinkEventDetails.links[x].action === "disable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
-                                                    editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "'] == '" + editLinkEventDetails.links[x].sourceValue.value + "'"
-                                                    };
-                                                } else if (editLinkEventDetails.links[x].action === "enable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
-                                                    editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
-                                                        "templateOptions['disabled']": "model['" + x + "'] != '" + editLinkEventDetails.links[x].sourceValue.value + "'"
-                                                    };
+                        var sourceFieldType = getType(x);
+                        if (editLinkEventDetails.links.hasOwnProperty(x)) {
+                            for (var a in editLinkEventDetails.eventFields) {
+                                if (editLinkEventDetails.eventFields.hasOwnProperty(a)) {
+                                    for (var b in editLinkEventDetails.eventFields[a].columns) {
+                                        if (editLinkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
+                                            if (editLinkEventDetails.links[x].targetField && editLinkEventDetails.links[x].targetField.hasOwnProperty("control")) {
+                                                if (editLinkEventDetails.eventFields[a].columns[b].control.key === editLinkEventDetails.links[x].targetField.control.key) {
+                                                    delete editLinkEventDetails.eventFields[a].columns[b].control.edited;
+                                                    delete editLinkEventDetails.eventFields[a].columns[b].control.subtype;
+                                                    delete editLinkEventDetails.eventFields[a].columns[b].control.selectedControl;
+
+                                                    if (editLinkEventDetails.links[x].action === "disable" && sourceFieldType !== "select") {
+                                                        editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "!model['" + x + "']"
+                                                        };
+                                                    } else if (editLinkEventDetails.links[x].action === "enable" && sourceFieldType !== "select") {
+                                                        editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "']"
+                                                        };
+                                                    } else if (editLinkEventDetails.links[x].action === "disable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                        editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "'] == '" + editLinkEventDetails.links[x].sourceValue.value + "'"
+                                                        };
+                                                    } else if (editLinkEventDetails.links[x].action === "enable" && (sourceFieldType === "basicSelect" || sourceFieldType === "select")) {
+                                                        editLinkEventDetails.eventFields[a].columns[b].control.formlyExpressionProperties = {
+                                                            "templateOptions['disabled']": "model['" + x + "'] != '" + editLinkEventDetails.links[x].sourceValue.value + "'"
+                                                        };
+                                                    }
+
                                                 }
-
                                             }
                                         }
                                     }
@@ -192,36 +199,38 @@
                             }
                         }
                     }
-                }
 
-                function getType (property) {
-                    for (var a in editLinkEventDetails.eventFields) {
-                        if (editLinkEventDetails.eventFields.hasOwnProperty(a)) {
-                            for (var b in editLinkEventDetails.eventFields[a].columns) {
-                                if (editLinkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
-                                    if (editLinkEventDetails.eventFields[a].columns[b].control.key === property) {
-                                        if (editLinkEventDetails.eventFields[a].columns[b].control.type === 'basicSelect') {
-                                            editLinkEventDetails.eventFields[a].columns[b].control.type = "select";
+                    function getType (property) {
+                        for (var a in editLinkEventDetails.eventFields) {
+                            if (editLinkEventDetails.eventFields.hasOwnProperty(a)) {
+                                for (var b in editLinkEventDetails.eventFields[a].columns) {
+                                    if (editLinkEventDetails.eventFields[a].columns.hasOwnProperty(b)) {
+                                        if (editLinkEventDetails.eventFields[a].columns[b].control.key === property) {
+                                            if (editLinkEventDetails.eventFields[a].columns[b].control.type === 'basicSelect') {
+                                                editLinkEventDetails.eventFields[a].columns[b].control.type = "select";
+                                            }
+
+                                            delete editLinkEventDetails.eventFields[a].columns[b].control.edited;
+                                            delete editLinkEventDetails.eventFields[a].columns[b].control.subtype;
+                                            delete editLinkEventDetails.eventFields[a].columns[b].control.selectedControl;
+
+                                            return editLinkEventDetails.eventFields[a].columns[b].control.type;
                                         }
-
-                                        delete editLinkEventDetails.eventFields[a].columns[b].control.edited;
-                                        delete editLinkEventDetails.eventFields[a].columns[b].control.subtype;
-                                        delete editLinkEventDetails.eventFields[a].columns[b].control.selectedControl;
-
-                                        return editLinkEventDetails.eventFields[a].columns[b].control.type;
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                editLinkEventDetails.fullEventDetails.eventDetails.edaFieldsModel = editLinkEventDetails.eventFields;
+                    editLinkEventDetails.fullEventDetails.eventDetails.edaFieldsModel = editLinkEventDetails.eventFields;
 
-                UpdateEventService.updateEvent(editLinkEventDetails.fullEventDetails).then(function (response) {
-                    $state.go('manageEvent');
-                }, function (error) {
-                    $log.info('Failure');
+                    UpdateEventService.updateEvent(editLinkEventDetails.fullEventDetails).then(function (response) {
+                        UpdateEventService.persistLinkDetails(editLinkEventDetails.links, editLinkEventDetails.eventId).then(function (response) {
+                            $state.go('manageEvent');
+                        });
+                    }, function (error) {
+                        $log.info('Failure');
+                    });
                 });
             };
         }

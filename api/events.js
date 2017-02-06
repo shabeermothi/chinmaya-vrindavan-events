@@ -3,6 +3,7 @@
 
     const EVENTS_COLLECTION = "events";
     const EVENT_PRICE_COLLECTION = "eventPrice";
+    const EVENT_LINK_COLLECTION = "eventLinks";
 
     let mongodb = require("mongodb");
     let ObjectID = mongodb.ObjectID;
@@ -156,6 +157,75 @@
                 res.status(200).json(responseArr);
             });
         });
+
+        app.delete("/event/price-and-links/:id", function(req, res) {
+            db.collection(EVENTS_COLLECTION).findOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+                if (err) {
+                    handleError(res, err.message, "Failed to delete event");
+                } else {
+                    for (var a of result.eventDetails.edaFieldsModel) {
+                        for (var b of a.columns) {
+                            b.control.formlyExpressionProperties = {};
+                        }
+                    }
+
+                    db.collection(EVENTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, result, function(err, doc) {
+                        if (err) {
+                            handleError(res, err.message, "Failed to update event");
+                        } else {
+                            db.collection(EVENT_PRICE_COLLECTION).deleteMany({eventId: req.params.id}, function(err, delResult) {
+                                if (err) {
+                                    handleError(res, err.message, "Failed to delete event");
+                                } else {
+                                    res.status(204).end();
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        app.post("/events/update-links/:eventId", function(req, res) {
+
+            var newLink = req.body;
+            newLink.createdDate = new Date();
+            newLink.eventId = req.params.eventId;
+
+            db.collection(EVENT_LINK_COLLECTION).insertOne(newLink, function(err, doc) {
+                if (err) {
+                    handleError(res, err.message, "Failed to create new event.");
+                } else {
+                    res.status(201).end();
+                }
+            });
+        });
+
+        app.put("/events/update-links/:eventId", function(req, res) {
+
+            var newLink = req.body;
+            newLink.createdDate = new Date();
+            newLink.eventId = req.params.eventId;
+
+            db.collection(EVENT_LINK_COLLECTION).updateOne({eventId: req.params.eventId}, newLink, function(err, doc) {
+                if (err) {
+                    handleError(res, err.message, "Failed to create new event.");
+                } else {
+                    res.status(201).end();
+                }
+            });
+        });
+
+        app.get("/events/update-links/:eventId", function(req, res) {
+            db.collection(EVENT_LINK_COLLECTION).find({eventId: req.params.eventId}).toArray(function(err, docs) {
+                if (err) {
+                    handleError(res, err.message, "Failed to get events.");
+                } else {
+                    res.status(200).json(docs[0]);
+                }
+            });
+        });
+
     }
 
     module.exports = Events;

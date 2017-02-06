@@ -123,7 +123,7 @@
                     if (linkEventDetails.links[x].price) {
                         var priceObj = {};
                         priceObj[x] = linkEventDetails.links[x].price;
-                        
+
                         UpdateEventService.addPrice(linkEventDetails.fullEventDetails._id, priceObj);
                     }
 
@@ -190,8 +190,10 @@
 
                 linkEventDetails.fullEventDetails.eventDetails.edaFieldsModel = linkEventDetails.eventFields;
 
-                UpdateEventService.updateEvent(linkEventDetails.fullEventDetails).then(function (response) {
-                    $state.go('manageEvent');
+                UpdateEventService.updateEvent(linkEventDetails.fullEventDetails).then(function () {
+                    UpdateEventService.persistLinkDetails(linkEventDetails.links, linkEventDetails.eventId).then(function (response) {
+                        $state.go('manageEvent');
+                    });
                 }, function (error) {
                     $log.info('Failure');
                 });
