@@ -51,6 +51,15 @@
                    $scope.eventId = $stateParams.eventId;
                }]
            })
+           .state('editEvent.linkSubEvents', {
+               url: '/:eventName',
+               templateUrl: 'partials/admin/edit-event/edit-event-linksubevent-home.html',
+               controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                   console.log("event id ", $stateParams.eventName);
+                   $scope.eventId = $stateParams.eventId;
+                   $scope.eventName = $stateParams.eventName;
+               }]
+           })
            .state('manageEvent', {
                url: '/events/admin/manage-events',
                templateUrl: 'partials/admin/manage-event/manage-an-event-home.html'

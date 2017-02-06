@@ -1,0 +1,99 @@
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Link your subevents - {{editLinkEventDetails.eventName}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="create-new-event">
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col-md-2"><h3>Source</h3></div>
+            <div class="col-md-3"><h3>Source Value (if any)</h3></div>
+            <div class="col-md-3"><h3>Target</h3></div>
+            <div class="col-md-2"><h3>Action</h3></div>
+            <div class="col-md-2"><h3>Add Price</h3></div>
+        </div>
+        <div class="well" ng-repeat="eventFields in editLinkEventDetails.eventFields">
+            <div class="row" ng-repeat="source in eventFields.columns" ng-if="source.control.templateOptions.label">
+                <div class="col-md-2">
+                    {{source.control.templateOptions.label}}
+                </div>
+                <div class="col-md-3">
+                    <div ng-switch="source.control.type">
+                        <div ng-switch-when="basicSelect">
+                            <select class="form-control" name="sourceSelectOptions" id="sourceSelectOptions"
+                                    ng-options="fieldOptions.name for fieldOptions in source.control.templateOptions.options"
+                                    ng-model="editLinkEventDetails.links[source.control.key].sourceValue"></select>
+                        </div>
+                        <div ng-switch-when="select">
+                            <select class="form-control" name="sourceSelectOptions" id="sourceSelectOptions"
+                                    ng-options="fieldOptions.name for fieldOptions in source.control.templateOptions.options"
+                                    ng-model="editLinkEventDetails.links[source.control.key].sourceValue"></select>
+                        </div>
+                        <div ng-switch-when="checkbox">
+                            <select class="form-control" name="sourceCheckboxOptions" id="sourceCheckboxOptions"
+                            ng-model="editLinkEventDetails.links[source.control.key].sourceValue">
+                                <option></option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control col-md-4" name="targetField" id="targetField"
+                            ng-options="field.control.templateOptions.label for field in eventFields.columns"
+                            ng-model="editLinkEventDetails.links[source.control.key].targetField"></select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control col-md-4" ng-model="editLinkEventDetails.links[source.control.key].action">
+                        <option value="disable">Disable Target</option>
+                        <option value="enable">Enable Target</option>
+                        <option value="hide">Hide Target</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <div ng-switch="source.control.type">
+                        <div ng-switch-when="basicSelect">
+                            <div ng-repeat="option in source.control.templateOptions.options">
+                                {{option.name}} <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
+                                                        ng-pattern="/^[0-9]*$/"
+                                                        ng-model="editLinkEventDetails.links[source.control.key].price[option.value]">
+                            </div>
+                        </div>
+                        <div ng-switch-when="select">
+                            <div ng-repeat="option in source.control.templateOptions.options">
+                                {{option.name}} <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
+                                                       ng-pattern="/^[0-9]*$/"
+                                                       ng-model="editLinkEventDetails.links[source.control.key].price[option.value]">
+                            </div>
+                        </div>
+                        <div ng-switch-when="checkbox">
+                            <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
+                                                   ng-pattern="/^[0-9]*$/"
+                                                   ng-model="editLinkEventDetails.links[source.control.key].price['yes']">
+                        </div>
+                        <div ng-switch-default>
+                            <input type="text" name="optionPrice" class="form-control" placeholder="Enter Price"
+                                   ng-pattern="/^[0-9]*$/"
+                                   ng-model="editLinkEventDetails.links[source.control.key].price[option]">
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-1"></div>
+                <br /><br /><br />
+            </div>
+        </div>
+        <button class="btn btn-success pull-right" ng-click="editLinkEventDetails.updateLinks()">Update</button>
+        <br /><br /><br />
+    </div>
+</section>
