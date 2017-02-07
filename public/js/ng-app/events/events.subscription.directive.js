@@ -50,7 +50,17 @@
                 vm.eventTotalDiscount = (response.eventTotalDiscount) ? parseInt(response.eventTotalDiscount) : 0;
                 vm.eventMaxNumSubEventsForSiblingDiscount =  (response.maxSiblingDiscount) ? parseInt(response.maxSiblingDiscount) : 1;
                 vm.eventMaxSubEventsForTotalDiscount =  (response.maxTotalDiscount) ? parseInt(response.maxTotalDiscount) : 4;
+
+                // change basicSelect to select before displaying
+                for (var a of response.eventDetails.edaFieldsModel) {
+                    for (var b of a.columns) {
+                        if (b.control.type == "basicSelect") {
+                            b.control.type = "select";
+                        }
+                    }
+                }
                 vm.eventDetails = response.eventDetails.edaFieldsModel;
+
                 vm.submitButtonText = response.eventDetails.btnSubmitText;
                 vm.cancelButtonText = response.eventDetails.btnCancelText;
 

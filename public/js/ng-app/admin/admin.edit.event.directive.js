@@ -75,6 +75,19 @@
             UpdateEventService.getEventDetails($scope.eventId).then(function (response) {
                 eventResponse = response;
                 editEventDetails.eventName = response.eventName;
+                for (var a of response.eventDetails.edaFieldsModel) {
+                    for (var b of a.columns) {
+                        if (b.control.type == "select" || b.control.type == "basicSelect") {
+                            b.control.type = "basicSelect";
+                            b.control.selectedControl = "BasicSelect"
+                        } else if (b.control.type == "checkbox") {
+                            b.control.selectedControl = "Checkbox";
+                        }
+
+                        b.control.subtype = "";
+                        b.control.edited = true;
+                    }
+                }
                 editEventDetails.easyFormGeneratorModel	= response.eventDetails;
                 editEventDetails.saveForm = saveForm;
             });
