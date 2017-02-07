@@ -19,6 +19,19 @@
                                                 'credit-cards',
                                                 'angular-loading-bar', 'ngCsv']);
 
+    eventsApp.provider('StateAuth', function () {
+        var isAdmin;
+        return {
+            setUserType: function (value) {
+                isAdmin = value;
+            },
+            $get: function () {
+                return {
+                    isAdmin: isAdmin
+                };
+            }
+        }
+    });
     eventsApp.factory('EventsInterceptor', EventsInterceptor);
 
     EventsInterceptor.$inject = ['$window', '$injector', '$rootScope', '$q'];
@@ -47,7 +60,7 @@
         }
     }
 
-    eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider, $httpProvider) {
+    eventsApp.config(function($stateProvider, $urlRouterProvider, easyFormSteWayConfigProvider, $httpProvider, StateAuthProvider) {
         easyFormSteWayConfigProvider.showPreviewPanel(false);
         //show/hide models in preview panel => default is true
         easyFormSteWayConfigProvider.showPreviewModels(false);
@@ -68,7 +81,6 @@
                     $scope.test = true;
 
                     $scope.callFn = function () {
-                        alert("called");
                         $scope.test = false;
                     };
                 }]
@@ -122,6 +134,7 @@
                         }).then(function (response) {
                             if (response.data.token) {
                                 $scope.invalidUserLogin = false;
+                                StateAuthProvider.setUserType(response.data.data[0].isAdmin);
                                 $window.sessionStorage.token = response.data.token;
                                 $window.sessionStorage.userDetails = response.data.data[0].name;
                                 $window.sessionStorage.isAdmin = response.data.data[0].isAdmin;
@@ -148,6 +161,7 @@
                             data: user
                         }).then(function (response) {
                             if (response.data.token) {
+                                StateAuthProvider.setUserType(false);
                                 $window.sessionStorage.token = response.data.token;
                                 $window.sessionStorage.userDetails = response.data.data[0].name;
                                 $window.sessionStorage.userId = response.data.data[0]._id;
