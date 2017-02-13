@@ -16,7 +16,7 @@
                 <div class="col-md-4">{{priceDetails.label}}</div>
                 <div class="col-md-4" ng-if="priceDetails.subLabel">{{priceDetails.subLabel}}</div>
                 <div class="col-md-4" ng-if="!priceDetails.subLabel">N/A</div>
-                <div class="col-md-4">{{priceDetails.price | currency}}</div>
+                <div class="col-md-4">{{priceDetails.price | currency}}<span ng-if="priceDetails.discount">({{priceDetails.discount}})</span></div>
             </div>
             <div class="row">
                 <div class="col-md-4">Base Price</div>
@@ -26,7 +26,8 @@
             <div class="row">
                 <div class="col-md-4">Total</div>
                 <div class="col-md-4"></div>
-                <div class="col-md-4 pull-right"><b>{{subscriptionPricesCtrl.subscription.price.total | currency}}</b></div>
+                <div class="col-md-4 pull-right"><b>{{subscriptionPricesCtrl.subscription.price.total.price || subscriptionPricesCtrl.subscription.price.total | currency}}
+                    <span ng-if="subscriptionPricesCtrl.subscription.price.total.discount">({{subscriptionPricesCtrl.subscription.price.total.discount}})</span></b></div>
             </div>
         </div>
     </uib-accordion>
