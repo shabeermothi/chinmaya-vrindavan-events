@@ -385,6 +385,7 @@
                     $window.sessionStorage.clear();
                     $rootScope.$broadcast('home.logout');
                     $state.go('home');
+                    $window.location.reload();
                 }]
             })
             .state('newEvent', {
