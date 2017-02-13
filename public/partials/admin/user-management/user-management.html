@@ -72,9 +72,12 @@
                     <a ng-click="vm.viewSubscriptions('lg', user)"><i class="fa fa-rss"></i></a>
                 </td>
                 <td>
-                    <a ng-click="vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i></a>
-                    <a ng-if="!user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i></a>
-                    <a ng-if="user.isAdmin" ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-remove"></i></a>
+                    <a confirm-click="Are you sure you want to remove {{user.name}} from the system?"
+                            ng-click="confirmClick() && vm.deleteUser(user._id)"><i class="fa fa-trash-o"></i></a>
+                    <a ng-if="!user.isAdmin"
+                       ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-user"></i></a>
+                    <a ng-if="user.isAdmin"
+                       ng-click="vm.toggleAdmin(user._id)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
             </tbody>
