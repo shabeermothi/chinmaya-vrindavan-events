@@ -1,48 +1,60 @@
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Subscriptions Details</h3>
+    <h3 class="modal-title" id="modal-title">Shabeer's Subscriptions Details</h3>
 </div>
 <div class="modal-body" id="modal-body">
     <div class="row">
         <input type="text" class="form-control" ng-model="searchSubscriptions" placeholder="Search in subscriptions" />
     </div>
-    <div class="row">
-        <uib-accordion>
-            <div uib-accordion-group class="panel-default" is-open="true" ng-repeat="subscription in subscriptionCtrl.userEvents | filter: searchSubscriptions">
-                <uib-accordion-heading>
-                    {{subscription.childName}} on {{subscription.createDate | date}}
-                </uib-accordion-heading>
-                <div class="row">
-                    <h3>Transaction Id : {{subscription.paymentResponse.data.transactionResponse.transId}}</h3>
-                    <div class="pull-right">
-                        <a ng-click="subscriptionCtrl.unsubscribe(subscription)" class="btn btn-small btn-danger">Unsubscribe</a>
-                    </div>
-                    <div class="alert alert-error" ng-if="subscription.paymentResponse.data.transactionResponse.errors">
-                        <h4>{{subscription.paymentResponse.data.transactionResponse.errors.error[0].errorText}}</h4>
-                    </div>
-                </div>
-                <div class="row well">
-                    <div class="col-md-4">Subevent</div>
-                    <div class="col-md-4">Options (if any)</div>
-                    <div class="col-md-4">Price ($)</div>
-                </div>
-                <div class="row" ng-repeat="priceDetail in subscription.priceDetails">
-                    <div class="col-md-4">{{priceDetail.label}}</div>
-                    <div class="col-md-4" ng-if="priceDetail.subLabel">{{priceDetail.subLabel}}</div>
-                    <div class="col-md-4" ng-if="!priceDetail.subLabel">N/A</div>
-                    <div class="col-md-4">{{priceDetail.price | currency}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Base Price</div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4 pull-right"><b>{{subscription.basePrice | currency}}</b></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Total</div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4 pull-right"><b>{{subscription.total | currency}}</b></div>
+    <div class="well row">
+        <div class="col-md-2">Subscribed For</div>
+        <div class="col-md-2">Subscribed On</div>
+        <div class="col-md-6">Subscribed Details</div>
+    </div>
+    <div class="row" ng-repeat="subscription in subscriptionCtrl.userEvents | filter: searchSubscriptions">
+        <div class="col-md-2">{{subscription.childName}}</div>
+        <div class="col-md-2">{{subscription.createDate}}</div>
+        <div class="col-md-2 pull-right">
+            <a ng-click="subscriptionCtrl.unsubscribe(subscription)" class="btn btn-small btn-danger">Unsubscribe</a>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <h4>Subscription Item Details</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Transaction id </div>
+                <div class="col-md-6">{{subscription.paymentResponse.data.transactionResponse.transId}}
+                    <i class="fa fa-info-circle" ng-if="subscription.transactionStatus"
+                       uib-tooltip="{{subscription.transactionStatus}}"
+                       tooltip-placement="top"></i>
+                    <hr>
                 </div>
             </div>
-        </uib-accordion>
+            <div class="row" ng-repeat="price in subscription.priceDetails">
+                <div class="col-md-4">{{price.label}}</div>
+                <div class="col-md-4">
+                    <span ng-if="price.subLabel">{{price.subLabel}}</span>
+                    <span ng-if="!price.subLabel">N/A</span>
+                </div>
+                <div class="col-md-4">
+                    {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Base Price</div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">{{subscription.basePrice | currency}}</div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Total</div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    ${{subscription.total.price || subscription.total}} <span ng-if="subscription.total.discount">({{subscription.total.discount}})</span>
+                </div>
+            </div>
+            <hr>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

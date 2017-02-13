@@ -2,6 +2,7 @@
     'use strict';
 
     const USERS_COLLECTION = "contacts";
+    const bcrypt = require('bcrypt');
 
     let cveMailer = require('./mailer');
     let mongodb = require("mongodb");
@@ -21,7 +22,7 @@
         console.log("ERROR: " + reason);
         res.status(code || 500).json({"error": message});
     }
-    
+
     function User (app, db) {
         app.get("/users", function(req, res) {
             db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
@@ -34,16 +35,22 @@
         });
 
         app.post("/login", function(req, res) {
-            db.collection(USERS_COLLECTION).find({"email": req.body.email, "password": req.body.password}).toArray(function(err, docs) {
+            db.collection(USERS_COLLECTION).find({"email": req.body.email}).toArray(function(err, docs) {
                 if (err) {
                     handleError(res, err.message, "Failed to get user.");
                 } else if (docs.length > 0) {
-                    var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
-                    var response = {
-                        token: token,
-                        data: docs
-                    };
-                    res.status(200).json(response);
+                    bcrypt.compare(req.body.password, docs[0].password, function (err, match) {
+                        if (match) {
+                            var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
+                            var response = {
+                                token: token,
+                                data: docs
+                            };
+                            res.status(200).json(response);
+                        } else {
+                            handleError(res, "User entered wrong password", "Wrong password.", 402);
+                        }
+                    });
                 } else {
                     handleError(res, "User does not exist", "User does not exist in system.", 404);
                 }
@@ -51,6 +58,7 @@
         });
 
         app.post("/users", function(req, res) {
+            var saltRounds = 10;
             var newUser = req.body;
             newUser.createDate = new Date();
 
@@ -58,30 +66,33 @@
                 handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
             }
 
-            db.collection(USERS_COLLECTION).find({"email": req.body.email}).toArray(function(err, docs) {
-                if (err) {
-                    handleError(res, err.message, "Failed to get user.");
-                } else if (docs.length > 0) {
-                    handleError(res, "User Exists", "User Exists.", 409);
-                } else {
-                    db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
-                        if (err) {
-                            handleError(res, err.message, "Failed to create new user.");
-                        } else if (doc.ops.length > 0) {
-                            var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
-                            var response = {
-                                token: token,
-                                data: doc.ops
-                            };
+            bcrypt.hash(req.body.password, saltRounds).then(function (hash) {
+                newUser.password = hash;
+                db.collection(USERS_COLLECTION).find({"email": req.body.email}).toArray(function(err, docs) {
+                    if (err) {
+                        handleError(res, err.message, "Failed to get user.");
+                    } else if (docs.length > 0) {
+                        handleError(res, "User Exists", "User Exists.", 409);
+                    } else {
+                        db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+                            if (err) {
+                                handleError(res, err.message, "Failed to create new user.");
+                            } else if (doc.ops.length > 0) {
+                                var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 1440});
+                                var response = {
+                                    token: token,
+                                    data: doc.ops
+                                };
 
-                            cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Welcome to Chinmaya Vrindavan Events");
+                                cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Welcome to Chinmaya Vrindavan Events");
 
-                            res.status(200).json(response);
-                        } else {
-                            handleError(res, "Unable to register user in system", "Unable to register user in system.", 500);
-                        }
-                    });
-                }
+                                res.status(200).json(response);
+                            } else {
+                                handleError(res, "Unable to register user in system", "Unable to register user in system.", 500);
+                            }
+                        });
+                    }
+                });
             });
 
         });
