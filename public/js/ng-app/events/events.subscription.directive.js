@@ -96,7 +96,7 @@
                         const oldPrice = vm.totalFirstFieldPrice;
 
                         price = vm.additionalFieldPrice + (oldPrice - (oldPrice * (vm.eventTotalDiscount/100)));
-                        discountDetails.totalDiscount = vm.eventTotalDiscount + "% of $" + oldPrice + " - tuition fee";
+                        discountDetails.totalDiscount = "after " + vm.eventTotalDiscount + "% discount on tuition fee of $" + oldPrice;
 
                     }
 

@@ -55,7 +55,7 @@
                                     }
 
                                     if (discountEventFieldArr.indexOf(key) > -1) {
-                                        priceDetails.discount = $scope.discountDetails.eventFieldDiscount[key] + "% of $" + ((vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]]) ?
+                                        priceDetails.discount = "Multi-child discount " + $scope.discountDetails.eventFieldDiscount[key] + "% off $" + ((vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]]) ?
                                             vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]] : vm.fieldsResponse[x][key].priceValue["yes"]);
                                         priceDetails.price = priceDetails.price - ((priceDetails.price * parseInt($scope.discountDetails.eventFieldDiscount[key])) / 100);
                                     }
