@@ -92,12 +92,13 @@
                         }
                     }
 
-                    if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
-                        const oldPrice = vm.totalFirstFieldPrice;
+                    const oldPrice = vm.totalFirstFieldPrice;
 
+                    if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
                         price = vm.additionalFieldPrice + (oldPrice - (oldPrice * (vm.eventTotalDiscount/100)));
                         discountDetails.totalDiscount = "after " + vm.eventTotalDiscount + "% discount on tuition fee of $" + oldPrice;
-
+                    } else {
+                        price = vm.additionalFieldPrice + oldPrice;
                     }
 
                     discountDetails.eventFieldDiscount = vm.fieldDiscount;
