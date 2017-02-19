@@ -216,10 +216,12 @@
                     }
 
                     for (var i=0; i<response.length; i++) {
-                        childNames.push({
-                            name: response[i].name,
-                            value: response[i].id
-                        });
+                        if (response[i].grade !== "Other") {
+                            childNames.push({
+                                name: response[i].name,
+                                value: response[i].id
+                            });
+                        }
                     }
 
                     for (var x in childIds) {
