@@ -313,6 +313,9 @@
                 templateUrl: 'partials/user-profile.html',
                 controller: ['$window', '$scope', '$http', '$state', 'uuid', 'Upload',
                     function ($window, $scope, $http, $state, uuid, Upload) {
+
+                        $scope.date = new Date();
+
                     $http({
                         method: 'GET',
                         url: '/users/' + $window.sessionStorage.userId
