@@ -103,13 +103,13 @@
                 <div class="col-md-2 col-sm-12"></div>
                 <div class="col-md-4 col-sm-12" data-ng-repeat="family in userDetails.familyDetails">
                     <div class="form-group">
-                        <label>Name <a ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
+                        <label>Name <span ng-if="$index === 0"> - Primary Adult </span><a ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
                         <input type="text" name="phone" id="phone" class="form-control"
                                placeholder="Name" ng-model="family.name">
                         <label>Role</label>
                         <select class="form-control" ng-model="family.role">
                             <option>Adult</option>
-                            <option>Child</option>
+                            <option ng-if="$index > 0">Child</option>
                         </select>
                         <label>Grade</label>
                         <input class="form-control" type="number" ng-model="family.grade" name="" placeholder="Enter Grade">
@@ -119,7 +119,7 @@
             <div class="row">
                 <div class="col-md-2 col-sm-12"></div>
                 <div class="col-md-4 col-sm-12">
-                    <button class="form-control btn btn-default" ng-click="addNewChoice()">Add family member</button>
+                    <button class="form-control btn btn-default" ng-click="addNewChoice()">Add additional Family members</button>
                 </div>
             </div>
             <div class="row">
