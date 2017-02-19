@@ -84,7 +84,8 @@
                     for (var userChosenField in eventUserDataModel) {
                         for (var eventFields of vm.eventDetails) {
                             for (var eventFieldColumn of eventFields.columns) {
-                                if (eventFieldColumn.control.key === userChosenField) {
+                                if ((eventFieldColumn.control.type === "select" || eventFieldColumn.control.type === "basicSelect")
+                                    && eventFieldColumn.control.key === userChosenField) {
                                     applyTotalDiscountCounter++;
                                     break;
                                 }
@@ -95,8 +96,8 @@
                     const oldPrice = vm.totalFirstFieldPrice;
 
                     if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
-                        price = vm.additionalFieldPrice + (oldPrice - (oldPrice * (vm.eventTotalDiscount/100)));
-                        discountDetails.totalDiscount = "after " + vm.eventTotalDiscount + "% discount on tuition fee of $" + oldPrice;
+                        price = vm.additionalFieldPrice + (oldPrice - (parseInt(applyTotalDiscountCounter) * (vm.eventTotalDiscount)));
+                        discountDetails.totalDiscount = "after $" + vm.eventTotalDiscount + " X " + parseInt(applyTotalDiscountCounter) + " chosen weeks discount on tuition fee of $" + oldPrice;
                     } else {
                         price = vm.additionalFieldPrice + oldPrice;
                     }

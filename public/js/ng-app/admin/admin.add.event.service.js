@@ -94,9 +94,9 @@
                                 "key": "eventTotalDiscount",
                                 "templateOptions": {
                                     "type": "number",
-                                    "label": "Event Discount (%)",
+                                    "label": "Event Discount ($)",
                                     "required": false,
-                                    "description": "Applicable when the number of subevents chosen are greater than 4.",
+                                    "description": "Applicable when the number of subevents chosen are greater than 4. Calculated by Event Discount ($) x number of chosen subevents",
                                     "placeholder": ""
                                 },
                                 "formlyExpressionProperties": {},
