@@ -56,7 +56,7 @@
                 } else if (res.status === 401) {
                     $window.sessionStorage.clear();
                     $rootScope.$broadcast('home.logout');
-                    $injector.get('$state').go('error');
+                    $injector.get('$state').go('inactiveSession');
                 }
 
                 return $q.reject(res);
@@ -77,6 +77,10 @@
             .state('error', {
                 url: '/error/unauthorized',
                 templateUrl: 'partials/error-unauthorized.html'
+            })
+            .state('inactiveSession', {
+                url: '/inactive-session',
+                templateUrl: 'partials/inactive-session.html'
             })
             .state('home', {
                 url: '/home',
