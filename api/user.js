@@ -145,9 +145,13 @@
         app.post('/recover-account/:userId/:passwordRecoveryHash', function (req, res) {
             db.collection(USERS_COLLECTION).findOne({_id: new ObjectID(req.params.userId), passwordRecoveryHash: req.params.passwordRecoveryHash}, function (err, doc) {
                 if (doc) {
-                    doc.password = req.body.newPassword;
-                    db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(doc._id)}, doc, function(err, doc) {
-                        res.sendStatus(201);
+                    var saltRounds = 10;
+                    bcrypt.hash(req.body.newPassword, saltRounds).then(function (hash) {
+                        doc.password = hash;
+
+                        db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(doc._id)}, doc, function(err, doc) {
+                            res.sendStatus(201);
+                        });
                     });
                 } else {
                     res.sendStatus(404);
