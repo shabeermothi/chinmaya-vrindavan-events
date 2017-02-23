@@ -41,7 +41,7 @@
                 } else if (docs.length > 0) {
                     bcrypt.compare(req.body.password, docs[0].password, function (err, match) {
                         if (match) {
-                            var token = jwt.sign(req.body, app.get('secretToken'), {expiresInMinutes: 1440});
+                            var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 72000});
                             var response = {
                                 token: token,
                                 data: docs
@@ -78,7 +78,7 @@
                             if (err) {
                                 handleError(res, err.message, "Failed to create new user.");
                             } else if (doc.ops.length > 0) {
-                                var token = jwt.sign(req.body, app.get('secretToken'), {expiresInMinutes: 1440});
+                                var token = jwt.sign(req.body, app.get('secretToken'), {expiresIn: 72000});
                                 var response = {
                                     token: token,
                                     data: doc.ops
