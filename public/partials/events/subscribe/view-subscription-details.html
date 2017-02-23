@@ -15,7 +15,7 @@
             <div class="row" ng-repeat="priceDetails in subscriptionPricesCtrl.subscription.price.priceDetails">
                 <div class="col-md-4">{{priceDetails.label}}</div>
                 <div class="col-md-4" ng-if="priceDetails.subLabel">{{priceDetails.subLabel}}</div>
-                <div class="col-md-4" ng-if="!priceDetails.subLabel">N/A</div>
+                <div class="col-md-4" ng-if="!priceDetails.subLabel"></div>
                 <div class="col-md-4">{{priceDetails.price | currency}}<span ng-if="priceDetails.discount">({{priceDetails.discount}})</span></div>
             </div>
             <div class="row">

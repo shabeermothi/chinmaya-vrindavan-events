@@ -33,7 +33,7 @@
                 <div class="col-md-4">{{price.label}}</div>
                 <div class="col-md-4">
                     <span ng-if="price.subLabel">{{price.subLabel}}</span>
-                    <span ng-if="!price.subLabel">N/A</span>
+                    <span ng-if="!price.subLabel"></span>
                 </div>
                 <div class="col-md-4">
                     {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
