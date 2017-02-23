@@ -53,6 +53,10 @@
                     $window.sessionStorage.clear();
                     $rootScope.$broadcast('home.logout');
                     $injector.get('$state').go('error');
+                } else if (res.status === 401) {
+                    $window.sessionStorage.clear();
+                    $rootScope.$broadcast('home.logout');
+                    $injector.get('$state').go('error');
                 }
 
                 return $q.reject(res);
