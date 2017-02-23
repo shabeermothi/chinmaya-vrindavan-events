@@ -323,11 +323,36 @@
                     function ($window, $scope, $http, $state, uuid, Upload) {
 
                         $scope.date = new Date();
+                        $scope.childArr = [];
 
                     $http({
                         method: 'GET',
                         url: '/users/' + $window.sessionStorage.userId
                     }).then(function (response) {
+
+                        $http({
+                            url: '/events',
+                            method: 'GET'
+                        }).then(function (events) {
+
+                            $http({
+                                url: '/user-events/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token,
+                                method: 'GET'
+                            }).then(function (userEvents) {
+                                var activeEvents = events.data.filter(function (ele) {
+                                    return (new Date(ele.eventDate) > new Date());
+                                });
+
+                                for (var a of activeEvents) {
+                                    for (var b of userEvents.data) {
+                                        if (a._id === b.eventId) {
+                                            $scope.childArr.push(b.childId);
+                                        }
+                                    }
+                                }
+                            })
+                        });
+
                         $scope.userDetails = response.data;
                         if (!$scope.userDetails.familyDetails) {
                             $scope.userDetails.familyDetails = [];
@@ -376,7 +401,6 @@
                     };
 
                     $scope.updateProfile = function () {
-                        console.log("Update profile called ", $scope.userDetails);
                         $http({
                             method: 'PUT',
                             url: '/users/' + $window.sessionStorage.userId,

@@ -98,17 +98,19 @@
                 <div class="col-md-2 col-sm-12"></div>
                 <div class="col-md-4 col-sm-12" data-ng-repeat="family in userDetails.familyDetails">
                     <div class="form-group">
-                        <label>Name <span ng-if="$index === 0"> - Primary Adult </span><a ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a></label>
+                        <label>Name <span ng-if="$index === 0"> - Primary Adult </span>
+                            <a ng-if="$index > 0 && childArr.indexOf(family.id) < 0" ng-click="removeChoice(family)"><i class="fa fa-minus-circle"></i></a>
+                        </label>
                         <input type="text" name="phone" id="phone" class="form-control"
-                               placeholder="Name" ng-model="family.name">
+                               placeholder="Name" ng-model="family.name" ng-disabled="childArr.indexOf(family.id) > 0">
                         <label>Role</label>
-                        <select class="form-control" ng-model="family.role">
+                        <select class="form-control" ng-model="family.role" ng-disabled="childArr.indexOf(family.id) > 0">
                             <option ng-if="$index === 0" selected>Adult</option>
                             <option ng-if="$index > 0">Adult</option>
                             <option ng-if="$index > 0">Child</option>
                         </select>
-                        <label>Grade in September {{date | date:'yyyy'}}</label>
-                        <select class="form-control" ng-model="family.grade">
+                        <label ng-if="$index > 0">Grade in September {{date | date:'yyyy'}}</label>
+                        <select ng-if="$index > 0" class="form-control" ng-model="family.grade" ng-disabled="childArr.indexOf(family.id) > 0" ng-required="family.role === 'Child'">
                             <option>Kindergarten</option>
                             <option>Grade 1</option>
                             <option>Grade 2</option>
