@@ -40,7 +40,7 @@
                 </div>
                 <hr>
             </div>
-            <div class="row">
+            <div class="row" ng-if="subscription.basePrice > 0">
                 <div class="col-md-4">Base Price</div>
                 <div class="col-md-4"></div>
                 <div class="col-md-4">{{subscription.basePrice | currency}}</div>

@@ -18,7 +18,7 @@
                 <div class="col-md-4" ng-if="!priceDetails.subLabel"></div>
                 <div class="col-md-4">{{priceDetails.price | currency}}<span ng-if="priceDetails.discount">({{priceDetails.discount}})</span></div>
             </div>
-            <div class="row">
+            <div class="row" ng-if="subscriptionPricesCtrl.subscription.price.basePrice > 0">
                 <div class="col-md-4">Base Price</div>
                 <div class="col-md-4"></div>
                 <div class="col-md-4 pull-right"><b>{{subscriptionPricesCtrl.subscription.price.basePrice | currency}}</b></div>
