@@ -103,12 +103,13 @@
                                placeholder="Name" ng-model="family.name">
                         <label>Role</label>
                         <select class="form-control" ng-model="family.role">
-                            <option>Adult</option>
+                            <option ng-if="$index === 0" selected>Adult</option>
+                            <option ng-if="$index > 0">Adult</option>
                             <option ng-if="$index > 0">Child</option>
                         </select>
                         <label>Grade in September {{date | date:'yyyy'}}</label>
                         <select class="form-control" ng-model="family.grade">
-                            <option>KinderGarden</option>
+                            <option>Kindergarten</option>
                             <option>Grade 1</option>
                             <option>Grade 2</option>
                             <option>Grade 3</option>
@@ -116,6 +117,11 @@
                             <option>Grade 5</option>
                             <option>Grade 6</option>
                             <option>Grade 7</option>
+                            <option>Grade 8</option>
+                            <option>Grade 9</option>
+                            <option>Grade 10</option>
+                            <option>Grade 11</option>
+                            <option>Grade 12</option>
                             <option>Other</option>
                         </select>
                     </div>
