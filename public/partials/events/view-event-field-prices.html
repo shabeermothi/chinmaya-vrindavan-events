@@ -7,7 +7,7 @@
         <div class="col-md-4">Option</div>
         <div class="col-md-4">Price ($)</div>
     </div>
-    <div ng-repeat="subEvent in viewEventFieldPrices.subEventPrices | orderBy:'parentField'">
+    <div ng-repeat="subEvent in viewEventFieldPrices.subEventPrices">
         <div class="row">
             <div class="col-md-4">
                 <div ng-if="subEvent.parentField">{{subEvent.parentField}}</div>
