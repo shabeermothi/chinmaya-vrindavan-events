@@ -12,7 +12,8 @@
             deleteUser: deleteUser,
             updateUserDetails: updateUserDetails,
             getUserSubscriptions: getUserSubscriptions,
-            unsubscribe: unsubscribe
+            unsubscribe: unsubscribe,
+            removeHealthDoc: removeHealthDoc
         };
 
         function getUsers () {
@@ -65,6 +66,14 @@
                 method: 'DELETE',
                 url: '/user-events/' + event.eventId + '/' + event.userId + '/' + event.childId
             });
+        }
+        
+        function removeHealthDoc (fileName) {
+            $http({
+                url: '/user-profile/remove/health-doc/' + fileName + '/' + $window.sessionStorage.userId,
+                method: 'GET'
+            });
+            $window.location.reload();
         }
     }
 }());

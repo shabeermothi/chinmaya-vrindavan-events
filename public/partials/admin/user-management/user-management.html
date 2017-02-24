@@ -64,7 +64,8 @@
                     </p>
                 </td>
                 <td>
-                    <button ng-if="user.healthDocRef" class="btn btn-primary">View Health Doc</button>
+                    <a href="{{user.healthDocRef}}" target="_blank" ng-if="user.healthDocRef" class="btn btn-primary">View Health Doc</a>
+                    <a ng-if="user.healthDocRef" ng-click="vm.removeHealthDoc(user.healthDocRef)" class="btn btn-warning">Remove Health Doc</a>
                     <p ng-if="!user.healthDocRef">No health doc available</p>
                 </td>
                 <td>

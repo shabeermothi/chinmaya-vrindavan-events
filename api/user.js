@@ -205,14 +205,44 @@
             });
         });
 
-        app.post('/user-profile/upload/health-docs', upload.single('file'), function (req, res, next) {
+        app.post('/user-profile/upload/health-docs/:userId', upload.single('file'), function (req, res, next) {
             var tmp_path = req.file.path;
-            var target_path = 'uploads/' + req.file.originalname;
+            var target_path = 'uploads/' + req.params.userId + '-' + req.file.originalname;
 
             var src = fs.createReadStream(tmp_path);
             var dest = fs.createWriteStream(target_path);
             src.pipe(dest);
-            src.on('end', function() { res.status(200); });
+            src.on('end', function() {
+                fs.unlinkSync(tmp_path);
+                res.status(200);
+            });
+        });
+
+        app.get('/user-profile/remove/health-doc/:fileName/:userId', function (req, res, next) {
+            var filePath = "uploads/" + req.params.fileName;
+
+            db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.userId) }, function(err, doc) {
+                if (err) {
+                    handleError(res, err.message, "Failed to get user");
+                } else {
+                    if (doc.healthDocRef === req.params.fileName) {
+                        if (fs.existsSync(filePath)) {
+                            fs.unlinkSync(filePath);
+                            delete doc.healthDocRef;
+                            db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.userId)}, doc, function(err, doc) {
+                                if (err) {
+                                    handleError(res, err.message, "Failed to update user");
+                                } else {
+                                    res.status(200);
+                                }
+                            });
+                        }
+
+                    } else {
+                        res.status(405);
+                    }
+                }
+            });
         });
 
     }

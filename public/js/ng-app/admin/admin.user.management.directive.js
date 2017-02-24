@@ -41,6 +41,10 @@
                 });
             };
 
+            vm.removeHealthDoc = function (fileName) {
+                ManageUserService.removeHealthDoc(fileName);
+            };
+
             vm.deleteUser = function (userId) {
                 ManageUserService.deleteUser(userId).then(function () {
                     getUsers();

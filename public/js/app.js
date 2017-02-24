@@ -368,7 +368,7 @@
                         $scope.upload = function (file) {
                             $scope.fileName = file.name;
                             Upload.upload({
-                                url: '/user-profile/upload/health-docs',
+                                url: '/user-profile/upload/health-docs/' + $window.sessionStorage.userId,
                                 data: {file: file}
                             }).then(function (resp) {
                             }, function (resp) {
@@ -377,10 +377,18 @@
                             }, function (evt) {
                                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                                 if (progressPercentage === 100) {
-                                    $scope.userDetails.healthDocRef = file.name;
+                                    $scope.userDetails.healthDocRef = $window.sessionStorage.userId + '-' + file.name;
                                     $scope.updateProfile();
                                 }
                             });
+                        };
+
+                        $scope.removeHealthDoc = function (fileName) {
+                            $http({
+                                url: '/user-profile/remove/health-doc/' + fileName + '/' + $window.sessionStorage.userId,
+                                method: 'GET'
+                            });
+                            $window.location.reload();
                         };
 
                     $scope.addNewChoice = function () {
