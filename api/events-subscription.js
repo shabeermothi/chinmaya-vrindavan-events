@@ -17,7 +17,7 @@
         console.log("ERROR: " + reason);
         res.status(code || 500).json({"error": message});
     }
-    
+
     function EventsSubscription (app, db) {
 
         app.post("/user-events/:token", function(req, res) {
@@ -118,16 +118,16 @@
                                 }
                             }
                             cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
-                                new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
+                                new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
                                     "\n " +
-                                    "View your subscription under 'My Subscriptions' in your account. \n \n " +
+                                    "View your subscription under <a href='https://chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
                                     "Have a great day! \n " +
                                     "Chinmaya Vrindavan Events Team"));
                         } else {
                             cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
-                                new require('sendgrid').mail.Content("text/plain", "You subscribed to " + eventPrice.eventName + " \n " +
+                                new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " \n " +
                                     "\n " +
-                                    "View your subscription under 'My Subscriptions' in your account. \n \n " +
+                                    "View your subscription under <a href='https://chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
                                     "Have a great day! \n " +
                                     "Chinmaya Vrindavan Events Team"));
                         }
@@ -144,7 +144,7 @@
                 res.status(200).json(doc[0]);
             });
         });
-        
+
         app.get('/events/subscription/:transId', function (req, res) {
             paymentDetails.getTransactionDetails(req.params.transId, function (transactionDetails) {
                 res.status(200).json(transactionDetails);

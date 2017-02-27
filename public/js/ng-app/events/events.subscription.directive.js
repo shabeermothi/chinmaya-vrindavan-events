@@ -104,7 +104,11 @@
 
                     discountDetails.eventFieldDiscount = vm.fieldDiscount;
 
-                    $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName, 'discountDetails': discountDetails});
+                    if (price) {
+                        $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName, 'discountDetails': discountDetails});
+                    } else {
+                        console.log("Error occurred while calculating price", vm.additionalFieldPrice);
+                    }
                 });
             };
 
@@ -218,14 +222,9 @@
 
                     for (var i=0; i<response.length; i++) {
                         console.log(response[i].name, response[i].role);
-                        if (response[i].grade !== "Other") {
-                            if (response[i].role !== "Adult") {
-                                childNames.push({
-                                    name: response[i].name,
-                                    value: response[i].id
-                                });
-                            }
-                        } else if (response[i].role !== "Adult") {
+                        if (response[i].role === "Child" && response[i].grade === "Other") {
+                        } else if (response[i].role === "Adult") {
+                        } else {
                             childNames.push({
                                 name: response[i].name,
                                 value: response[i].id
