@@ -105,8 +105,10 @@
                         <input type="text" name="phone" id="phone" class="form-control"
                                placeholder="Name" ng-model="family.name" ng-disabled="childArr.indexOf(family.id) > 0">
                         <label>Role</label>
-                        <select class="form-control" ng-model="family.role" ng-disabled="childArr.indexOf(family.id) > 0">
-                            <option ng-if="$index === 0" selected>Adult</option>
+                        <select class="form-control" ng-model="family.role" ng-if="$index === 0" ng-init="family.role = 'Adult'">
+                            <option selected>Adult</option>
+                        </select>
+                        <select class="form-control" ng-model="family.role" ng-if="$index > 0" ng-disabled="childArr.indexOf(family.id) > 0">
                             <option ng-if="$index > 0">Adult</option>
                             <option ng-if="$index > 0">Child</option>
                         </select>
@@ -120,11 +122,6 @@
                             <option>Grade 5</option>
                             <option>Grade 6</option>
                             <option>Grade 7</option>
-                            <option>Grade 8</option>
-                            <option>Grade 9</option>
-                            <option>Grade 10</option>
-                            <option>Grade 11</option>
-                            <option>Grade 12</option>
                             <option>Other</option>
                         </select>
                     </div>
