@@ -46,11 +46,12 @@
             SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
                 SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
                     let childSubscribedFields = [];
+                    let testModel = {};
 
                     for (const userEvent of userEventResponse) {
                         if (userEvent.eventId === $scope.eventId && userEvent.childId === $scope.childId) {
-                            childSubscribedFields = Object.keys(userEvent.eventDetails);
-                            vm.eventDataModel = userEvent.eventDetails;
+                            childSubscribedFields = childSubscribedFields.concat(Object.keys(userEvent.eventDetails));
+                            testModel = angular.extend(testModel, userEvent.eventDetails);
                         }
                     }
 
@@ -62,33 +63,26 @@
                     vm.eventMaxSubEventsForTotalDiscount =  (response.maxTotalDiscount) ? parseInt(response.maxTotalDiscount) : 4;
 
                     // change basicSelect to select before displaying
-                    for (var a of response.eventDetails.edaFieldsModel) {
+                    for (const a of response.eventDetails.edaFieldsModel) {
                         for (const b of a.columns) {
                             if (b.control.type == "basicSelect") {
                                 b.control.type = "select";
-                                if (childSubscribedFields.indexOf(b.control.key) >= 0) {
-
-                                    b.control.formlyExpressionProperties = {
-                                        "templateOptions['placeholder']" : "test"
-                                    };
-
-                                }
                             } else {
                                 if (childSubscribedFields.indexOf(b.control.key) >= 0) {
                                     if (b.control.templateOptions.options.length > 0) {
-                                        for (var x of b.control.templateOptions.options) {
-                                            if (x.value === vm.eventDataModel[b.control.key]) {
+                                        for (const x of b.control.templateOptions.options) {
+                                            if (x.value === testModel[b.control.key]) {
                                                 b.control.templateOptions.description = "Chosen Timing " + x.name;
                                             }
                                         }
                                     }
 
-                                    b.control.formlyExpressionProperties = {
-                                        "templateOptions['disabled']" : "true",
-                                        "hideExpression": function ($viewValue, $modelValue, scope) {
-                                            scope.model[b.control.key] = vm.eventDataModel[b.control.key];
+                                    b.control.formlyExpressionProperties = angular.extend(b.control.formlyExpressionProperties, {
+                                        "templateOptions['disabled']" : function ($viewValue, $modelValue, scope) {
+                                            scope.model[b.control.key] = testModel[b.control.key];
+                                            return true;
                                         }
-                                    };
+                                    });
 
                                 }
                             }
@@ -110,15 +104,20 @@
 
             vm.subscribeToEvent = function (eventUserDataModel) {
 
-                var updatedEventUserDataModel = {};
                 SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
+                    var updatedEventUserDataModel = {};
+                    var testUserModel = {};
+
                     for (const userEvent of userEventResponse) {
-                        for (const x in eventUserDataModel) {
-                            if (eventUserDataModel.hasOwnProperty(x)) {
-                                if(userEvent.eventDetails.hasOwnProperty(x)) {
-                                } else {
-                                    updatedEventUserDataModel[x] = eventUserDataModel[x];
-                                }
+                        if (userEvent.eventId === $scope.eventId && userEvent.childId === $scope.childId) {
+                            testUserModel = angular.extend(testUserModel, userEvent.eventDetails);
+                        }
+                    }
+
+                    for (const x in eventUserDataModel) {
+                        if (eventUserDataModel.hasOwnProperty(x)) {
+                            if(Object.keys(testUserModel).indexOf(x) < 0) {
+                                updatedEventUserDataModel[x] = eventUserDataModel[x];
                             }
                         }
                     }
