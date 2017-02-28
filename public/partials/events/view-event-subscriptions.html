@@ -20,43 +20,45 @@
             <div class="col-md-2">{{subscription.subscribedFor}}</div>
             <div class="col-md-2">{{subscription.subscribedOn}}</div>
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-4">Transaction id </div>
-                    <div class="col-md-6">{{subscription.pricingDetails.paymentResponse.data.transactionResponse.transId}}
-                        <i class="fa fa-info-circle" ng-if="subscription.pricingDetails.transactionStatus"
-                           uib-tooltip="{{subscription.pricingDetails.transactionStatus}}"
-                           tooltip-placement="top"></i>
+                <div ng-repeat="sub in subscription.pricingDetails">
+                    <div class="row">
+                        <div class="col-md-4">Transaction id </div>
+                        <div class="col-md-6">{{sub.paymentResponse.data.transactionResponse.transId}}
+                            <i class="fa fa-info-circle" ng-if="sub.transactionStatus"
+                               uib-tooltip="{{sub.transactionStatus}}"
+                               tooltip-placement="top"></i>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>Subscription Item Details</h4>
+                    </div>
+                    <div class="row" ng-repeat="price in sub.priceDetails">
+                        <div class="col-md-4">{{price.label}}</div>
+                        <div class="col-md-4">
+                            <span ng-if="price.subLabel">{{price.subLabel}}</span>
+                            <span ng-if="!price.subLabel"></span>
+                        </div>
+                        <div class="col-md-4">
+                            {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                        </div>
                         <hr>
                     </div>
-                </div>
-                <div class="row">
-                    <h4>Subscription Item Details</h4>
-                </div>
-                <div class="row" ng-repeat="price in subscription.pricingDetails.priceDetails">
-                    <div class="col-md-4">{{price.label}}</div>
-                    <div class="col-md-4">
-                        <span ng-if="price.subLabel">{{price.subLabel}}</span>
-                        <span ng-if="!price.subLabel"></span>
+                    <div class="row" ng-if="sub.basePrice > 0">
+                        <div class="col-md-4">Base Price</div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">{{sub.basePrice | currency}}</div>
+                        <hr>
                     </div>
-                    <div class="col-md-4">
-                        {{price.price | currency}} <span ng-if="price.discount">({{price.discount}})</span>
+                    <div class="row">
+                        <div class="col-md-4">Total Price</div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            ${{sub.total.price || sub.total}} <span ng-if="sub.total.discount">({{sub.total.discount}})</span>
+                        </div>
                     </div>
                     <hr>
                 </div>
-                <div class="row" ng-if="subscription.pricingDetails.basePrice > 0">
-                    <div class="col-md-4">Base Price</div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">{{subscription.pricingDetails.basePrice | currency}}</div>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Total Price</div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        ${{subscription.pricingDetails.total.price || subscription.pricingDetails.total}} <span ng-if="subscription.pricingDetails.total.discount">({{subscription.pricingDetails.total.discount}})</span>
-                    </div>
-                </div>
-                <hr>
             </div>
         </div>
     </div>

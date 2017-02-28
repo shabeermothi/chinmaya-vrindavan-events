@@ -8,7 +8,7 @@
 
     ViewSubscriptionsCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventSubscriptions', 'sourceEvent', 'EventsSubscriptionService', 'SubscribeEventService'];
 
-    function ViewSubscriptionsCtrl ($scope, $log, $uibModalInstance, eventSubscriptions, sourceEvent, EventsSubscriptionService, SubscribeEventService) {
+    function ViewSubscriptionsCtrl($scope, $log, $uibModalInstance, eventSubscriptions, sourceEvent, EventsSubscriptionService, SubscribeEventService) {
         var viewEventSubscriptionCtrl = this;
 
         viewEventSubscriptionCtrl.eventSubscriptions = eventSubscriptions;
@@ -16,34 +16,41 @@
         viewEventSubscriptionCtrl.event = sourceEvent;
 
         viewEventSubscriptionCtrl.subscriptions = [];
+        let childPriceEnqArr = [];
 
-        for (var i=0; i<eventSubscriptions.length; i++) {
+        for (var i = 0; i < eventSubscriptions.length; i++) {
             const subscribedDate = eventSubscriptions[i].createDate;
             const childId = eventSubscriptions[i].childId;
             const eventId = eventSubscriptions[i].eventId;
 
             EventsSubscriptionService.getSubscriptionDetails(eventSubscriptions[i]).then(function (response) {
-                for (var x in response.familyDetails) {
+                for (const x in response.familyDetails) {
                     const subscriptionObj = {};
                     if (response.familyDetails.hasOwnProperty(x)) {
                         if (response.familyDetails[x].id === childId) {
                             const childName = response.familyDetails[x].name;
-                            subscriptionObj.subscribedOn = subscribedDate;
-                            subscriptionObj.subscribedFor = childName;
-                            subscriptionObj.subscribedBy = response.name;
 
-                            SubscribeEventService.getSubscriptionPrice(eventId, childId).then(function (subscriptionPriceResponse) {
-                                subscriptionObj.pricingDetails = subscriptionPriceResponse;
+                            if (childPriceEnqArr.indexOf(childId) < 0) {
+                                subscriptionObj.subscribedFor = childName;
+                                subscriptionObj.subscribedBy = response.name;
 
-                                SubscribeEventService.getTransactionDetails(subscriptionPriceResponse.paymentResponse.data.transactionResponse.transId).then(function (transactionResponse) {
-                                    subscriptionObj.pricingDetails.transactionStatus = angular.copy(transactionResponse.messages.message[0].text);
-                                    subscriptionObj.pricingDetails.transactionType = angular.copy((transactionResponse.transaction) ? transactionResponse.transaction.transactionType : "");
-                                    viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
-                                }, function (error) {
+                                childPriceEnqArr.push(childId);
+                                SubscribeEventService.getSubscriptionPrice(eventId, childId).then(function (subscriptionPriceResponse) {
+                                    subscriptionObj.pricingDetails = subscriptionPriceResponse;
+
+                                    for (var x in subscriptionPriceResponse) {
+                                        subscriptionObj.subscribedOn = subscriptionPriceResponse[x].createDate;
+                                        SubscribeEventService.getTransactionDetails(subscriptionPriceResponse[x].paymentResponse.data.transactionResponse.transId).then(function (transactionResponse) {
+                                            subscriptionObj.pricingDetails[x].transactionStatus = angular.copy(transactionResponse.messages.message[0].text);
+                                            subscriptionObj.pricingDetails[x].transactionType = angular.copy((transactionResponse.transaction) ? transactionResponse.transaction.transactionType : "");
+                                        }, function (error) {
+                                            viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
+                                        });
+                                    }
+
                                     viewEventSubscriptionCtrl.subscriptions.push(subscriptionObj);
                                 });
-                            });
-
+                            }
                         }
                     }
                 }
@@ -57,7 +64,7 @@
 
     EventFieldPricesCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'eventFieldPrice'];
 
-    function EventFieldPricesCtrl ($scope, $log, $uibModalInstance, eventFieldPrice) {
+    function EventFieldPricesCtrl($scope, $log, $uibModalInstance, eventFieldPrice) {
         var viewEventFieldPrices = this;
 
         viewEventFieldPrices.eventFieldPrices = eventFieldPrice;
@@ -104,7 +111,7 @@
 
     SubscriptionPricesCtrl.$inject = ['$scope', '$log', '$uibModalInstance', 'subscriptionDetails', 'subscriptionPriceDetails'];
 
-    function SubscriptionPricesCtrl ($scope, $log, $uibModalInstance, subscriptionDetails, subscriptionPriceDetails) {
+    function SubscriptionPricesCtrl($scope, $log, $uibModalInstance, subscriptionDetails, subscriptionPriceDetails) {
         var subscriptionPricesCtrl = this;
 
         subscriptionPricesCtrl.subscription = {
