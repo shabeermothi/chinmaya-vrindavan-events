@@ -141,7 +141,7 @@
 
         app.get('/events/subscription-price/:eventId/:childId', function (req, res) {
             db.collection(EVENT_PRICE_DETAILS).find({eventId: req.params.eventId, childId: req.params.childId}).toArray(function (err, doc) {
-                res.status(200).json(doc[0]);
+                res.status(200).json(doc);
             });
         });
 

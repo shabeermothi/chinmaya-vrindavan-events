@@ -3,31 +3,31 @@
 </div>
 <div class="modal-body" id="modal-body">
     <uib-accordion>
-        <div uib-accordion-group class="panel-default" is-open="true">
+        <div uib-accordion-group class="panel-default" is-open="true" ng-repeat="price in subscriptionPricesCtrl.subscription.price">
             <uib-accordion-heading>
-                {{subscriptionPricesCtrl.subscription.details.familySubscriptionDetails.childName}} on {{subscriptionPricesCtrl.subscription.details.familySubscriptionDetails.createDate | date}}
+                {{subscriptionPricesCtrl.subscription.details.familySubscriptionDetails.childName}} on {{price.createDate | date}}
             </uib-accordion-heading>
             <div class="row well">
                 <div class="col-md-4">Subevent</div>
                 <div class="col-md-4">Options (if any)</div>
                 <div class="col-md-4">Price ($)</div>
             </div>
-            <div class="row" ng-repeat="priceDetails in subscriptionPricesCtrl.subscription.price.priceDetails">
+            <div class="row" ng-repeat="priceDetails in price.priceDetails">
                 <div class="col-md-4">{{priceDetails.label}}</div>
                 <div class="col-md-4" ng-if="priceDetails.subLabel">{{priceDetails.subLabel}}</div>
                 <div class="col-md-4" ng-if="!priceDetails.subLabel"></div>
                 <div class="col-md-4">{{priceDetails.price | currency}}<span ng-if="priceDetails.discount">({{priceDetails.discount}})</span></div>
             </div>
-            <div class="row" ng-if="subscriptionPricesCtrl.subscription.price.basePrice > 0">
+            <div class="row" ng-if="price.basePrice > 0">
                 <div class="col-md-4">Base Price</div>
                 <div class="col-md-4"></div>
-                <div class="col-md-4 pull-right"><b>{{subscriptionPricesCtrl.subscription.price.basePrice | currency}}</b></div>
+                <div class="col-md-4 pull-right"><b>{{price.basePrice | currency}}</b></div>
             </div>
             <div class="row">
                 <div class="col-md-4">Total Price</div>
                 <div class="col-md-4"></div>
-                <div class="col-md-4 pull-right"><b>{{subscriptionPricesCtrl.subscription.price.total.price || subscriptionPricesCtrl.subscription.price.total | currency}}
-                    <span ng-if="subscriptionPricesCtrl.subscription.price.total.discount">({{subscriptionPricesCtrl.subscription.price.total.discount}})</span></b></div>
+                <div class="col-md-4 pull-right"><b>{{price.total.price || price.total | currency}}
+                    <span ng-if="price.total.discount">({{price.total.discount}})</span></b></div>
             </div>
         </div>
     </uib-accordion>

@@ -270,20 +270,27 @@
                                 url: '/user-events/' + $window.sessionStorage.userId + '/' + $window.sessionStorage.token
                             }).then(function (userEventsReponse) {
 
-                                for (var y in userEventsReponse.data) {
-                                    for (var x in response.data) {
+                                for (const y in userEventsReponse.data) {
+                                    for (const x in response.data) {
                                         if (response.data[x]._id === userEventsReponse.data[y].eventId) {
                                             var userEventObj = {};
                                             userEventObj = angular.copy(response.data[x]);
                                             userEventObj.familySubscriptionDetails = angular.copy(userEventsReponse.data[y]);
 
-                                            for (var z in userDetails.data.familyDetails) {
+                                            for (const z in userDetails.data.familyDetails) {
                                                 if (userDetails.data.familyDetails[z].id === userEventsReponse.data[y].childId) {
                                                     userEventObj.familySubscriptionDetails.childName = userDetails.data.familyDetails[z].name;
                                                 }
                                             }
 
+                                            for (const n in events) {
+                                                if (events[n].familySubscriptionDetails.childId === userEventsReponse.data[y].childId) {
+                                                    events.splice(n, 1);
+                                                }
+                                            }
+
                                             events.push(userEventObj);
+
                                         }
                                     }
                                 }
