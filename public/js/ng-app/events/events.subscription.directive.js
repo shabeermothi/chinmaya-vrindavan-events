@@ -44,71 +44,124 @@
             };
 
             SubscribeEventService.getEventDetails($scope.eventId).then(function (response) {
-                vm.eventName = response.eventName;
-                vm.eventId = response._id;
-                vm.eventSiblingDiscount = (response.eventDiscount) ? parseInt(response.eventDiscount) : 20;
-                vm.eventTotalDiscount = (response.eventTotalDiscount) ? parseInt(response.eventTotalDiscount) : 0;
-                vm.eventMaxNumSubEventsForSiblingDiscount =  (response.maxSiblingDiscount) ? parseInt(response.maxSiblingDiscount) : 1;
-                vm.eventMaxSubEventsForTotalDiscount =  (response.maxTotalDiscount) ? parseInt(response.maxTotalDiscount) : 4;
+                SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
+                    let childSubscribedFields = [];
 
-                // change basicSelect to select before displaying
-                for (var a of response.eventDetails.edaFieldsModel) {
-                    for (var b of a.columns) {
-                        if (b.control.type == "basicSelect") {
-                            b.control.type = "select";
+                    for (const userEvent of userEventResponse) {
+                        if (userEvent.eventId === $scope.eventId && userEvent.childId === $scope.childId) {
+                            childSubscribedFields = Object.keys(userEvent.eventDetails);
+                            vm.eventDataModel = userEvent.eventDetails;
                         }
                     }
-                }
-                vm.eventDetails = response.eventDetails.edaFieldsModel;
 
-                vm.submitButtonText = response.eventDetails.btnSubmitText;
-                vm.cancelButtonText = response.eventDetails.btnCancelText;
+                    vm.eventName = response.eventName;
+                    vm.eventId = response._id;
+                    vm.eventSiblingDiscount = (response.eventDiscount) ? parseInt(response.eventDiscount) : 20;
+                    vm.eventTotalDiscount = (response.eventTotalDiscount) ? parseInt(response.eventTotalDiscount) : 0;
+                    vm.eventMaxNumSubEventsForSiblingDiscount =  (response.maxSiblingDiscount) ? parseInt(response.maxSiblingDiscount) : 1;
+                    vm.eventMaxSubEventsForTotalDiscount =  (response.maxTotalDiscount) ? parseInt(response.maxTotalDiscount) : 4;
 
-                calculatePrice().then(function (price) {
-                    vm.eventPrice = price;
+                    // change basicSelect to select before displaying
+                    for (var a of response.eventDetails.edaFieldsModel) {
+                        for (const b of a.columns) {
+                            if (b.control.type == "basicSelect") {
+                                b.control.type = "select";
+                                if (childSubscribedFields.indexOf(b.control.key) >= 0) {
+
+                                    b.control.formlyExpressionProperties = {
+                                        "templateOptions['placeholder']" : "test"
+                                    };
+
+                                }
+                            } else {
+                                if (childSubscribedFields.indexOf(b.control.key) >= 0) {
+                                    if (b.control.templateOptions.options.length > 0) {
+                                        for (var x of b.control.templateOptions.options) {
+                                            if (x.value === vm.eventDataModel[b.control.key]) {
+                                                b.control.templateOptions.description = "Chosen Timing " + x.name;
+                                            }
+                                        }
+                                    }
+
+                                    b.control.formlyExpressionProperties = {
+                                        "templateOptions['disabled']" : "true",
+                                        "hideExpression": function ($viewValue, $modelValue, scope) {
+                                            scope.model[b.control.key] = vm.eventDataModel[b.control.key];
+                                        }
+                                    };
+
+                                }
+                            }
+
+
+                        }
+                    }
+
+                    vm.eventDetails = response.eventDetails.edaFieldsModel;
+
+                    vm.submitButtonText = response.eventDetails.btnSubmitText;
+                    vm.cancelButtonText = response.eventDetails.btnCancelText;
+
+                    calculatePrice().then(function (price) {
+                        vm.eventPrice = price;
+                    });
                 });
             });
 
             vm.subscribeToEvent = function (eventUserDataModel) {
 
-                var discountDetails = {};
-                var userEventObj = {
-                    "eventId": $scope.eventId,
-                    "userId": $window.sessionStorage.userId,
-                    "childId": $scope.childId,
-                    "eventDetails": eventUserDataModel
-                };
-
-                calculatePrice(eventUserDataModel).then(function (price) {
-                    var applyTotalDiscountCounter = 0;
-                    for (var userChosenField in eventUserDataModel) {
-                        for (var eventFields of vm.eventDetails) {
-                            for (var eventFieldColumn of eventFields.columns) {
-                                if ((eventFieldColumn.control.type === "select" || eventFieldColumn.control.type === "basicSelect")
-                                    && eventFieldColumn.control.key === userChosenField) {
-                                    applyTotalDiscountCounter++;
-                                    break;
+                var updatedEventUserDataModel = {};
+                SubscribeEventService.getUserEventDetails().then(function (userEventResponse) {
+                    for (const userEvent of userEventResponse) {
+                        for (const x in eventUserDataModel) {
+                            if (eventUserDataModel.hasOwnProperty(x)) {
+                                if(userEvent.eventDetails.hasOwnProperty(x)) {
+                                } else {
+                                    updatedEventUserDataModel[x] = eventUserDataModel[x];
                                 }
                             }
                         }
                     }
 
-                    const oldPrice = vm.totalFirstFieldPrice;
+                    var discountDetails = {};
+                    var userEventObj = {
+                        "eventId": $scope.eventId,
+                        "userId": $window.sessionStorage.userId,
+                        "childId": $scope.childId,
+                        "eventDetails": updatedEventUserDataModel
+                    };
 
-                    if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
-                        price = vm.additionalFieldPrice + (oldPrice - (parseInt(applyTotalDiscountCounter) * (vm.eventTotalDiscount)));
-                        discountDetails.totalDiscount = "after $" + vm.eventTotalDiscount + " X " + parseInt(applyTotalDiscountCounter) + " chosen weeks discount on tuition fee of $" + oldPrice;
-                    } else {
-                        price = vm.additionalFieldPrice + oldPrice;
-                    }
+                    calculatePrice(updatedEventUserDataModel).then(function (price) {
+                        var applyTotalDiscountCounter = 0;
+                        for (var userChosenField in updatedEventUserDataModel) {
+                            for (var eventFields of vm.eventDetails) {
+                                for (var eventFieldColumn of eventFields.columns) {
+                                    if ((eventFieldColumn.control.type === "select" || eventFieldColumn.control.type === "basicSelect")
+                                        && eventFieldColumn.control.key === userChosenField) {
+                                        applyTotalDiscountCounter++;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
 
-                    discountDetails.eventFieldDiscount = vm.fieldDiscount;
+                        const oldPrice = vm.totalFirstFieldPrice;
 
-                    if (price) {
-                        $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName, 'discountDetails': discountDetails});
-                    } else {
-                        console.log("Error occurred while calculating price", vm.additionalFieldPrice);
-                    }
+                        if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
+                            price = vm.additionalFieldPrice + (oldPrice - (parseInt(applyTotalDiscountCounter) * (vm.eventTotalDiscount)));
+                            discountDetails.totalDiscount = "after $" + vm.eventTotalDiscount + " X " + parseInt(applyTotalDiscountCounter) + " chosen weeks discount on tuition fee of $" + oldPrice;
+                        } else {
+                            price = vm.additionalFieldPrice + oldPrice;
+                        }
+
+                        discountDetails.eventFieldDiscount = vm.fieldDiscount;
+
+                        if (price) {
+                            $state.go('events.details.cardDetails', {'eventFieldPrices': vm.eventFieldPrices, 'eventDetails': userEventObj, 'price': price, 'eventName': vm.eventName, 'discountDetails': discountDetails});
+                        } else {
+                            console.log("Error occurred while calculating price", vm.additionalFieldPrice);
+                        }
+                    });
                 });
             };
 
@@ -221,7 +274,6 @@
                     }
 
                     for (var i=0; i<response.length; i++) {
-                        console.log(response[i].name, response[i].role);
                         if (response[i].role === "Child" && response[i].grade === "Other") {
                         } else if (response[i].role === "Adult") {
                         } else {
@@ -232,13 +284,13 @@
                         }
                     }
 
-                    for (var x in childIds) {
+                    /*for (var x in childIds) {
                         for (var j=0; j<childNames.length; j++) {
                             if (childIds[x] === childNames[j].value) {
                                 childNames.splice(j, 1);
                             }
                         }
-                    }
+                    }*/
 
                     userSubscription.childNameForm =  [
                         {
