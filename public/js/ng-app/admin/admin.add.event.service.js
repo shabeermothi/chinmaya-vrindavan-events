@@ -120,7 +120,7 @@
                                 "type": "datepicker",
                                 "key": "eventDate",
                                 "templateOptions": {
-                                    "label": "Event From Date",
+                                    "label": "Event Expiry Date",
                                     "required": true,
                                     "description": "",
                                     "placeholder": ""
@@ -140,7 +140,7 @@
                                 "type": "datepicker",
                                 "key": "eventToDate",
                                 "templateOptions": {
-                                    "label": "Event To Date",
+                                    "label": "Event End Date",
                                     "required": true,
                                     "description": "",
                                     "placeholder": ""
