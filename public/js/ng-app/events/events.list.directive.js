@@ -80,14 +80,14 @@
 
             if (eventType === 'active') {
                 for (var x = 0; x < events.length; x++) {
-                    if (new Date(events[x].eventDate) > new Date()) {
+                    if (new Date(events[x].eventToDate) > new Date()) {
                         filteredEvent = events[x];
                         filteredEvents.push(filteredEvent);
                     }
                 }
             } else if (eventType === 'expired') {
                 for (var x = 0; x < events.length; x++) {
-                    if (new Date(events[x].eventDate) < new Date()) {
+                    if (new Date(events[x].eventToDate) < new Date()) {
                         filteredEvent = events[x];
                         filteredEvents.push(filteredEvent);
                     }

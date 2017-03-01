@@ -120,7 +120,7 @@
                                 "type": "datepicker",
                                 "key": "eventDate",
                                 "templateOptions": {
-                                    "label": "Event Expiry Date",
+                                    "label": "Event From Date",
                                     "required": true,
                                     "description": "",
                                     "placeholder": ""
