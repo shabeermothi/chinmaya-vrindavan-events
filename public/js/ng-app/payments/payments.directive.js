@@ -65,6 +65,10 @@
                             }
                         }
                     }
+
+                    vm.priceDetailsArr = _.sortBy(vm.priceDetailsArr, function (o) {
+                         return (o.label || o.subLabel);
+                    });
                 });
 
             });

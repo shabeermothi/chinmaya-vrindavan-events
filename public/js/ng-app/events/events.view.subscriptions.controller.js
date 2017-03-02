@@ -100,7 +100,9 @@
             }
         }
 
-        viewEventFieldPrices.subEventPrices = responseArr;
+        viewEventFieldPrices.subEventPrices = _.sortBy(responseArr, function (o) {
+            return (o.parentField || o.field);
+        });
 
         viewEventFieldPrices.isArray = angular.isArray;
 
