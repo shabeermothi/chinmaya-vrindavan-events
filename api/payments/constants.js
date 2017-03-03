@@ -2,8 +2,8 @@
     'use strict';
 
     var constants = {
-        apiLoginKey: "72KMm9gV",
-        transactionKey: "6B5Kd8Lj4c3Z3Xvx"
+        apiLoginKey: process.env.PAYMENT_API_LOGIN_KEY,
+        transactionKey: process.env.PAYMENT_TRANSACTION_KEY
     };
 
     module.exports = constants;
