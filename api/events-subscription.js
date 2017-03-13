@@ -120,14 +120,14 @@
                             cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
                                 new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
                                     "\n " +
-                                    "View your subscription under <a href='https://chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
+                                    "View your subscription under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
                                     "Have a great day! \n " +
                                     "Chinmaya Vrindavan Events Team"));
                         } else {
                             cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
                                 new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " \n " +
                                     "\n " +
-                                    "View your subscription under <a href='https://chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
+                                    "View your subscription under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
                                     "Have a great day! \n " +
                                     "Chinmaya Vrindavan Events Team"));
                         }
