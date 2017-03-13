@@ -179,7 +179,7 @@
                             var to_email = new helper.Email(req.params.emailId);
                             var subject = "Reset your Chinmaya Vrindavan Events Account password";
                             var content = new helper.Content("text/plain", "Click on the below link to reset your password. \n " +
-                                "https://demo-chinmaya-vrindavan-events.herokuapp.com/#/recover-account/reset-password/" + userId + "/" + hash + " \n " +
+                                "https://chinmaya-vrindavan-events.herokuapp.com/#/recover-account/reset-password/" + userId + "/" + hash + " \n " +
                                 "\n " +
                                 "Please note that the above link to reset your password will be valid only for 5 mins. \n " +
                                 "\n " +
