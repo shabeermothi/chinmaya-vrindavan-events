@@ -227,8 +227,9 @@
             .state('events.subscription', {
                 url: '/:eventId',
                 templateUrl: 'partials/events/subscribe/home.html',
-                controller: ['$scope', '$stateParams', function ($scope, $stateParams) {
+                controller: ['$scope', '$stateParams', '$window', function ($scope, $stateParams, $window) {
                     $scope.eventId = $stateParams.eventId;
+                    $window.localStorage.clear();
                 }]
             })
             .state('events.details', {

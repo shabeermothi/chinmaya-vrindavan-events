@@ -55,8 +55,9 @@
                                     }
 
                                     if (discountEventFieldArr.indexOf(key) > -1) {
-                                        priceDetails.discount = "Multi-child discount " + $scope.discountDetails.eventFieldDiscount[key] + "% off $" + ((vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]]) ?
-                                            vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]] : vm.fieldsResponse[x][key].priceValue["yes"]);
+                                        priceDetails.discount = "Reflects " + $scope.discountDetails.eventFieldDiscount[key] + "% sibling discount";
+                                            //"Multi-child discount " + $scope.discountDetails.eventFieldDiscount[key] + "% off $" + ((vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]]) ?
+                                            //vm.fieldsResponse[x][key].priceValue[vm.eventDetails.eventDetails[key]] : vm.fieldsResponse[x][key].priceValue["yes"]);
                                         priceDetails.price = priceDetails.price - ((priceDetails.price * parseInt($scope.discountDetails.eventFieldDiscount[key])) / 100);
                                     }
 
@@ -98,7 +99,7 @@
             };
 
             vm.goToPreviousState = function () {
-                SubscribeEventService.go('^');
+                SubscribeEventService.go('^', {backEvent: vm.priceDetailsArr});
             };
         }
     }

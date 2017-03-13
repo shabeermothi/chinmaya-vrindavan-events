@@ -84,7 +84,7 @@
                                     data: doc.ops
                                 };
 
-                                cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", req.body.email, "Welcome to Chinmaya Vrindavan Events");
+                                cveMailer.sendMail("chinmayavrindavansummercamp@gmail.com", req.body.email, "Welcome to Chinmaya Vrindavan Events");
 
                                 res.status(200).json(response);
                             } else {

@@ -117,19 +117,19 @@
                                     childName = doc.familyDetails[i].name;
                                 }
                             }
-                            cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
-                                new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " for " + childName + " \n " +
-                                    "\n " +
-                                    "View your subscription under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
-                                    "Have a great day! \n " +
-                                    "Chinmaya Vrindavan Events Team"));
+                            cveMailer.sendMail("chinmayavrindavansummercamp@gmail.com", doc.email, "Chinmaya Vrindavan Summer Camp Registration for " + childName,
+                                new require('sendgrid').mail.Content("text/html", "Dear " + doc.familyDetails[0].name + ", <br /><br />" +
+                                    "Hari Om!  Your Summer Camp registration for " + childName + " is complete.  Your child’s spot is now reserved.  View details of your registration under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>My Subscriptions</a> in your account.  Please note summer camp dues paid to CMTC is <b>100% tax deductible</b>. <br /><br />" +
+                                    "Thank you for registering your child in the Chariot of Success.  Our team has planned fun and exciting activities for all the children.  If you have any questions, please contact us at chinmayavrindavansummercamp@gmail.com  We look forward to providing a wonderful summer camp experience for your family! <br /><br />" +
+                                    "Regards, <br/>" +
+                                    "Summer Camp Team"));
                         } else {
-                            cveMailer.sendMail("friendsatchinmaya@chinmayavrindavanevents.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
-                                new require('sendgrid').mail.Content("text/html", "You subscribed to " + eventPrice.eventName + " \n " +
-                                    "\n " +
-                                    "View your subscription under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>'My Subscriptions'</a> in your account. \n \n " +
-                                    "Have a great day! \n " +
-                                    "Chinmaya Vrindavan Events Team"));
+                            cveMailer.sendMail("chinmayavrindavansummercamp@gmail.com", doc.email, "Chinmaya Vrindavan Events - Subscription",
+                                new require('sendgrid').mail.Content("text/html", "Dear " + doc.familyDetails[0].name + ", <br /><br />" +
+                                    "Hari Om!  Your Summer Camp registration for " + childName + " is complete.  Your child’s spot is now reserved.  View details of your registration under <a href='https://demo-chinmaya-vrindavan-events.herokuapp.com/#/login'>My Subscriptions</a> in your account.  Please note summer camp dues paid to CMTC is <b>100% tax deductible</b>. <br /><br />" +
+                                    "Thank you for registering your child in the Chariot of Success.  Our team has planned fun and exciting activities for all the children.  If you have any questions, please contact us at chinmayavrindavansummercamp@gmail.com  We look forward to providing a wonderful summer camp experience for your family! <br /><br />" +
+                                    "Regards, <br/>" +
+                                    "Summer Camp Team"));
                         }
 
                         res.sendStatus(201);

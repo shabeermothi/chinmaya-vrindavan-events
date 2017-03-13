@@ -12,7 +12,8 @@
             restrict: 'A',
             scope: {
                 eventId: '=',
-                childId: '='
+                childId: '=',
+                backEvent: '&'
             },
             templateUrl: 'partials/events/subscribe/subscribe-to-an-event.html',
             controller: SubscribeEventDirectiveCtrl,
@@ -87,7 +88,19 @@
                                 }
                             }
 
-
+                            if ($window.localStorage.userEventModel) {
+                                let savedUserEventModel = JSON.parse($window.localStorage.userEventModel);
+                                for (const h in savedUserEventModel) {
+                                    if (h === b.control.key) {
+                                        b.control.formlyExpressionProperties = angular.extend(b.control.formlyExpressionProperties, {
+                                            "templateOptions['enabled']" : function ($viewValue, $modelValue, scope) {
+                                                scope.model[b.control.key] = savedUserEventModel[h];
+                                                return true;
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -130,6 +143,8 @@
                         "eventDetails": updatedEventUserDataModel
                     };
 
+                    $window.localStorage.userEventModel = JSON.stringify(updatedEventUserDataModel);
+
                     calculatePrice(updatedEventUserDataModel).then(function (price) {
                         var applyTotalDiscountCounter = 0;
                         for (var userChosenField in updatedEventUserDataModel) {
@@ -148,7 +163,9 @@
 
                         if (applyTotalDiscountCounter >= vm.eventMaxSubEventsForTotalDiscount) {
                             price = vm.additionalFieldPrice + (oldPrice - (parseInt(applyTotalDiscountCounter) * (vm.eventTotalDiscount)));
-                            discountDetails.totalDiscount = "after $" + vm.eventTotalDiscount + " X " + parseInt(applyTotalDiscountCounter) + " chosen weeks discount on tuition fee of $" + oldPrice;
+
+                            discountDetails.totalDiscount = "Reflects multi-week tuition discount";
+                                //"after $" + vm.eventTotalDiscount + " X " + parseInt(applyTotalDiscountCounter) + " chosen weeks discount on tuition fee of $" + oldPrice;
                         } else {
                             price = vm.additionalFieldPrice + oldPrice;
                         }
@@ -307,7 +324,7 @@
                                         "templateOptions" : {
                                             "label" : "Choose Child",
                                             "required" : true,
-                                            "description" : "",
+                                            "description" : "If you are registering multiple children in your family, you will register and pay for each child separately. When you register your second child, sibling discount automatically appears in the price calculations.  To avail multi-week discount, you have to choose 4 or more weeks at one time.  Adding weeks later will not qualify for the discount.",
                                             "placeholder" : "",
                                             "options" : childNames
                                         },

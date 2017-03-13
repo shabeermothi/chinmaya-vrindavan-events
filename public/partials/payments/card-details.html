@@ -8,9 +8,9 @@
                 Subscription Details
             </uib-accordion-heading>
             <div class="row well">
-                <div class="col-md-4">Subevent</div>
-                <div class="col-md-4">Options (if any)</div>
-                <div class="col-md-4">Price ($)</div>
+                <div class="col-md-4">Purchase Details</div>
+                <div class="col-md-4">Timing</div>
+                <div class="col-md-4">Amount ($)</div>
             </div>
             <div class="row" ng-repeat="priceDetails in vm.priceDetailsArr">
                 <div class="col-md-4">{{priceDetails.label}}</div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="card-price">Card Price</label>
-                        <h3>{{vm.price | currency}}</h3>
+                        <h3 id="card-price">{{vm.price | currency}}</h3>
                     </div>
                 </div>
                 <div class="form-group">
