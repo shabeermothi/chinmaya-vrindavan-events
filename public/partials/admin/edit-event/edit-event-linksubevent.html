@@ -93,7 +93,16 @@
                 <br /><br /><br />
             </div>
         </div>
-        <button class="btn btn-success pull-right" ng-click="editLinkEventDetails.updateLinks()">Update</button>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-1">
+                <button class="btn btn-success" ng-click="editLinkEventDetails.updateLinks()">Update</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger" type="reset" ui-sref="manageEvent">Cancel and go back to manage events</button>
+            </div>
+        </div>
         <br /><br /><br />
     </div>
 </section>
