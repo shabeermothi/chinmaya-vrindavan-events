@@ -81,7 +81,8 @@
                                     {
                                         "parentField": fieldValues.label,
                                         "field": fieldValues.actualValue[c].name,
-                                        "price": fieldValues.priceValue[d]
+                                        "price": fieldValues.priceValue[d],
+                                        "displaySeq": fieldValues.displaySeq || 0
                                     }
                                 );
                             }
@@ -92,7 +93,8 @@
                         responseArr.push(
                             {
                                 "field": fieldValues.actualValue,
-                                "price": fieldValues.priceValue[b]
+                                "price": fieldValues.priceValue[b],
+                                "displaySeq": fieldValues.displaySeq || 0
                             }
                         );
                     }
@@ -101,7 +103,7 @@
         }
 
         viewEventFieldPrices.subEventPrices = _.sortBy(responseArr, function (o) {
-            return (o.parentField || o.field);
+            return (o.displaySeq || o.parentField || o.field);
         });
 
         viewEventFieldPrices.isArray = angular.isArray;

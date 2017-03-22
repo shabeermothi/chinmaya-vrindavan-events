@@ -51,6 +51,7 @@
                                         if (vm.eventDetails.eventDetails[key]) {
                                             priceDetails.price = vm.fieldsResponse[x][key].priceValue["yes"];
                                             priceDetails.label = vm.fieldsResponse[x][key].actualValue;
+                                            priceDetails.displaySeq = vm.fieldsResponse[x][key].displaySeq;
                                         }
                                     }
 
@@ -68,7 +69,7 @@
                     }
 
                     vm.priceDetailsArr = _.sortBy(vm.priceDetailsArr, function (o) {
-                         return (o.label || o.subLabel);
+                         return (o.displaySeq || o.label || o.subLabel);
                     });
                 });
 

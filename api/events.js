@@ -145,6 +145,7 @@
                                             }
 
                                             responseObj[column.control.key].priceValue = eventFields[a][x];
+                                            responseObj[column.control.key].displaySeq = column.control.templateOptions.displaySeq || 0;
                                             responseArr.push(responseObj);
                                         }
                                     }
